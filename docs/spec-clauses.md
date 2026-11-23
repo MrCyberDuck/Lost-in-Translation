@@ -71,7 +71,7 @@ What is still out of scope, on purpose: rule metadata that converters do not use
 | --- | --- | --- | --- | --- | --- |
 | S23 | `''` is an empty value | Rules spec, Special Field Values | clear | 31 | Matches a present field whose value is the empty string. |
 | S24 | `null` is a null value; "the application depends on the target SIEM" | Rules spec, Special Field Values | **ambiguous by design** | 65 | `field: null` matches when the field is absent **or** present with JSON null; it does not match `''`. |
-| S25 | A field missing from the event never matches a value condition | implied | clear | all | So `not sel` is true when `sel`'s field is missing. |
+| S25 | A field missing from the event never matches a value condition | implied by two-valued `not` (Conditions) | clear (confirmed by Nik, 2026-11-23) | all | So `not sel` is true when `sel`'s field is missing. |
 
 ## Conditions
 

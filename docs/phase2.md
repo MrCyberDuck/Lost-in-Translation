@@ -162,7 +162,7 @@ Pair counts below are (rule, event) pairs, given as regression neutral / product
 
 | Mechanism | What Chainsaw does | Clauses | Regression | Attack samples | Label |
 | --- | --- | --- | --- | --- | --- |
-| C4 | A test on a missing field is "unknown", and `not unknown` stays unknown, so `selection and not filter` **fails** when the filter's field is absent. AND returns the first non-true value left to right; OR is true if any branch is true, else false if any is false, else unknown. | S25 | 8 / 0 | 88 / 16 | `backend-bug` (engine), **if S25 stays `clear`**: see the open question below |
+| C4 | A test on a missing field is "unknown", and `not unknown` stays unknown, so `selection and not filter` **fails** when the filter's field is absent. AND returns the first non-true value left to right; OR is true if any branch is true, else false if any is false, else unknown. | S25 | 8 / 0 | 88 / 16 | `backend-bug` (engine); S25 confirmed `clear` (Nik, 2026-11-23) |
 | C5 | `field: null` matches only an explicit JSON null, not a missing field | S24 | 2 / 0 | 118 / 0 | `spec-gap` |
 | C6 | Rule string `'true'` does not match a boolean event value | S11, S39 | 0 / 0 | 10 / 10 | `spec-gap` |
 | C8 | Rule number `3389` does not match string event value `'3389'` | S11 | 0 / 0 | 4 / 4 | `spec-gap` |
@@ -196,9 +196,9 @@ Full per-pair tables: `results/phase2/<dataset>/explained.json`; per-rule match 
 4. **`null` versus missing (S24) and string-versus-typed values (S11, S39) are the largest spec gaps** in volume (118 and 14 pairs in the neutral config). They are reported as spec clarifications, not bugs, as decided.
 5. **A spec-faithful engine can miss what the rule author meant.** The Pass-the-Hash rule expects `NtLmSsp`, but Windows writes `NtLmSsp ` with a trailing space. Hayabusa matches only because it trims values (H1, against the spec); the evaluator and Chainsaw miss it. This is a rule-quality finding for SigmaHQ as well as an engine deviation.
 
-### Open question for Nik
+### Decision: S25 stays `clear` (Nik, 2026-11-23)
 
-S25 ("a missing field never matches, so `not selection` is true") is marked `clear`, but its spec source is "implied": the spec never says it in words. Chainsaw's C4 behaviour (98 pairs in the neutral config, 18 with logsource) is a `backend-bug` if S25 stays clear and a `spec-gap` if it becomes ambiguous. This decides how the biggest Chainsaw finding is reported.
+The spec never says in words what a missing field means (S25's source is "implied"), so Chainsaw's C4 behaviour could have been read as a spec gap. It stays a `backend-bug` because the spec defines the condition language only as "Logical AND/OR" and "Negation with 'not'", with no third truth value. Under two-valued logic, `not X` is the complement of `X`. Chainsaw breaks that: on the Mimikatz event (`sysmon_3_10_Invoke-Mimikatz_hosted_Github.evtx#10273`, no `SourceUser`), probe rules show that both `filter` and `not filter` are false. The spec also treats optional fields as normal (Field Existence section), and its own example of the pattern is `selection and not filter`. Expected in Phase 3: SQL-style backends may show the same behaviour; this is a guess until measured.
 
 ### Limits
 
