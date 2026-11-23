@@ -1,0 +1,141 @@
+{
+ "dataset": "regression",
+ "events": 233,
+ "rules": 2295,
+ "rules_in_scope": 2247,
+ "evaluator_rule_errors": 0,
+ "hayabusa_converted_rules": 2279,
+ "chainsaw_unloadable": {
+  "78bc5783-81d9-4d73-ac97-59f6db4f72a8": "keyless identifiers cannot be converted",
+  "550d3350-bb8a-4ff3-9533-2ba533f4a1c0": "keyless identifiers cannot be converted",
+  "b7bc7038-638b-4ffd-880c-292c692209ef": "keyless identifiers cannot be converted",
+  "516376b4-05cd-4122-bae0-ad7641c38d48": "keyless identifiers cannot be converted",
+  "09570ae5-889e-43ea-aac0-0e1221fb3d95": "keyless identifiers cannot be converted",
+  "9db37458-4df2-46a5-95ab-307e7f29e675": "keyless identifiers cannot be converted",
+  "4fe151c2-ecf9-4fae-95ae-b88ec9c2fca6": "keyless identifiers cannot be converted",
+  "259a9cdf-c4dd-4fa2-b243-2269e5ab18a2": "unsupported modifiers - cidr",
+  "78d5cab4-557e-454f-9fb9-a222bd0d5edc": "unsupported modifiers - cidr",
+  "f88e112a-21aa-44bd-9b01-6ee2a2bbbed1": "unsupported modifiers - cidr",
+  "b55d23e5-6821-44ff-8a6e-67218891e49f": "keyless identifiers cannot be converted",
+  "18f37338-b9bd-4117-a039-280c81f7a596": "keyless identifiers cannot be converted",
+  "06d71506-7beb-4f22-8888-e2e5e2ca7fd8": "keyless identifiers cannot be converted",
+  "0b7889b4-5577-4521-a60a-3376ee7f9f7b": "keyless identifiers cannot be converted",
+  "f01d1f70-cd41-42ec-9c0b-26dd9c22bf29": "unsupported modifiers - fieldref",
+  "efafe0bf-4238-479e-af8f-797bd3490d2d": "unsupported modifiers - cidr",
+  "37e4024a-6c80-4d8f-b95d-2e7e94f3a8d1": "unsupported modifiers - cidr",
+  "75e33ce3-ae32-4dcc-9aa8-a2a3029d6f84": "unsupported modifiers - cidr",
+  "5f699bc5-5446-4a4a-a0b7-5ef2885a3eb4": "unsupported modifiers - cidr",
+  "0531e43a-d77d-47c2-b89f-5fe50321c805": "unsupported modifiers - cidr",
+  "cdc8da7d-c303-42f8-b08c-b4ab47230263": "unsupported modifiers - cidr",
+  "4b89abaa-99fe-4232-afdd-8f9aa4d20382": "unsupported modifiers - cidr",
+  "6d8c3d20-a5e1-494f-8412-4571d716cf5c": "unsupported modifiers - cidr",
+  "9f2cc74d-78af-4eb2-bb64-9cd1d292b87b": "unsupported modifiers - cidr",
+  "7610a4ea-c06d-495f-a2ac-0a696abcfd3b": "unsupported modifiers - cidr",
+  "08249dc0-a28d-4555-8ba5-9255a198e08c": "unsupported modifiers - cidr",
+  "992a6cae-db6a-43c8-9cec-76d7195c96fc": "unsupported modifiers - cidr",
+  "c649a6c7-cd8c-4a78-9c04-000fc76df954": "unsupported modifiers - cidr",
+  "1f2b5353-573f-4880-8e33-7d04dcf97744": "keyless identifiers cannot be converted"
+ },
+ "seconds": {
+  "evaluator": 12.9,
+  "native": 38.0
+ },
+ "versions": {
+  "chainsaw": "chainsaw 2.18.0",
+  "hayabusa": "Hayabusa v4.4.0 - CODE BLUE Release"
+ },
+ "manifest": null,
+ "neutral": {
+  "rules_compared": 2295,
+  "rules_all_agree": 2290,
+  "rules_not_runnable": {
+   "evaluator": 0,
+   "chainsaw": 29,
+   "hayabusa": 0
+  },
+  "matches": {
+   "evaluator": 389,
+   "chainsaw": 380,
+   "hayabusa": 388
+  },
+  "pairs": {
+   "evaluator-chainsaw": {
+    "rules_agree": 2261,
+    "rules_differ": 5,
+    "pairs_both": 378,
+    "pairs_only_a": 11,
+    "pairs_only_b": 2,
+    "rules_not_runnable": 29
+   },
+   "evaluator-hayabusa": {
+    "rules_agree": 2294,
+    "rules_differ": 1,
+    "pairs_both": 388,
+    "pairs_only_a": 1,
+    "pairs_only_b": 0
+   },
+   "chainsaw-hayabusa": {
+    "rules_agree": 2262,
+    "rules_differ": 4,
+    "pairs_both": 378,
+    "pairs_only_a": 2,
+    "pairs_only_b": 10,
+    "rules_not_runnable": 29
+   }
+  }
+ },
+ "production": {
+  "rules_compared": 2295,
+  "rules_all_agree": 2292,
+  "rules_not_runnable": {
+   "evaluator": 0,
+   "chainsaw": 29,
+   "hayabusa": 16
+  },
+  "matches": {
+   "evaluator": 310,
+   "chainsaw": 307,
+   "hayabusa": 310
+  },
+  "pairs": {
+   "evaluator-chainsaw": {
+    "rules_agree": 2263,
+    "rules_differ": 3,
+    "pairs_both": 307,
+    "pairs_only_a": 3,
+    "pairs_only_b": 0,
+    "rules_not_runnable": 29
+   },
+   "evaluator-hayabusa": {
+    "rules_agree": 2279,
+    "rules_differ": 0,
+    "pairs_both": 310,
+    "pairs_only_a": 0,
+    "pairs_only_b": 0,
+    "rules_not_runnable": 16
+   },
+   "chainsaw-hayabusa": {
+    "rules_agree": 2247,
+    "rules_differ": 3,
+    "pairs_both": 307,
+    "pairs_only_a": 0,
+    "pairs_only_b": 3,
+    "rules_not_runnable": 45
+   }
+  }
+ },
+ "regression_positive": {
+  "neutral": {
+   "evaluator": 197,
+   "chainsaw": 195,
+   "hayabusa": 196,
+   "cases": 197
+  },
+  "production": {
+   "evaluator": 197,
+   "chainsaw": 195,
+   "hayabusa": 197,
+   "cases": 197
+  }
+ }
+}

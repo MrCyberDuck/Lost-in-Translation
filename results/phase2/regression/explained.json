@@ -1,0 +1,372 @@
+{
+ "dataset": "regression",
+ "mechanisms": {
+  "C1": {
+   "engine": "chainsaw",
+   "description": "only fields listed in the mapping file are reachable",
+   "clauses": [],
+   "kind": "config"
+  },
+  "C2": {
+   "engine": "chainsaw",
+   "description": "event field names with spaces are not stripped",
+   "clauses": [
+    "S85"
+   ],
+   "kind": "config"
+  },
+  "C3": {
+   "engine": "chainsaw",
+   "description": "UserData fields are not reachable (mapping points at EventData)",
+   "clauses": [
+    "S86"
+   ],
+   "kind": "config"
+  },
+  "C4": {
+   "engine": "chainsaw",
+   "description": "a test on a missing field is unknown; NOT of unknown stays unknown, so `sel and not filter` fails when the filter's field is missing",
+   "clauses": [
+    "S25"
+   ],
+   "kind": "semantics"
+  },
+  "C5": {
+   "engine": "chainsaw",
+   "description": "`field: null` matches only a present JSON null, not a missing field",
+   "clauses": [
+    "S24"
+   ],
+   "kind": "semantics"
+  },
+  "C6": {
+   "engine": "chainsaw",
+   "description": "a string in the rule ('true') does not match a boolean event value",
+   "clauses": [
+    "S11",
+    "S39"
+   ],
+   "kind": "semantics"
+  },
+  "C8": {
+   "engine": "chainsaw",
+   "description": "a number in the rule (3389) does not match a string event value ('3389')",
+   "clauses": [
+    "S11"
+   ],
+   "kind": "semantics"
+  },
+  "C7": {
+   "engine": "chainsaw",
+   "description": "logsource preconditions by Provider/EventID (process_creation also 4688; unlisted categories and services run on every event; title exclusions)",
+   "clauses": [
+    "S37"
+   ],
+   "kind": "config"
+  },
+  "H1": {
+   "engine": "hayabusa",
+   "description": "leading/trailing spaces in event values are trimmed before matching",
+   "clauses": [
+    "S3",
+    "S45"
+   ],
+   "kind": "semantics"
+  },
+  "H2": {
+   "engine": "hayabusa",
+   "description": "events without a Channel are not evaluated",
+   "clauses": [
+    "S36"
+   ],
+   "kind": "config"
+  },
+  "H3": {
+   "engine": "hayabusa",
+   "description": "raw SigmaHQ rules: field names with spaces are not stripped (the converter adds the renames)",
+   "clauses": [
+    "S85"
+   ],
+   "kind": "config"
+  },
+  "H4": {
+   "engine": "hayabusa",
+   "description": "PowerShell classic (400/600/800) `Data` text is split into fields such as CommandLine and HostApplication",
+   "clauses": [
+    "S87"
+   ],
+   "kind": "config"
+  }
+ },
+ "engines": {
+  "chainsaw": {
+   "neutral": {
+    "disagreeing_pairs": 13,
+    "explained": 13,
+    "residual": [],
+    "pairs": [
+     {
+      "rule_id": "d4f1a2b3-7c8e-4d5f-b6a9-1e0c2d3f4e5b",
+      "rule_path": "rules/windows/builtin/wmi/win_wmi_activity_nteventlogfile_cleareventlog.yml",
+      "event_id": "regression_data/rules/windows/builtin/wmi/win_wmi_activity_nteventlogfile_cleareventlog/d4f1a2b3-7c8e-4d5f-b6a9-1e0c2d3f4e5b.evtx#5314",
+      "spec": true,
+      "chainsaw": false,
+      "mechanisms": [
+       "C1",
+       "C3"
+      ],
+      "explained_by_all": true,
+      "label": "spec-gap"
+     },
+     {
+      "rule_id": "5ef9853e-4d0e-4a70-846f-a9ca37d876da",
+      "rule_path": "rules/windows/process_access/proc_access_win_lsass_memdump.yml",
+      "event_id": "regression_data/rules/windows/process_access/proc_access_win_susp_dbgcore_dbghelp_load/9f5c1d59-33be-4e60-bcab-85d2f566effd.evtx#676404",
+      "spec": true,
+      "chainsaw": false,
+      "mechanisms": [
+       "C1&C4"
+      ],
+      "explained_by_all": true,
+      "label": "backend-bug"
+     },
+     {
+      "rule_id": "f4bbd493-b796-416e-bbf2-121235348529",
+      "rule_path": "rules/windows/process_creation/proc_creation_win_powershell_non_interactive_execution.yml",
+      "event_id": "regression_data/rules/windows/registry/registry_delete/registry_delete_removal_amsi_registry_key/41d1058a-aea7-4952-9293-29eaaf516465.evtx#16786799",
+      "spec": true,
+      "chainsaw": false,
+      "mechanisms": [
+       "C4"
+      ],
+      "explained_by_all": true,
+      "label": "backend-bug"
+     },
+     {
+      "rule_id": "f4bbd493-b796-416e-bbf2-121235348529",
+      "rule_path": "rules/windows/process_creation/proc_creation_win_powershell_non_interactive_execution.yml",
+      "event_id": "regression_data/rules/windows/registry/registry_set/registry_set_amsi_disable/aa37cbb0-da36-42cb-a90f-fdf216fc7467.evtx#16031",
+      "spec": true,
+      "chainsaw": false,
+      "mechanisms": [
+       "C4"
+      ],
+      "explained_by_all": true,
+      "label": "backend-bug"
+     },
+     {
+      "rule_id": "f4bbd493-b796-416e-bbf2-121235348529",
+      "rule_path": "rules/windows/process_creation/proc_creation_win_powershell_non_interactive_execution.yml",
+      "event_id": "regression_data/rules/windows/registry/registry_set/registry_set_bypass_uac_using_delegateexecute/46dd5308-4572-4d12-aa43-8938f0184d4f.evtx#27772045",
+      "spec": true,
+      "chainsaw": false,
+      "mechanisms": [
+       "C4"
+      ],
+      "explained_by_all": true,
+      "label": "backend-bug"
+     },
+     {
+      "rule_id": "f4bbd493-b796-416e-bbf2-121235348529",
+      "rule_path": "rules/windows/process_creation/proc_creation_win_powershell_non_interactive_execution.yml",
+      "event_id": "regression_data/rules/windows/registry/registry_set/registry_set_change_security_zones/45e112d0-7759-4c2a-aa36-9f8fb79d3393.evtx#28344631",
+      "spec": true,
+      "chainsaw": false,
+      "mechanisms": [
+       "C4"
+      ],
+      "explained_by_all": true,
+      "label": "backend-bug"
+     },
+     {
+      "rule_id": "f4bbd493-b796-416e-bbf2-121235348529",
+      "rule_path": "rules/windows/process_creation/proc_creation_win_powershell_non_interactive_execution.yml",
+      "event_id": "regression_data/rules/windows/registry/registry_set/registry_set_change_security_zones/45e112d0-7759-4c2a-aa36-9f8fb79d3393.evtx#28344632",
+      "spec": true,
+      "chainsaw": false,
+      "mechanisms": [
+       "C4"
+      ],
+      "explained_by_all": true,
+      "label": "backend-bug"
+     },
+     {
+      "rule_id": "f4bbd493-b796-416e-bbf2-121235348529",
+      "rule_path": "rules/windows/process_creation/proc_creation_win_powershell_non_interactive_execution.yml",
+      "event_id": "regression_data/rules/windows/registry/registry_set/registry_set_change_security_zones/45e112d0-7759-4c2a-aa36-9f8fb79d3393.evtx#28344633",
+      "spec": true,
+      "chainsaw": false,
+      "mechanisms": [
+       "C4"
+      ],
+      "explained_by_all": true,
+      "label": "backend-bug"
+     },
+     {
+      "rule_id": "f4bbd493-b796-416e-bbf2-121235348529",
+      "rule_path": "rules/windows/process_creation/proc_creation_win_powershell_non_interactive_execution.yml",
+      "event_id": "regression_data/rules/windows/registry/registry_set/registry_set_credential_guard_disabled/73921b9c-cafd-4446-b0c6-fdb0ace42bc0.evtx#23575",
+      "spec": true,
+      "chainsaw": false,
+      "mechanisms": [
+       "C4"
+      ],
+      "explained_by_all": true,
+      "label": "backend-bug"
+     },
+     {
+      "rule_id": "f4bbd493-b796-416e-bbf2-121235348529",
+      "rule_path": "rules/windows/process_creation/proc_creation_win_powershell_non_interactive_execution.yml",
+      "event_id": "regression_data/rules/windows/registry/registry_set/registry_set_susp_user_shell_folders/9c226817-8dc9-46c2-a58d-66655aafd7dc.evtx#74886",
+      "spec": true,
+      "chainsaw": false,
+      "mechanisms": [
+       "C4"
+      ],
+      "explained_by_all": true,
+      "label": "backend-bug"
+     },
+     {
+      "rule_id": "4720b7df-40c3-48fd-bbdf-fd4b3c464f0d",
+      "rule_path": "rules/windows/registry/registry_set/registry_set_taskcache_entry.yml",
+      "event_id": "regression_data/rules/windows/registry/registry_delete/registry_delete_schtasks_hide_task_via_index_value_removal/526cc8bc-1cdc-48ad-8b26-f19bff969cec.evtx#156421",
+      "spec": false,
+      "chainsaw": true,
+      "mechanisms": [
+       "C5"
+      ],
+      "explained_by_all": true,
+      "label": "spec-gap"
+     },
+     {
+      "rule_id": "4720b7df-40c3-48fd-bbdf-fd4b3c464f0d",
+      "rule_path": "rules/windows/registry/registry_set/registry_set_taskcache_entry.yml",
+      "event_id": "regression_data/rules/windows/registry/registry_delete/registry_delete_schtasks_hide_task_via_sd_value_removal/acd74772-5f88-45c7-956b-6a7b36c294d2.evtx#155709",
+      "spec": false,
+      "chainsaw": true,
+      "mechanisms": [
+       "C5"
+      ],
+      "explained_by_all": true,
+      "label": "spec-gap"
+     },
+     {
+      "rule_id": "a7c3e5f2-8b1d-4e9a-b6c2-3d7f5e8a9b4c",
+      "rule_path": "rules-emerging-threats/2026/Exploits/RedSun/win_defender_exploit_redsun_tiering_engine_detected_as_eicar.yml",
+      "event_id": "regression_data/rules-emerging-threats/2026/Exploits/RedSun/win_defender_exploit_redsun_tiering_engine_detected_as_eicar/a7c3e5f2-8b1d-4e9a-b6c2-3d7f5e8a9b4c.evtx#542",
+      "spec": true,
+      "chainsaw": false,
+      "mechanisms": [
+       "C1",
+       "C2"
+      ],
+      "explained_by_all": true,
+      "label": "config"
+     }
+    ],
+    "by_mechanism": {
+     "C1+C3": 1,
+     "C1&C4": 1,
+     "C4": 8,
+     "C5": 2,
+     "C1+C2": 1
+    },
+    "by_label": {
+     "spec-gap": 3,
+     "backend-bug": 9,
+     "config": 1
+    }
+   },
+   "production": {
+    "disagreeing_pairs": 3,
+    "explained": 3,
+    "residual": [],
+    "pairs": [
+     {
+      "rule_id": "d4f1a2b3-7c8e-4d5f-b6a9-1e0c2d3f4e5b",
+      "rule_path": "rules/windows/builtin/wmi/win_wmi_activity_nteventlogfile_cleareventlog.yml",
+      "event_id": "regression_data/rules/windows/builtin/wmi/win_wmi_activity_nteventlogfile_cleareventlog/d4f1a2b3-7c8e-4d5f-b6a9-1e0c2d3f4e5b.evtx#5314",
+      "spec": true,
+      "chainsaw": false,
+      "mechanisms": [
+       "C1",
+       "C3"
+      ],
+      "explained_by_all": true,
+      "label": "spec-gap"
+     },
+     {
+      "rule_id": "5ef9853e-4d0e-4a70-846f-a9ca37d876da",
+      "rule_path": "rules/windows/process_access/proc_access_win_lsass_memdump.yml",
+      "event_id": "regression_data/rules/windows/process_access/proc_access_win_susp_dbgcore_dbghelp_load/9f5c1d59-33be-4e60-bcab-85d2f566effd.evtx#676404",
+      "spec": true,
+      "chainsaw": false,
+      "mechanisms": [
+       "C1&C4"
+      ],
+      "explained_by_all": true,
+      "label": "backend-bug"
+     },
+     {
+      "rule_id": "a7c3e5f2-8b1d-4e9a-b6c2-3d7f5e8a9b4c",
+      "rule_path": "rules-emerging-threats/2026/Exploits/RedSun/win_defender_exploit_redsun_tiering_engine_detected_as_eicar.yml",
+      "event_id": "regression_data/rules-emerging-threats/2026/Exploits/RedSun/win_defender_exploit_redsun_tiering_engine_detected_as_eicar/a7c3e5f2-8b1d-4e9a-b6c2-3d7f5e8a9b4c.evtx#542",
+      "spec": true,
+      "chainsaw": false,
+      "mechanisms": [
+       "C1",
+       "C2"
+      ],
+      "explained_by_all": true,
+      "label": "config"
+     }
+    ],
+    "by_mechanism": {
+     "C1+C3": 1,
+     "C1&C4": 1,
+     "C1+C2": 1
+    },
+    "by_label": {
+     "spec-gap": 1,
+     "backend-bug": 1,
+     "config": 1
+    }
+   }
+  },
+  "hayabusa": {
+   "neutral": {
+    "disagreeing_pairs": 1,
+    "explained": 1,
+    "residual": [],
+    "pairs": [
+     {
+      "rule_id": "a7c3e5f2-8b1d-4e9a-b6c2-3d7f5e8a9b4c",
+      "rule_path": "rules-emerging-threats/2026/Exploits/RedSun/win_defender_exploit_redsun_tiering_engine_detected_as_eicar.yml",
+      "event_id": "regression_data/rules-emerging-threats/2026/Exploits/RedSun/win_defender_exploit_redsun_tiering_engine_detected_as_eicar/a7c3e5f2-8b1d-4e9a-b6c2-3d7f5e8a9b4c.evtx#542",
+      "spec": true,
+      "hayabusa": false,
+      "mechanisms": [
+       "H3"
+      ],
+      "explained_by_all": true,
+      "label": "config"
+     }
+    ],
+    "by_mechanism": {
+     "H3": 1
+    },
+    "by_label": {
+     "config": 1
+    }
+   },
+   "production": {
+    "disagreeing_pairs": 0,
+    "explained": 0,
+    "residual": [],
+    "pairs": [],
+    "by_mechanism": {},
+    "by_label": {}
+   }
+  }
+ }
+}

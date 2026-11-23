@@ -32,6 +32,6 @@ Largest logsource groups in scope: `process_creation` 1,095, `registry_set` 190,
 
 ## Spec clauses
 
-See [spec-clauses.md](spec-clauses.md): 84 clauses (35 in the first version, 49 added after an audit of every spec file), of which 31 are ambiguous or contradictory and carry a working interpretation. Nik accepted all working interpretations on 23 Nov 2026, including the four that had been open (keywords, integer comparison, null, correlation windows). They stay ambiguous, so findings that depend on them are `spec-gap`.
+See [spec-clauses.md](spec-clauses.md): 84 clauses (35 in the first version, 49 added after an audit of every spec file), of which 31 are ambiguous or contradictory and carry a working interpretation. Nik accepted all working interpretations on 23 Nov 2026, including the four that had been open (keywords, integer comparison, null, correlation windows). They stay ambiguous, so findings that depend on them are `spec-gap`. Phase 2 added S85 to S87, found by the native-engine cross-check ([phase2.md](phase2.md)).
 
 `python -m harness.construct_census` counts how many in-scope rules use each construct (`results/phase0/construct_census.json`), so each clause shows how many rules it can affect.

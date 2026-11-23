@@ -191,6 +191,14 @@ No global filters are shipped in the in-scope folder, so these are conformance c
 | --- | --- | --- | --- | --- | --- |
 | S84 | `Hashes` holds several hashes in one string (`SHA1=...,MD5=...,SHA256=...,IMPHASH=...`), as Sysmon writes it | Taxonomy appendix, Fields | clear for the neutral config; the production mapping to per-hash fields is a pipeline choice | 46 | Neutral config: plain string matching. Production config: differences are `config`, not bugs. |
 
+## New in Phase 2: found by the native-engine cross-check
+
+| ID | Clause | Spec source | Status | Rules | Evaluator behaviour / working interpretation |
+| --- | --- | --- | --- | --- | --- |
+| S85 | Field names in rules are the log source's names "with all spaces stripped" (`New Value` is written `NewValue`) | Rules spec, Field Usage, point 2 | clear | 1 in the regression data (Defender `Source Name`, `Threat Name`, `Process Name`) | A rule field matches an event field whose name equals it once spaces are removed; an exact name wins. Missed in the 84-clause audit and found in Phase 2 because the evaluator missed a regression test that Hayabusa (through its rule converter) passed. |
+| S86 | Windows events that carry their payload in `<UserData>` instead of `<EventData>` (WMI-Activity 5858, some Task Scheduler and AppLocker events) | Rules spec, Field Usage, point 3 covers `<EventData>` `Data Name` only | ambiguous | 1 in the regression data | The children of the single `<UserData>` wrapper element are fields under their own names (`harness/datasets.py`). Chainsaw's mapping only reaches `EventData`, Hayabusa reaches both. |
+| S87 | Unnamed `<Data>` elements in `<EventData>` (classic Application-log providers such as ESENT, MsiInstaller, MSSQL, and PowerShell classic 400/600/800) | not covered (point 3 assumes every `Data` has a `Name`) | ambiguous | SigmaHQ rules address them as `Data` | They form one multi-valued field `Data`; a value matches if any element matches (S44). Hayabusa does the same. |
+
 ## Questions closed on 23 Nov 2026
 
 These four were open for the co-author. Nik decided on 23 Nov 2026 to keep the working interpretation for each. The clauses stay `ambiguous`, so every finding that depends on them is a `spec-gap`.

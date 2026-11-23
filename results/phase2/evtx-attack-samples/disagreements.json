@@ -1,0 +1,1986 @@
+[
+ {
+  "rule_id": "e6e88853-5f20-4c4a-8d26-cd469fd8d31f",
+  "rule_path": "rules/windows/builtin/application/esent/win_esent_ntdsutil_abuse.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Credential Access/dc_applog_ntdsutil_dfir_325_326_327.evtx#1969": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/dc_applog_ntdsutil_dfir_325_326_327.evtx#1970": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/dc_applog_ntdsutil_dfir_325_326_327.evtx#1971": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/dc_applog_ntdsutil_dfir_325_326_327.evtx#1972": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "94dc4390-6b7c-4784-8ffc-335334404650",
+  "rule_path": "rules/windows/builtin/application/esent/win_esent_ntdsutil_abuse_susp_location.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Credential Access/dc_applog_ntdsutil_dfir_325_326_327.evtx#1970": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "5594e67a-7f92-4a04-b65d-1a42fd824a60",
+  "rule_path": "rules/windows/builtin/application/msiinstaller/win_msi_install_from_web.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Execution/rogue_msi_url_1040_1042.evtx#3734": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Execution/rogue_msi_url_1040_1042.evtx#3735": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "7f103213-a04e-4d59-8261-213dddf22314",
+  "rule_path": "rules/windows/builtin/application/mssqlserver/win_mssql_xp_cmdshell_audit_log.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Lateral Movement/LM_xp_cmdshell_MSSQL_Events.evtx#9693": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "d08dd86f-681e-4a00-a92c-1db218754417",
+  "rule_path": "rules/windows/builtin/application/mssqlserver/win_mssql_xp_cmdshell_change.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Defense Evasion/DE_xp_cmdshell_enabled_MSSQL_EID_15457.evtx#9692": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Defense Evasion/DE_xp_cmdshell_enabled_MSSQL_EID_15457.evtx#9696": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Lateral Movement/LM_xp_cmdshell_MSSQL_Events.evtx#9692": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Lateral Movement/LM_xp_cmdshell_MSSQL_Events.evtx#9696": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "8eef149c-bd26-49f2-9e5a-9b00e3af499b",
+  "rule_path": "rules/windows/builtin/security/account_management/win_security_pass_the_hash_2.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Credential Access/tutto_malseclogon.evtx#329918": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Lateral Movement/ImpersonateUser-via local Pass The Hash Sysmon and Security.evtx#321446": [
+    "hayabusa"
+   ],
+   "Lateral Movement/LM_4624_mimikatz_sekurlsa_pth_source_machine.evtx#432903": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Privilege Escalation/Invoke_TokenDuplication_UAC_Bypass4624.evtx#10113": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Privilege Escalation/privexchange_dirkjan.evtx#65969": [
+    "hayabusa"
+   ],
+   "Privilege Escalation/security_4624_4673_token_manip.evtx#18206": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "749c9f5e-b353-4b90-a9c1-05243357ca4b",
+  "rule_path": "rules/windows/builtin/security/account_management/win_security_susp_privesc_kerberos_relay_over_ldap.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Privilege Escalation/privesc_KrbRelayUp_windows_4624.evtx#72742": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "5bed80b6-b3e8-428e-a3ae-d3c757589e41",
+  "rule_path": "rules/windows/builtin/security/win_security_rdp_reverse_tunnel.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Command and Control/DE_RDP_Tunnel_5156.evtx#227727": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Command and Control/DE_RDP_Tunnel_5156.evtx#227728": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Command and Control/DE_RDP_Tunnel_5156.evtx#227741": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Command and Control/DE_RDP_Tunnel_5156.evtx#227742": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "614cf376-6651-47c4-9dcc-6b9527f749f4",
+  "rule_path": "rules/windows/builtin/security/win_security_susp_scheduled_task_update.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Lateral Movement/remote task update 4624 4702 same logonid.evtx#2171293": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "b5de0c9a-6f19-43e0-af4e-55ad01f550af",
+  "rule_path": "rules/windows/image_load/image_load_susp_unsigned_dll.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#423994": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424049": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424050": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424051": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424053": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424054": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424059": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424060": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424061": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424062": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424063": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424064": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424065": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424066": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424067": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424077": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424078": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424081": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424114": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424115": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424174": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424175": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424232": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424233": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424234": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424236": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424241": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424244": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424245": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424246": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424247": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424248": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424249": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424250": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424251": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424260": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424261": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424262": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424266": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424320": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424322": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424323": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/Malware/sideloading_uacbypass_rundll32_injection_c2.evtx#417079": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3614": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3619": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3620": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3621": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3622": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3623": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3624": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3625": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3626": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3627": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3628": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3629": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#4135": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/panache_sysmon_vs_EDRTestingScript.evtx#4899": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/panache_sysmon_vs_EDRTestingScript.evtx#4918": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/panache_sysmon_vs_EDRTestingScript.evtx#4928": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/panache_sysmon_vs_EDRTestingScript.evtx#4967": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/panache_sysmon_vs_EDRTestingScript.evtx#4968": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/panache_sysmon_vs_EDRTestingScript.evtx#4971": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/panache_sysmon_vs_EDRTestingScript.evtx#4974": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/panache_sysmon_vs_EDRTestingScript.evtx#4977": [
+    "chainsaw"
+   ],
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238378": [
+    "chainsaw"
+   ],
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238380": [
+    "chainsaw"
+   ],
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238383": [
+    "chainsaw"
+   ],
+   "Credential Access/sysmon_10_1_memdump_comsvcs_minidump.evtx#32154": [
+    "chainsaw"
+   ],
+   "Credential Access/sysmon_10_1_memdump_comsvcs_minidump.evtx#32155": [
+    "chainsaw"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243512": [
+    "chainsaw"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243514": [
+    "chainsaw"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243516": [
+    "chainsaw"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243517": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243518": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243520": [
+    "chainsaw"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243521": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243523": [
+    "chainsaw"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243524": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243525": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243527": [
+    "chainsaw"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243528": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243532": [
+    "chainsaw"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243534": [
+    "chainsaw"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243535": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243536": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243538": [
+    "chainsaw"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243540": [
+    "chainsaw"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243541": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243542": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243544": [
+    "chainsaw"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243545": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243547": [
+    "chainsaw"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243548": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243550": [
+    "chainsaw"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243552": [
+    "chainsaw"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243553": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243554": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243556": [
+    "chainsaw"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243558": [
+    "chainsaw"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243559": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243560": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243562": [
+    "chainsaw"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243563": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243565": [
+    "chainsaw"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243566": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Defense Evasion/Sysmon 7  Update Session Orchestrator Dll Hijack.evtx#243569": [
+    "chainsaw"
+   ],
+   "Defense Evasion/sysmon_13_rdp_settings_tampering.evtx#5275": [
+    "chainsaw"
+   ],
+   "Execution/Sysmon_meterpreter_ReflectivePEInjection_to_notepad_.evtx#8352": [
+    "chainsaw"
+   ],
+   "Execution/Sysmon_meterpreter_ReflectivePEInjection_to_notepad_.evtx#8354": [
+    "chainsaw"
+   ],
+   "Execution/exec_persist_rundll32_mshta_scheduledtask_sysmon_1_3_11.evtx#4126": [
+    "chainsaw"
+   ],
+   "Execution/exec_sysmon_1_11_lolbin_rundll32_openurl_FileProtocolHandler.evtx#16388": [
+    "chainsaw"
+   ],
+   "Execution/exec_sysmon_1_11_lolbin_rundll32_openurl_FileProtocolHandler.evtx#16390": [
+    "chainsaw"
+   ],
+   "Execution/exec_sysmon_1_11_lolbin_rundll32_openurl_FileProtocolHandler.evtx#16391": [
+    "chainsaw"
+   ],
+   "Execution/exec_sysmon_1_11_lolbin_rundll32_openurl_FileProtocolHandler.evtx#16392": [
+    "chainsaw"
+   ],
+   "Execution/exec_sysmon_1_11_lolbin_rundll32_openurl_FileProtocolHandler.evtx#16395": [
+    "chainsaw"
+   ],
+   "Execution/exec_sysmon_1_11_lolbin_rundll32_shdocvw_openurl.evtx#16438": [
+    "chainsaw"
+   ],
+   "Execution/exec_sysmon_1_11_lolbin_rundll32_zipfldr_RouteTheCall.evtx#16443": [
+    "chainsaw"
+   ],
+   "Execution/exec_sysmon_1_lolbin_rundll32_advpack_RegisterOCX.evtx#16452": [
+    "chainsaw"
+   ],
+   "Execution/exec_sysmon_1_rundll32_pcwutl_LaunchApplication.evtx#16507": [
+    "chainsaw"
+   ],
+   "Execution/sysmon_1_11_rundll32_cpl_ostap.evtx#4863": [
+    "chainsaw"
+   ],
+   "Execution/sysmon_1_11_rundll32_cpl_ostap.evtx#4864": [
+    "chainsaw"
+   ],
+   "Execution/sysmon_lolbas_rundll32_zipfldr_routethecall_shell.evtx#10674": [
+    "chainsaw"
+   ],
+   "Lateral Movement/LM_tsclient_startup_folder.evtx#31144": [
+    "chainsaw"
+   ],
+   "Lateral Movement/LM_tsclient_startup_folder.evtx#31146": [
+    "chainsaw"
+   ],
+   "Lateral Movement/LM_tsclient_startup_folder.evtx#31147": [
+    "chainsaw"
+   ],
+   "Lateral Movement/LM_wmi_PoisonHandler_Mr-Un1k0d3r_sysmon_1_13.evtx#336": [
+    "chainsaw"
+   ],
+   "Lateral Movement/LM_wmi_PoisonHandler_Mr-Un1k0d3r_sysmon_1_13.evtx#340": [
+    "chainsaw"
+   ],
+   "Other/maldoc_mshta_via_shellbrowserwind_rundll32.evtx#556863": [
+    "chainsaw"
+   ],
+   "Persistence/persistence_sysmon_11_13_1_shime_appfix.evtx#1966541": [
+    "chainsaw"
+   ],
+   "Persistence/persistence_sysmon_11_13_1_shime_appfix.evtx#1966543": [
+    "chainsaw"
+   ],
+   "Persistence/persistence_sysmon_11_13_1_shime_appfix.evtx#1966544": [
+    "chainsaw"
+   ],
+   "Privilege Escalation/privesc_unquoted_svc_sysmon_1_11.evtx#27803": [
+    "chainsaw"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "0dba975d-a193-4ed1-a067-424df57570d1",
+  "rule_path": "rules/windows/network_connection/net_connection_win_certutil_initiated_connection.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "AutomatedTestingTools/panache_sysmon_vs_EDRTestingScript.evtx#4981": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/panache_sysmon_vs_EDRTestingScript.evtx#4982": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "e81528db-fc02-45e8-8e98-4e84aba1f10b",
+  "rule_path": "rules/windows/network_connection/net_connection_win_notepad.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#4136": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Defense Evasion/de_unmanagedpowershell_psinject_sysmon_7_8_10.evtx#18732": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Defense Evasion/evasion_codeinj_odzhan_conhost_sysmon_10_1.evtx#2116722": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Defense Evasion/evasion_codeinj_odzhan_spoolsv_sysmon_10_1.evtx#304595": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Execution/execution_evasion_visual_studio_prebuild_event.evtx#2429139": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Execution/sysmon_exec_from_vss_persistence.evtx#6179": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Execution/sysmon_lolbin_bohops_vshadow_exec.evtx#6414": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Lateral Movement/LM_sysmon_3_12_13_1_SharpRDP.evtx#311352": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Lateral Movement/LM_sysmon_3_12_13_1_SharpRDP.evtx#311359": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Lateral Movement/LM_sysmon_3_12_13_1_SharpRDP.evtx#311369": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Lateral Movement/LM_sysmon_3_12_13_1_SharpRDP.evtx#311377": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Lateral Movement/LM_wmi_PoisonHandler_Mr-Un1k0d3r_sysmon_1_13.evtx#338": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Lateral Movement/LM_wmi_PoisonHandler_Mr-Un1k0d3r_sysmon_1_13.evtx#342": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Lateral Movement/LM_wmi_PoisonHandler_Mr-Un1k0d3r_sysmon_1_13.evtx#346": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Persistence/persistence_SilentProcessExit_ImageHijack_sysmon_13_1.evtx#8039": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Persistence/persistence_SilentProcessExit_ImageHijack_sysmon_13_1.evtx#8044": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Persistence/sysmon_1_persist_bitsjob_SetNotifyCmdLine.evtx#17288": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Privilege Escalation/privesc_rotten_potato_from_webshell_metasploit_sysmon_1_8_3.evtx#5408": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Privilege Escalation/privesc_rotten_potato_from_webshell_metasploit_sysmon_1_8_3.evtx#5412": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Privilege Escalation/privesc_rotten_potato_from_webshell_metasploit_sysmon_1_8_3.evtx#5413": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Privilege Escalation/privesc_rotten_potato_from_webshell_metasploit_sysmon_1_8_3.evtx#5414": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Privilege Escalation/privesc_rotten_potato_from_webshell_metasploit_sysmon_1_8_3.evtx#5415": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Privilege Escalation/privesc_rotten_potato_from_webshell_metasploit_sysmon_1_8_3.evtx#5416": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Privilege Escalation/privesc_rotten_potato_from_webshell_metasploit_sysmon_1_8_3.evtx#5417": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Privilege Escalation/privesc_rotten_potato_from_webshell_metasploit_sysmon_1_8_3.evtx#5418": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Privilege Escalation/privesc_rotten_potato_from_webshell_metasploit_sysmon_1_8_3.evtx#5420": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "ed74fe75-7594-4b4b-ae38-e38e3fd2eb23",
+  "rule_path": "rules/windows/network_connection/net_connection_win_rdp_outbound_over_non_standard_tools.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Command and Control/DE_sysmon-3-rdp-tun.evtx#1940901": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Command and Control/DE_sysmon-3-rdp-tun.evtx#1940919": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Command and Control/tunna_iis_rdp_smb_tunneling_sysmon_3.evtx#35076": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Command and Control/tunna_iis_rdp_smb_tunneling_sysmon_3.evtx#35079": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "c7e91a02-d771-4a6d-a700-42587e0b1095",
+  "rule_path": "rules/windows/network_connection/net_connection_win_regsvr32_network_activity.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#4043": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/panache_sysmon_vs_EDRTestingScript.evtx#4934": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Execution/exec_sysmon_lobin_regsvr32_sct.evtx#16794": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Persistence/sysmon_1_persist_bitsjob_SetNotifyCmdLine.evtx#17289": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "5ef9853e-4d0e-4a70-846f-a9ca37d876da",
+  "rule_path": "rules/windows/process_access/proc_access_win_lsass_memdump.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Credential Access/ppl_bypass_ppldump_knowdll_hijack_sysmon_security.evtx#564598": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_10_11_lsass_memdump.evtx#4434": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_10_11_lsass_memdump.evtx#4442": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238374": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238376": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238379": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238381": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238382": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238384": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238386": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238388": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_2x10_lsass_with_different_pid_RtlCreateProcessReflection.evtx#2125126": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_2x10_lsass_with_different_pid_RtlCreateProcessReflection.evtx#2125128": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_2x10_lsass_with_different_pid_RtlCreateProcessReflection.evtx#2125129": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_3_10_Invoke-Mimikatz_hosted_Github.evtx#10273": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Defense Evasion/DE_BYOV_Zam64_CA_Memdump_sysmon_7_10.evtx#20013": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "33be4333-2c6b-44f4-ae28-102cdbde0a31",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_msbuild_susp_parent_process.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Execution/execution_evasion_visual_studio_prebuild_event.evtx#2429134": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Execution/execution_evasion_visual_studio_prebuild_event.evtx#2429135": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Execution/execution_evasion_visual_studio_prebuild_event.evtx#2429136": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Execution/execution_evasion_visual_studio_prebuild_event.evtx#2429140": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Execution/execution_evasion_visual_studio_prebuild_event.evtx#2429141": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Execution/execution_evasion_visual_studio_prebuild_event.evtx#2429142": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Execution/execution_evasion_visual_studio_prebuild_event.evtx#2429143": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Execution/execution_evasion_visual_studio_prebuild_event.evtx#2429144": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Execution/execution_evasion_visual_studio_prebuild_event.evtx#2429148": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Execution/execution_evasion_visual_studio_prebuild_event.evtx#2429149": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Execution/execution_evasion_visual_studio_prebuild_event.evtx#2429150": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Execution/execution_evasion_visual_studio_prebuild_event.evtx#2429151": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Execution/execution_evasion_visual_studio_prebuild_event.evtx#2429152": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Persistence/persist_valid_account_guest_rid_hijack.evtx#38289": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "f4bbd493-b796-416e-bbf2-121235348529",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_powershell_non_interactive_execution.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3574": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3575": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3607": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3608": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3609": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3631": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3632": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3757": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#4105": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#4108": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#4109": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#4111": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/panache_sysmon_vs_EDRTestingScript.evtx#4895": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/panache_sysmon_vs_EDRTestingScript.evtx#4912": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/panache_sysmon_vs_EDRTestingScript.evtx#4913": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/panache_sysmon_vs_EDRTestingScript.evtx#4915": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/babyshark_mimikatz_powershell.evtx#13": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Credential Access/babyshark_mimikatz_powershell.evtx#18": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/babyshark_mimikatz_powershell.evtx#19": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/babyshark_mimikatz_powershell.evtx#20": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/babyshark_mimikatz_powershell.evtx#21": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/babyshark_mimikatz_powershell.evtx#23": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/babyshark_mimikatz_powershell.evtx#25": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/babyshark_mimikatz_powershell.evtx#26": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/babyshark_mimikatz_powershell.evtx#27": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/babyshark_mimikatz_powershell.evtx#28": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/babyshark_mimikatz_powershell.evtx#29": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/discovery_sysmon_1_iis_pwd_and_config_discovery_appcmd.evtx#5875": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_3_10_Invoke-Mimikatz_hosted_Github.evtx#10272": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Defense Evasion/DE_Powershell_CLM_Disabled_Sysmon_12.evtx#18527": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Defense Evasion/de_powershell_execpolicy_changed_sysmon_13.evtx#1387": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Discovery/discovery_sysmon_3_Invoke_UserHunter_SourceMachine.evtx#32008": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Discovery/discovery_sysmon_3_Invoke_UserHunter_SourceMachine.evtx#32009": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Execution/execution_evasion_visual_studio_prebuild_event.evtx#2429138": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Lateral Movement/ImpersonateUser-via local Pass The Hash Sysmon and Security.evtx#578497": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Lateral Movement/ImpersonateUser-via local Pass The Hash Sysmon and Security.evtx#578500": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Lateral Movement/LM_sysmon_psexec_smb_meterpreter.evtx#9808": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Lateral Movement/LM_sysmon_psexec_smb_meterpreter.evtx#9809": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Lateral Movement/LM_sysmon_psexec_smb_meterpreter.evtx#9813": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Lateral Movement/LM_sysmon_remote_task_src_powershell.evtx#589693": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Lateral Movement/LM_sysmon_remote_task_src_powershell.evtx#589974": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Lateral Movement/LM_sysmon_remote_task_src_powershell.evtx#589975": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Lateral Movement/lm_sysmon_18_remshell_over_namedpipe.evtx#8048": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Lateral Movement/powercat_revShell_sysmon_1_3.evtx#8118": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Privilege Escalation/CVE-2020-0796_SMBV3Ghost_LocalPrivEsc_Sysmon_3_1_10.evtx#339223": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Privilege Escalation/Sysmon_13_1_UACBypass_SDCLTBypass.evtx#11122": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Privilege Escalation/Sysmon_13_1_UAC_Bypass_EventVwrBypass.evtx#11112": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Privilege Escalation/Sysmon_13_1_UAC_Bypass_EventVwrBypass.evtx#11116": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Privilege Escalation/privesc_seimpersonate_tosys_spoolsv_sysmon_17_18.evtx#110434": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Privilege Escalation/privesc_spoolsv_spl_file_write_sysmon11.evtx#342310": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Privilege Escalation/sysmon_11_1_15_WScriptBypassUAC.evtx#11219": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Privilege Escalation/sysmon_1_13_UACBypass_AppPath_Control.evtx#11264": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Privilege Escalation/sysmon_1_7_elevate_uacbypass_sysprep.evtx#17729": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "deb9b646-a508-44ee-b7c9-d8965921c6b6",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_powershell_token_obfuscation.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Other/emotet/exec_emotet_ps_800_get-item.evtx#789": [
+    "hayabusa"
+   ],
+   "Other/emotet/exec_emotet_ps_800_invoke-item.evtx#792": [
+    "hayabusa"
+   ],
+   "Other/emotet/exec_emotet_ps_800_new-item.evtx#786": [
+    "hayabusa"
+   ],
+   "Other/emotet/exec_emotet_ps_800_new-object.evtx#787": [
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "20f0ee37-5942-4e45-b7d5-c5b5db9df5cd",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_asep_reg_keys_modification_currentversion.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6593": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/Malware/sideloading_injection_persistence_run_key.evtx#416056": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3595": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3598": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3602": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3605": [
+    "chainsaw"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3607": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#3608": [
+    "chainsaw"
+   ],
+   "Lateral Movement/lm_remote_registry_sysmon_1_13_3.evtx#549018": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Lateral Movement/wmi_remote_registry_sysmon.evtx#549609": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Persistence/evasion_persis_hidden_run_keyvalue_sysmon_13.evtx#306346": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "724ea201-6514-4f38-9739-e5973c34f49a",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_bypass_uac_using_silentcleanup_task.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Privilege Escalation/Sysmon_UACME_34.evtx#5132": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Privilege Escalation/Sysmon_UACME_34.evtx#5135": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Privilege Escalation/Sysmon_uacme_58.evtx#143174": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "d88d0ab2-e696-4d40-a2ed-9790064e66b3",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_persistence_ie.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "AutomatedTestingTools/Malware/rundll32_hollowing_wermgr_masquerading.evtx#422736": [
+    "chainsaw"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "8ac03a65-6c84-4116-acad-dc1558ff7a77",
+  "rule_path": "rules/windows/sysmon/sysmon_config_modification.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Credential Access/CA_PetiPotam_etw_rpc_efsr_5_6.evtx#22545": [
+    "evaluator",
+    "chainsaw"
+   ],
+   "Credential Access/CA_PetiPotam_etw_rpc_efsr_5_6.evtx#30659": [
+    "evaluator",
+    "chainsaw"
+   ],
+   "Credential Access/babyshark_mimikatz_powershell.evtx#1": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Credential Access/babyshark_mimikatz_powershell.evtx#7": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "e6e88853-5f20-4c4a-8d26-cd469fd8d31f",
+  "rule_path": "rules/windows/builtin/application/esent/win_esent_ntdsutil_abuse.yml",
+  "in_scope": true,
+  "config": "production",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Credential Access/dc_applog_ntdsutil_dfir_325_326_327.evtx#1969": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/dc_applog_ntdsutil_dfir_325_326_327.evtx#1970": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/dc_applog_ntdsutil_dfir_325_326_327.evtx#1971": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/dc_applog_ntdsutil_dfir_325_326_327.evtx#1972": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "94dc4390-6b7c-4784-8ffc-335334404650",
+  "rule_path": "rules/windows/builtin/application/esent/win_esent_ntdsutil_abuse_susp_location.yml",
+  "in_scope": true,
+  "config": "production",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Credential Access/dc_applog_ntdsutil_dfir_325_326_327.evtx#1970": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "5594e67a-7f92-4a04-b65d-1a42fd824a60",
+  "rule_path": "rules/windows/builtin/application/msiinstaller/win_msi_install_from_web.yml",
+  "in_scope": true,
+  "config": "production",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Execution/rogue_msi_url_1040_1042.evtx#3734": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Execution/rogue_msi_url_1040_1042.evtx#3735": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "7f103213-a04e-4d59-8261-213dddf22314",
+  "rule_path": "rules/windows/builtin/application/mssqlserver/win_mssql_xp_cmdshell_audit_log.yml",
+  "in_scope": true,
+  "config": "production",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Lateral Movement/LM_xp_cmdshell_MSSQL_Events.evtx#9693": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "d08dd86f-681e-4a00-a92c-1db218754417",
+  "rule_path": "rules/windows/builtin/application/mssqlserver/win_mssql_xp_cmdshell_change.yml",
+  "in_scope": true,
+  "config": "production",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Defense Evasion/DE_xp_cmdshell_enabled_MSSQL_EID_15457.evtx#9692": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Defense Evasion/DE_xp_cmdshell_enabled_MSSQL_EID_15457.evtx#9696": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Lateral Movement/LM_xp_cmdshell_MSSQL_Events.evtx#9692": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Lateral Movement/LM_xp_cmdshell_MSSQL_Events.evtx#9696": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "8eef149c-bd26-49f2-9e5a-9b00e3af499b",
+  "rule_path": "rules/windows/builtin/security/account_management/win_security_pass_the_hash_2.yml",
+  "in_scope": true,
+  "config": "production",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Credential Access/tutto_malseclogon.evtx#329918": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Lateral Movement/ImpersonateUser-via local Pass The Hash Sysmon and Security.evtx#321446": [
+    "hayabusa"
+   ],
+   "Lateral Movement/LM_4624_mimikatz_sekurlsa_pth_source_machine.evtx#432903": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Privilege Escalation/Invoke_TokenDuplication_UAC_Bypass4624.evtx#10113": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "Privilege Escalation/privexchange_dirkjan.evtx#65969": [
+    "hayabusa"
+   ],
+   "Privilege Escalation/security_4624_4673_token_manip.evtx#18206": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "749c9f5e-b353-4b90-a9c1-05243357ca4b",
+  "rule_path": "rules/windows/builtin/security/account_management/win_security_susp_privesc_kerberos_relay_over_ldap.yml",
+  "in_scope": true,
+  "config": "production",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Privilege Escalation/privesc_KrbRelayUp_windows_4624.evtx#72742": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
+  "rule_path": "rules/windows/builtin/security/win_security_audit_log_cleared.yml",
+  "in_scope": true,
+  "config": "production",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Command and Control/DE_RDP_Tunnel_5156.evtx#227693": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/ACL_ForcePwd_SPNAdd_User_Computer_Accounts.evtx#198238040": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/CA_chrome_firefox_opera_4663.evtx#4987": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/Zerologon_VoidSec_CVE-2020-1472_4626_LT3_Anonym_follwedby_4742_DC_Anony_DC.evtx#768617": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/kerberos_pwd_spray_4771.evtx#887106": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/remote_pwd_reset_rpc_mimikatz_postzerologon_target_DC.evtx#769792": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/remote_sam_registry_access_via_backup_operator_priv.evtx#2988521": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Defense Evasion/DE_1102_security_log_cleared.evtx#452811": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Defense Evasion/DE_suspicious_remote_eventlog_svc_access_5145.evtx#772605": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Discovery/dicovery_4661_net_group_domain_admins_target.evtx#565591": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Discovery/discovery_bloodhound.evtx#32853": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Discovery/discovery_psloggedon.evtx#32950": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Lateral Movement/LM_4624_mimikatz_sekurlsa_pth_source_machine.evtx#432901": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Lateral Movement/LM_ScheduledTask_ATSVC_target_host.evtx#566821": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Lateral Movement/LM_WMIC_4648_rpcss.evtx#433307": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Lateral Movement/net_share_drive_5142.evtx#6272": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Lateral Movement/remote task update 4624 4702 same logonid.evtx#2171289": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Persistence/DACL_DCSync_Right_Powerview_ Add-DomainObjectAcl.evtx#198242566": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Persistence/persistence_security_dcshadow_4742.evtx#203050": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Privilege Escalation/4624 LT3 AnonymousLogon Localhost - JuicyPotato.evtx#25048": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Privilege Escalation/NTLM2SelfRelay-med0x2e-security_4624_4688.evtx#21365": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Privilege Escalation/Runas_4624_4648_Webshell_CreateProcessAsUserA.evtx#161471": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Privilege Escalation/samaccount_spoofing_CVE-2021-42287_CVE-2021-42278_DC_securitylogs.evtx#2982081": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Privilege Escalation/security_4624_4673_token_manip.evtx#18195": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "5bed80b6-b3e8-428e-a3ae-d3c757589e41",
+  "rule_path": "rules/windows/builtin/security/win_security_rdp_reverse_tunnel.yml",
+  "in_scope": true,
+  "config": "production",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Command and Control/DE_RDP_Tunnel_5156.evtx#227727": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Command and Control/DE_RDP_Tunnel_5156.evtx#227728": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Command and Control/DE_RDP_Tunnel_5156.evtx#227741": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Command and Control/DE_RDP_Tunnel_5156.evtx#227742": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "614cf376-6651-47c4-9dcc-6b9527f749f4",
+  "rule_path": "rules/windows/builtin/security/win_security_susp_scheduled_task_update.yml",
+  "in_scope": true,
+  "config": "production",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Lateral Movement/remote task update 4624 4702 same logonid.evtx#2171293": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "0dba975d-a193-4ed1-a067-424df57570d1",
+  "rule_path": "rules/windows/network_connection/net_connection_win_certutil_initiated_connection.yml",
+  "in_scope": true,
+  "config": "production",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "AutomatedTestingTools/panache_sysmon_vs_EDRTestingScript.evtx#4981": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/panache_sysmon_vs_EDRTestingScript.evtx#4982": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "ed74fe75-7594-4b4b-ae38-e38e3fd2eb23",
+  "rule_path": "rules/windows/network_connection/net_connection_win_rdp_outbound_over_non_standard_tools.yml",
+  "in_scope": true,
+  "config": "production",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Command and Control/DE_sysmon-3-rdp-tun.evtx#1940901": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Command and Control/DE_sysmon-3-rdp-tun.evtx#1940919": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Command and Control/tunna_iis_rdp_smb_tunneling_sysmon_3.evtx#35076": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Command and Control/tunna_iis_rdp_smb_tunneling_sysmon_3.evtx#35079": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": [
+   "Command and Control/DE_RDP_Tunnel_5156.evtx#227727",
+   "Command and Control/DE_RDP_Tunnel_5156.evtx#227741"
+  ]
+ },
+ {
+  "rule_id": "c7e91a02-d771-4a6d-a700-42587e0b1095",
+  "rule_path": "rules/windows/network_connection/net_connection_win_regsvr32_network_activity.yml",
+  "in_scope": true,
+  "config": "production",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#4043": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "AutomatedTestingTools/panache_sysmon_vs_EDRTestingScript.evtx#4934": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Execution/exec_sysmon_lobin_regsvr32_sct.evtx#16794": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Persistence/sysmon_1_persist_bitsjob_SetNotifyCmdLine.evtx#17289": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "5ef9853e-4d0e-4a70-846f-a9ca37d876da",
+  "rule_path": "rules/windows/process_access/proc_access_win_lsass_memdump.yml",
+  "in_scope": true,
+  "config": "production",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "Credential Access/ppl_bypass_ppldump_knowdll_hijack_sysmon_security.evtx#564598": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_10_11_lsass_memdump.evtx#4434": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_10_11_lsass_memdump.evtx#4442": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238374": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238376": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238379": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238381": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238382": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238384": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238386": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238388": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_2x10_lsass_with_different_pid_RtlCreateProcessReflection.evtx#2125126": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_2x10_lsass_with_different_pid_RtlCreateProcessReflection.evtx#2125128": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_2x10_lsass_with_different_pid_RtlCreateProcessReflection.evtx#2125129": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Credential Access/sysmon_3_10_Invoke-Mimikatz_hosted_Github.evtx#10273": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "Defense Evasion/DE_BYOV_Zam64_CA_Memdump_sysmon_7_10.evtx#20013": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "0f06a3a5-6a09-413f-8743-e6cf35561297",
+  "rule_path": "rules/windows/wmi_event/sysmon_wmi_event_subscription.yml",
+  "in_scope": true,
+  "config": "production",
+  "engines": [
+   "evaluator",
+   "chainsaw"
+  ],
+  "events": {
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#4055": [
+    "evaluator"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#4056": [
+    "evaluator"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#4057": [
+    "evaluator"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#4058": [
+    "evaluator"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#4059": [
+    "evaluator"
+   ],
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#4060": [
+    "evaluator"
+   ],
+   "Persistence/sysmon_20_21_1_CommandLineEventConsumer.evtx#16111": [
+    "evaluator"
+   ],
+   "Persistence/sysmon_20_21_1_CommandLineEventConsumer.evtx#16112": [
+    "evaluator"
+   ],
+   "Persistence/sysmon_20_21_1_CommandLineEventConsumer.evtx#16115": [
+    "evaluator"
+   ],
+   "Persistence/sysmon_20_21_1_CommandLineEventConsumer.evtx#16120": [
+    "evaluator"
+   ],
+   "Persistence/sysmon_20_21_1_CommandLineEventConsumer.evtx#16121": [
+    "evaluator"
+   ],
+   "Persistence/sysmon_20_21_1_CommandLineEventConsumer.evtx#16123": [
+    "evaluator"
+   ],
+   "Persistence/wmighost_sysmon_20_21_1.evtx#7195": [
+    "evaluator"
+   ],
+   "Persistence/wmighost_sysmon_20_21_1.evtx#7197": [
+    "evaluator"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ }
+]

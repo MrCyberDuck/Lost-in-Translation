@@ -1,0 +1,1381 @@
+[
+ {
+  "rule_id": "7595ba94-cf3b-4471-aa03-4f6baa9e5fad",
+  "rule_path": "rules/windows/builtin/security/win_security_susp_scheduled_task_delete_or_disable.yml",
+  "evtx": "regression_data/rules/windows/builtin/security/win_security_susp_scheduled_task_delete_or_disable/7595ba94-cf3b-4471-aa03-4f6baa9e5fad.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "9e3cb244-bdb8-4632-8c90-6079c8f4f16d",
+  "rule_path": "rules/windows/builtin/taskscheduler/win_taskscheduler_susp_schtasks_delete_or_disable.yml",
+  "evtx": "regression_data/rules/windows/builtin/taskscheduler/win_taskscheduler_susp_schtasks_delete_or_disable/9e3cb244-bdb8-4632-8c90-6079c8f4f16d.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "d4f1a2b3-7c8e-4d5f-b6a9-1e0c2d3f4e5b",
+  "rule_path": "rules/windows/builtin/wmi/win_wmi_activity_nteventlogfile_cleareventlog.yml",
+  "evtx": "regression_data/rules/windows/builtin/wmi/win_wmi_activity_nteventlogfile_cleareventlog/d4f1a2b3-7c8e-4d5f-b6a9-1e0c2d3f4e5b.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "fed85bf9-e075-4280-9159-fbe8a023d6fa",
+  "rule_path": "rules/windows/file/file_event/file_event_win_advanced_ip_scanner.yml",
+  "evtx": "regression_data/rules/windows/file/file_event/file_event_win_advanced_ip_scanner/fed85bf9-e075-4280-9159-fbe8a023d6fa.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "0b9ad457-2554-44c1-82c2-d56a99c42377",
+  "rule_path": "rules/windows/file/file_event/file_event_win_anydesk_artefact.yml",
+  "evtx": "regression_data/rules/windows/file/file_event/file_event_win_anydesk_artefact/0b9ad457-2554-44c1-82c2-d56a99c42377.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "65236ec7-ace0-4f0c-82fd-737b04fd4dcb",
+  "rule_path": "rules/windows/file/file_event/file_event_win_create_evtx_non_common_locations.yml",
+  "evtx": "regression_data/rules/windows/file/file_event/file_event_win_create_evtx_non_common_locations/65236ec7-ace0-4f0c-82fd-737b04fd4dcb.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "df6ecb8b-7822-4f4b-b412-08f524b4576c",
+  "rule_path": "rules/windows/file/file_event/file_event_win_create_non_existent_dlls.yml",
+  "evtx": "regression_data/rules/windows/file/file_event/file_event_win_create_non_existent_dlls/df6ecb8b-7822-4f4b-b412-08f524b4576c.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "ee63c85c-6d51-4d12-ad09-04e25877a947",
+  "rule_path": "rules/windows/file/file_event/file_event_win_creation_new_shim_database.yml",
+  "evtx": "regression_data/rules/windows/file/file_event/file_event_win_creation_new_shim_database/ee63c85c-6d51-4d12-ad09-04e25877a947.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "13c02350-4177-4e45-ac17-cf7ca628ff5e",
+  "rule_path": "rules/windows/file/file_event/file_event_win_creation_system_dll_files.yml",
+  "evtx": "regression_data/rules/windows/file/file_event/file_event_win_creation_system_dll_files/13c02350-4177-4e45-ac17-cf7ca628ff5e.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "d5866ddf-ce8f-4aea-b28e-d96485a20d3d",
+  "rule_path": "rules/windows/file/file_event/file_event_win_creation_system_file.yml",
+  "evtx": "regression_data/rules/windows/file/file_event/file_event_win_creation_system_file/d5866ddf-ce8f-4aea-b28e-d96485a20d3d.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "8fbf3271-1ef6-4e94-8210-03c2317947f6",
+  "rule_path": "rules/windows/file/file_event/file_event_win_cred_dump_tools_dropped_files.yml",
+  "evtx": "regression_data/rules/windows/file/file_event/file_event_win_cred_dump_tools_dropped_files/8fbf3271-1ef6-4e94-8210-03c2317947f6.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "aba15bdd-657f-422a-bab3-ac2d2a0d6f1c",
+  "rule_path": "rules/windows/file/file_event/file_event_win_dump_file_susp_creation.yml",
+  "evtx": "regression_data/rules/windows/file/file_event/file_event_win_dump_file_susp_creation/aba15bdd-657f-422a-bab3-ac2d2a0d6f1c.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "efc21479-9e83-41da-8cf1-122e06ba8db3",
+  "rule_path": "rules/windows/file/file_event/file_event_win_hktl_netexec_file_indicators.yml",
+  "evtx": "regression_data/rules/windows/file/file_event/file_event_win_hktl_netexec_file_indicators/efc21479-9e83-41da-8cf1-122e06ba8db3.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "f0540f7e-2db3-4432-b9e0-3965486744bc",
+  "rule_path": "rules/windows/file/file_event/file_event_win_susp_legitimate_app_dropping_exe.yml",
+  "evtx": "regression_data/rules/windows/file/file_event/file_event_win_susp_legitimate_app_dropping_exe/f0540f7e-2db3-4432-b9e0-3965486744bc.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "1cf465a1-2609-4c15-9b66-c32dbe4bfd67",
+  "rule_path": "rules/windows/file/file_event/file_event_win_susp_legitimate_app_dropping_in_uncommon_location.yml",
+  "evtx": "regression_data/rules/windows/file/file_event/file_event_win_susp_legitimate_app_dropping_in_uncommon_location/1cf465a1-2609-4c15-9b66-c32dbe4bfd67.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "7d604714-e071-49ff-8726-edeb95a70679",
+  "rule_path": "rules/windows/file/file_event/file_event_win_susp_legitimate_app_dropping_script.yml",
+  "evtx": "regression_data/rules/windows/file/file_event/file_event_win_susp_legitimate_app_dropping_script/7d604714-e071-49ff-8726-edeb95a70679.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "3215aa19-f060-4332-86d5-5602511f3ca8",
+  "rule_path": "rules/windows/file/file_event/file_event_win_susp_lnk_double_extension.yml",
+  "evtx": "regression_data/rules/windows/file/file_event/file_event_win_susp_lnk_double_extension/3215aa19-f060-4332-86d5-5602511f3ca8.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "b447f7de-1e53-4cbf-bfb4-f1f6d0b04e4e",
+  "rule_path": "rules/windows/file/file_event/file_event_win_susp_public_folder_extension.yml",
+  "evtx": "regression_data/rules/windows/file/file_event/file_event_win_susp_public_folder_extension/b447f7de-1e53-4cbf-bfb4-f1f6d0b04e4e.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "cd8b36ac-8e4a-4c2f-a402-a29b8fbd5bca",
+  "rule_path": "rules/windows/file/file_event/file_event_win_susp_recycle_bin_fake_exec.yml",
+  "evtx": "regression_data/rules/windows/file/file_event/file_event_win_susp_recycle_bin_fake_exec/cd8b36ac-8e4a-4c2f-a402-a29b8fbd5bca.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "979baf41-ca44-4540-9d0c-4fcef3b5a3a4",
+  "rule_path": "rules/windows/file/file_event/file_event_win_susp_right_to_left_override_extension_spoofing.yml",
+  "evtx": "regression_data/rules/windows/file/file_event/file_event_win_susp_right_to_left_override_extension_spoofing/979baf41-ca44-4540-9d0c-4fcef3b5a3a4.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "69ca12af-119d-44ed-b50f-a47af0ebc364",
+  "rule_path": "rules/windows/file/file_event/file_event_win_taskmgr_lsass_dump.yml",
+  "evtx": "regression_data/rules/windows/file/file_event/file_event_win_taskmgr_lsass_dump/69ca12af-119d-44ed-b50f-a47af0ebc364.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "2b140a5c-dc02-4bb8-b6b1-8bdb45714cde",
+  "rule_path": "rules/windows/image_load/image_load_side_load_cpl_from_non_system_location.yml",
+  "evtx": "regression_data/rules/windows/image_load/image_load_side_load_cpl_from_non_system_location/2b140a5c-dc02-4bb8-b6b1-8bdb45714cde.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "d7a63acb-1284-49bc-bfea-7771146c8b1c",
+  "rule_path": "rules/windows/image_load/image_load_side_load_vcruntime140.yml",
+  "evtx": "regression_data/rules/windows/image_load/image_load_side_load_vcruntime140/d7a63acb-1284-49bc-bfea-7771146c8b1c.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "416bc4a2-7217-4519-8dc7-c3271817f1d5",
+  "rule_path": "rules/windows/image_load/image_load_win_susp_dbgcore_dbghelp_load.yml",
+  "evtx": "regression_data/rules/windows/image_load/image_load_win_susp_dbgcore_dbghelp_load/416bc4a2-7217-4519-8dc7-c3271817f1d5.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "9f5c1d59-33be-4e60-bcab-85d2f566effd",
+  "rule_path": "rules/windows/process_access/proc_access_win_susp_dbgcore_dbghelp_load.yml",
+  "evtx": "regression_data/rules/windows/process_access/proc_access_win_susp_dbgcore_dbghelp_load/9f5c1d59-33be-4e60-bcab-85d2f566effd.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "387df17d-3b04-448f-8669-9e7fd5e5fd8c",
+  "rule_path": "rules/windows/process_access/proc_access_win_werfaultsecure_msmpeng_access.yml",
+  "evtx": "regression_data/rules/windows/process_access/proc_access_win_werfaultsecure_msmpeng_access/387df17d-3b04-448f-8669-9e7fd5e5fd8c.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "7dbbcac2-57a0-45ac-b306-ff30a8bd2981",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_amsi_registry_tampering.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_amsi_registry_tampering/7dbbcac2-57a0-45ac-b306-ff30a8bd2981.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "d7b81144-b866-48a4-9bcc-275dc69d870e",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_autologger_session_registry_modification.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_autologger_session_registry_modification/d7b81144-b866-48a4-9bcc-275dc69d870e.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "d059842b-6b9d-4ed1-b5c3-5b89143c6ede",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_bitsadmin_download.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_bitsadmin_download/d059842b-6b9d-4ed1-b5c3-5b89143c6ede.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "99c840f2-2012-46fd-9141-c761987550ef",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_bitsadmin_download_direct_ip.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_bitsadmin_download_direct_ip/99c840f2-2012-46fd-9141-c761987550ef.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "8518ed3d-f7c9-4601-a26c-f361a4256a0c",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_bitsadmin_download_file_sharing_domains.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_bitsadmin_download_file_sharing_domains/8518ed3d-f7c9-4601-a26c-f361a4256a0c.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "5b80a791-ad9b-4b75-bcc1-ad4e1e89c200",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_bitsadmin_download_susp_extensions.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_bitsadmin_download_susp_extensions/5b80a791-ad9b-4b75-bcc1-ad4e1e89c200.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "2ddef153-167b-4e89-86b6-757a9e65dcac",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_bitsadmin_download_susp_targetfolder.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_bitsadmin_download_susp_targetfolder/2ddef153-167b-4e89-86b6-757a9e65dcac.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "0e8cfe08-02c9-4815-a2f8-0d157b7ed33e",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_browsers_chromium_headless_file_download.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_browsers_chromium_headless_file_download/0e8cfe08-02c9-4815-a2f8-0d157b7ed33e.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "88d6e60c-759d-4ac1-a447-c0f1466c2d21",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_browsers_chromium_load_extension.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_browsers_chromium_load_extension/88d6e60c-759d-4ac1-a447-c0f1466c2d21.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "1c526788-0abe-4713-862f-b520da5e5316",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_browsers_chromium_mockbin_abuse.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_browsers_chromium_mockbin_abuse/1c526788-0abe-4713-862f-b520da5e5316.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "27ba3207-dd30-4812-abbf-5d20c57d474e",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_browsers_chromium_susp_load_extension.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_browsers_chromium_susp_load_extension/27ba3207-dd30-4812-abbf-5d20c57d474e.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "94771a71-ba41-4b6e-a757-b531372eaab6",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_browsers_inline_file_download.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_browsers_inline_file_download/94771a71-ba41-4b6e-a757-b531372eaab6.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "62f7c9bf-9135-49b2-8aeb-1e54a6ecc13c",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_browsers_tor_execution.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_browsers_tor_execution/62f7c9bf-9135-49b2-8aeb-1e54a6ecc13c.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "d2125259-ddea-4c1c-9c22-977eb5b29cf0",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_certutil_certificate_installation.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_certutil_certificate_installation/d2125259-ddea-4c1c-9c22-977eb5b29cf0.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "cc9cbe82-7bc0-4ef5-bc23-bbfb83947be7",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_certutil_decode.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_certutil_decode/cc9cbe82-7bc0-4ef5-bc23-bbfb83947be7.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "19b08b1c-861d-4e75-a1ef-ea0c1baf202b",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_certutil_download.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_certutil_download/19b08b1c-861d-4e75-a1ef-ea0c1baf202b.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "13e6fe51-d478-4c7e-b0f2-6da9b400a829",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_certutil_download_direct_ip.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_certutil_download_direct_ip/13e6fe51-d478-4c7e-b0f2-6da9b400a829.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "42a5f1e7-9603-4f6d-97ae-3f37d130d794",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_certutil_download_file_sharing_domains.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_certutil_download_file_sharing_domains/42a5f1e7-9603-4f6d-97ae-3f37d130d794.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "e62a9f0c-ca1e-46b2-85d5-a6da77f86d1a",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_certutil_encode.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_certutil_encode/e62a9f0c-ca1e-46b2-85d5-a6da77f86d1a.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "ea0cdc3e-2239-4f26-a947-4e8f8224e464",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_certutil_encode_susp_extensions.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_certutil_encode_susp_extensions/ea0cdc3e-2239-4f26-a947-4e8f8224e464.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "82a6714f-4899-4f16-9c1e-9a333544d4c3",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_certutil_encode_susp_location.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_certutil_encode_susp_location/82a6714f-4899-4f16-9c1e-9a333544d4c3.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "3ffd6f51-e6c1-47b7-94b4-c1e61d4117c5",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_certutil_export_pfx.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_certutil_export_pfx/3ffd6f51-e6c1-47b7-94b4-c1e61d4117c5.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "6c6d9280-e6d0-4b9d-80ac-254701b64916",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_certutil_ntlm_coercion.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_certutil_ntlm_coercion/6c6d9280-e6d0-4b9d-80ac-254701b64916.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "7090adee-82e2-4269-bd59-80691e7c6338",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_chcp_codepage_lookup.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_chcp_codepage_lookup/7090adee-82e2-4269-bd59-80691e7c6338.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "c7942406-33dd-4377-a564-0f62db0593a3",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_chcp_codepage_switch.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_chcp_codepage_switch/c7942406-33dd-4377-a564-0f62db0593a3.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "4b046706-5789-4673-b111-66f25fe99534",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_cipher_overwrite_deleted_data.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_cipher_overwrite_deleted_data/4b046706-5789-4673-b111-66f25fe99534.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "ddeff553-5233-4ae9-bbab-d64d2bd634be",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_clip_execution.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_clip_execution/ddeff553-5233-4ae9-bbab-d64d2bd634be.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "3d3aa6cd-6272-44d6-8afc-7e88dfef7061",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_cmd_assoc_execution.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_cmd_assoc_execution/3d3aa6cd-6272-44d6-8afc-7e88dfef7061.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "7c9340a9-e2ee-4e43-94c5-c54ebbea1006",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_cmd_dir_execution.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_cmd_dir_execution/7c9340a9-e2ee-4e43-94c5-c54ebbea1006.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "5a6b7c8d-9e0f-1a2b-3c4d-5e6f7a8b9c0d",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_cmd_launched_with_hidden_start_flag.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_cmd_launched_with_hidden_start_flag/5a6b7c8d-9e0f-1a2b-3c4d-5e6f7a8b9c0d.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "e9b61244-893f-427c-b287-3e708f321c6b",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_cmd_mklink_osk_cmd.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_cmd_mklink_osk_cmd/e9b61244-893f-427c-b287-3e708f321c6b.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "41ca393d-538c-408a-ac27-cf1e038be80c",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_cmd_rmdir_execution.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_cmd_rmdir_execution/41ca393d-538c-408a-ac27-cf1e038be80c.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "b1ec66c6-f4d1-4b5c-96dd-af28ccae7727",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_cmdkey_adding_generic_creds.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_cmdkey_adding_generic_creds/b1ec66c6-f4d1-4b5c-96dd-af28ccae7727.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "07f8bdc2-c9b3-472a-9817-5a670b872f53",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_cmdkey_recon.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_cmdkey_recon/07f8bdc2-c9b3-472a-9817-5a670b872f53.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "056c7317-9a09-4bd4-9067-d051312752ea",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_conhost_headless_powershell.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_conhost_headless_powershell/056c7317-9a09-4bd4-9067-d051312752ea.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "c17d47b7-dcd6-4109-87eb-d1817bd4cbc9",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_credential_guard_registry_tampering.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_credential_guard_registry_tampering/c17d47b7-dcd6-4109-87eb-d1817bd4cbc9.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "5a6e1e16-07de-48d8-8aae-faa766c05e88",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_curl_cookie_hijacking.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_curl_cookie_hijacking/5a6e1e16-07de-48d8-8aae-faa766c05e88.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "85de1f22-d189-44e4-8239-dc276b45379b",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_curl_custom_user_agent.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_curl_custom_user_agent/85de1f22-d189-44e4-8239-dc276b45379b.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "9cc85849-3b02-4cb5-b371-3a1ff54f2218",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_curl_download_direct_ip_exec.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_curl_download_direct_ip_exec/9cc85849-3b02-4cb5-b371-3a1ff54f2218.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "5cb299fc-5fb1-4d07-b989-0644c68b6043",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_curl_download_direct_ip_susp_extensions.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_curl_download_direct_ip_susp_extensions/5cb299fc-5fb1-4d07-b989-0644c68b6043.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "56454143-524f-49fb-b1c6-3fb8b1ad41fb",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_curl_download_susp_file_sharing_domains.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_curl_download_susp_file_sharing_domains/56454143-524f-49fb-b1c6-3fb8b1ad41fb.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "cb9cc1d1-e84e-4bdc-b7ad-c31b1b7908ec",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_curl_insecure_connection.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_curl_insecure_connection/cb9cc1d1-e84e-4bdc-b7ad-c31b1b7908ec.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "2c1486f5-02e8-4f86-9099-b97f2da4ed77",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_curl_insecure_proxy_or_doh.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_curl_insecure_proxy_or_doh/2c1486f5-02e8-4f86-9099-b97f2da4ed77.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "aa6f6ea6-0676-40dd-b510-6e46f02d8867",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_curl_local_file_read.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_curl_local_file_read/aa6f6ea6-0676-40dd-b510-6e46f02d8867.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "916eb839-895e-47f8-99ee-3008bf377a3e",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_curl_ntlm_hash_leak_attempt.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_curl_ntlm_hash_leak_attempt/916eb839-895e-47f8-99ee-3008bf377a3e.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "e218595b-bbe7-4ee5-8a96-f32a24ad3468",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_curl_susp_download.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_curl_susp_download/e218595b-bbe7-4ee5-8a96-f32a24ad3468.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "85f520e7-6f5e-43ca-874c-222e5bf9c0de",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_devcon_disable_vmci_driver.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_devcon_disable_vmci_driver/85f520e7-6f5e-43ca-874c-222e5bf9c0de.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "b4dc61f5-6cce-468e-a608-b48b469feaa2",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_dirlister_execution.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_dirlister_execution/b4dc61f5-6cce-468e-a608-b48b469feaa2.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "0022869c-49f7-4ff2-ba03-85ac42ddac58",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_discovery_via_reg_queries.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_discovery_via_reg_queries/0022869c-49f7-4ff2-ba03-85ac42ddac58.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "43e32da2-fdd0-4156-90de-50dfd62636f9",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_dism_remove.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_dism_remove/43e32da2-fdd0-4156-90de-50dfd62636f9.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "9fc3072c-dc8f-4bf7-b231-18950000fadd",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_driverquery_recon.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_driverquery_recon/9fc3072c-dc8f-4bf7-b231-18950000fadd.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "a20def93-0709-4eae-9bd2-31206e21e6b2",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_driverquery_usage.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_driverquery_usage/a20def93-0709-4eae-9bd2-31206e21e6b2.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "3bad990e-4848-4a78-9530-b427d854aac0",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_dsquery_domain_trust_discovery.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_dsquery_domain_trust_discovery/3bad990e-4848-4a78-9530-b427d854aac0.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "7124aebe-4cd7-4ccb-8df0-6d6b93c96795",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_dtrace_kernel_dump.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_dtrace_kernel_dump/7124aebe-4cd7-4ccb-8df0-6d6b93c96795.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "c3d76afc-93df-461e-8e67-9b2bad3f2ac4",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_explorer_folder_shortcut_via_shell_binary.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_explorer_folder_shortcut_via_shell_binary/c3d76afc-93df-461e-8e67-9b2bad3f2ac4.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "91a2c315-9ee6-4052-a853-6f6a8238f90d",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_findstr_gpp_passwords.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_findstr_gpp_passwords/91a2c315-9ee6-4052-a853-6f6a8238f90d.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "fe63010f-8823-4864-a96b-a7b4a0f7b929",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_findstr_lsass.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_findstr_lsass/fe63010f-8823-4864-a96b-a7b4a0f7b929.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "47e4bab7-c626-47dc-967b-255608c9a920",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_findstr_recon_everyone.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_findstr_recon_everyone/47e4bab7-c626-47dc-967b-255608c9a920.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "ccb5742c-c248-4982-8c5c-5571b9275ad3",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_findstr_recon_pipe_output.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_findstr_recon_pipe_output/ccb5742c-c248-4982-8c5c-5571b9275ad3.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "4fe074b4-b833-4081-8f24-7dcfeca72b42",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_findstr_security_keyword_lookup.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_findstr_security_keyword_lookup/4fe074b4-b833-4081-8f24-7dcfeca72b42.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "af491bca-e752-4b44-9c86-df5680533dbc",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_finger_execution.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_finger_execution/af491bca-e752-4b44-9c86-df5680533dbc.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "5bac7a56-da88-4c27-922e-c81e113b20cb",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_github_self_hosted_runner.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_github_self_hosted_runner/5bac7a56-da88-4c27-922e-c81e113b20cb.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "e56d3073-83ff-4021-90fe-c658e0709e72",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_gpresult_execution.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_gpresult_execution/e56d3073-83ff-4021-90fe-c658e0709e72.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "68c8acb4-1b60-4890-8e82-3ddf7a6dba84",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_hh_chm_execution.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_hh_chm_execution/68c8acb4-1b60-4890-8e82-3ddf7a6dba84.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "c598cc0c-9e70-4852-b9eb-8921af79f598",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_hktl_edr_freeze.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_hktl_edr_freeze/c598cc0c-9e70-4852-b9eb-8921af79f598.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "7638e5fe-600c-4289-a968-f49dd537ec7d",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_hktl_netexec.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_hktl_netexec/7638e5fe-600c-4289-a968-f49dd537ec7d.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "589ac73f-8e12-409c-964e-31a2f5775ae2",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_hktl_wsass.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_hktl_wsass/589ac73f-8e12-409c-964e-31a2f5775ae2.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "6225c53a-a96e-4235-b28f-8d7997cd96eb",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_hvci_registry_tampering.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_hvci_registry_tampering/6225c53a-a96e-4235-b28f-8d7997cd96eb.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "762bb580-79b4-40f4-8b9e-9349ce1710f4",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_sftp_proxy_command_execution.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_lolbin_sftp_indirect_cmd_execution/762bb580-79b4-40f4-8b9e-9349ce1710f4.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "da92713f-ca2d-4fab-8320-098013d3f43a",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_systemsettingsadminflows_defender_disable.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_lolbin_systemsettingsadminflows_defender_disable/da92713f-ca2d-4fab-8320-098013d3f43a.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "afa71271-6a97-4e47-810f-83120fb1a4ce",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_node_new_agent_skills_installed.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_node_new_agent_skills_installed/afa71271-6a97-4e47-810f-83120fb1a4ce.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "6385697e-9f1b-40bd-8817-f4a91f40508e",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_powershell_base64_invoke.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_powershell_base64_invoke/6385697e-9f1b-40bd-8817-f4a91f40508e.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "2fcda7e2-8c57-4904-86ac-37fc3157e09d",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_print_dump_sensitive_files.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_print_dump_sensitive_files/2fcda7e2-8c57-4904-86ac-37fc3157e09d.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "455b9d50-15a1-4b99-853f-8d37655a4c1b",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_pua_adfind_enumeration.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_pua_adfind_enumeration/455b9d50-15a1-4b99-853f-8d37655a4c1b.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "514e7e3e-b3b4-4a67-af60-be20f139198b",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_pua_adfind_execution.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_pua_adfind_execution/514e7e3e-b3b4-4a67-af60-be20f139198b.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "9a132afa-654e-11eb-ae93-0242ac130002",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_pua_adfind_susp_usage.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_pua_adfind_susp_usage/9a132afa-654e-11eb-ae93-0242ac130002.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "bef37fa2-f205-4a7b-b484-0759bfd5f86f",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_pua_advanced_ip_scanner.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_pua_advanced_ip_scanner/bef37fa2-f205-4a7b-b484-0759bfd5f86f.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "54773c5f-f1cc-4703-9126-2f797d96a69d",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_pua_advanced_port_scanner.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_pua_advanced_port_scanner/54773c5f-f1cc-4703-9126-2f797d96a69d.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "d2b749ee-4225-417e-b20e-a8d2193cbb84",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_pua_advancedrun.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_pua_advancedrun/d2b749ee-4225-417e-b20e-a8d2193cbb84.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "fa00b701-44c6-4679-994d-5a18afa8a707",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_pua_advancedrun_priv_user.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_pua_advancedrun_priv_user/fa00b701-44c6-4679-994d-5a18afa8a707.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "e76ca062-4de0-4d79-8d90-160a0d335eca",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_pua_kdu_driver_tool.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_pua_kdu_driver_tool/e76ca062-4de0-4d79-8d90-160a0d335eca.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "8a1b2c3d-4e5f-6789-abcd-ef1234567890",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_pua_memprocfs.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_pua_memprocfs/8a1b2c3d-4e5f-6789-abcd-ef1234567890.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "44030449-b0df-4c94-aae1-502359ab28ee",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_pua_trufflehog.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_pua_trufflehog/44030449-b0df-4c94-aae1-502359ab28ee.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "50a0aa3d-ab16-4594-a8aa-5145a6e6792b",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_python_base64_encoded_execution.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_python_base64_encoded_execution/50a0aa3d-ab16-4594-a8aa-5145a6e6792b.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "de587dce-915e-4218-aac4-835ca6af6f70",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_reg_add_run_key.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_reg_add_run_key/de587dce-915e-4218-aac4-835ca6af6f70.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "d7662ff6-9e97-4596-a61d-9839e32dee8d",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_reg_add_safeboot.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_reg_add_safeboot/d7662ff6-9e97-4596-a61d-9839e32dee8d.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "c43a5405-e8e1-4221-9ac9-dbe3fa14e886",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_reg_system_language_discovery.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_reg_system_language_discovery/c43a5405-e8e1-4221-9ac9-dbe3fa14e886.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "7c06ab9b-b1d2-4ba9-b06e-09491ded20d9",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_reg_system_restore_modification.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_reg_system_restore_modification/7c06ab9b-b1d2-4ba9-b06e-09491ded20d9.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "9ec9fb1b-e059-4489-9642-f270c207923d",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_registry_special_accounts_hide_user.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_registry_special_accounts_hide_user/9ec9fb1b-e059-4489-9642-f270c207923d.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "df55196f-f105-44d3-a675-e9dfb6cc2f2b",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_renamed_adfind.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_renamed_adfind/df55196f-f105-44d3-a675-e9dfb6cc2f2b.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "36480ae1-a1cb-4eaa-a0d6-29801d7e9142",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_renamed_binary.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_renamed_binary/36480ae1-a1cb-4eaa-a0d6-29801d7e9142.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "0ba1da6d-b6ce-4366-828c-18826c9de23e",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_renamed_binary_highly_relevant.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_renamed_binary_highly_relevant/0ba1da6d-b6ce-4366-828c-18826c9de23e.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "7530cd3d-7671-43e3-b209-976966f6ea48",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_renamed_curl.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_renamed_curl/7530cd3d-7671-43e3-b209-976966f6ea48.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "277a4393-446c-449a-b0ed-7fdc7795244c",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_renamed_ftp.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_renamed_ftp/277a4393-446c-449a-b0ed-7fdc7795244c.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "bd1c6866-65fc-44b2-be51-5588fcff82b9",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_renamed_msdt.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_renamed_msdt/bd1c6866-65fc-44b2-be51-5588fcff82b9.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "81bcb81b-5b1f-474b-b373-52c871aaa7b1",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_sc_stop_service.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_sc_stop_service/81bcb81b-5b1f-474b-b373-52c871aaa7b1.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "dbc1f800-0fe0-4bc0-9c66-292c2abe3f78",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_schtasks_delete.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_schtasks_delete/dbc1f800-0fe0-4bc0-9c66-292c2abe3f78.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "9ac94dc8-9042-493c-ba45-3b5e7c86b980",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_schtasks_disable.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_schtasks_disable/9ac94dc8-9042-493c-ba45-3b5e7c86b980.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "beaa66d6-aa1b-4e3c-80f5-e0145369bfaf",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_susp_eventlog_content_recon.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_susp_eventlog_content_recon/beaa66d6-aa1b-4e3c-80f5-e0145369bfaf.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "502b42de-4306-40b4-9596-6f590c81f073",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_susp_local_system_owner_account_discovery.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_susp_local_system_owner_account_discovery/502b42de-4306-40b4-9596-6f590c81f073.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "ad691d92-15f2-4181-9aa4-723c74f9ddc3",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_susp_right_to_left_override.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_susp_right_to_left_override/ad691d92-15f2-4181-9aa4-723c74f9ddc3.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "0f60b28c-64dd-4e2c-9a63-5334d3e3a6e6",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_susp_script_interpretor_spawn_credential_scanner.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_susp_script_interpretor_spawn_credential_scanner/0f60b28c-64dd-4e2c-9a63-5334d3e3a6e6.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "e4a6b256-3e47-40fc-89d2-7a477edd6915",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_susp_system_exe_anomaly.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_susp_system_exe_anomaly/e4a6b256-3e47-40fc-89d2-7a477edd6915.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "be58d2e2-06c8-4f58-b666-b99f6dc3b6cd",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_svchost_masqueraded_execution.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_svchost_masqueraded_execution/be58d2e2-06c8-4f58-b666-b99f6dc3b6cd.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "8f3ab69a-aa22-4943-aa58-e0a52fdf6818",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_user_shell_folders_registry_modification.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_user_shell_folders_registry_modification/8f3ab69a-aa22-4943-aa58-e0a52fdf6818.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "22154f0e-5132-4a54-aa78-cc62f6def531",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_vulnerable_driver_blocklist_registry_tampering.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_vulnerable_driver_blocklist_registry_tampering/22154f0e-5132-4a54-aa78-cc62f6def531.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "1f0b4cac-9c81-41f4-95d0-8475ff46b3e2",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_werfaultsecure_abuse.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_werfaultsecure_abuse/1f0b4cac-9c81-41f4-95d0-8475ff46b3e2.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "51cbac1e-eee3-4a90-b1b7-358efb81fa0a",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_wmic_namespace_defender.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_wmic_namespace_defender/51cbac1e-eee3-4a90-b1b7-358efb81fa0a.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "526be59f-a573-4eea-b5f7-f0973207634d",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_wmic_process_creation.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_wmic_process_creation/526be59f-a573-4eea-b5f7-f0973207634d.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "9d7ca793-f6bd-471c-8d0f-11e68b2f0d2f",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_wmic_recon_computersystem.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_wmic_recon_computersystem/9d7ca793-f6bd-471c-8d0f-11e68b2f0d2f.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "3e3ceccd-6c06-48b8-b5ff-ab1d25db8c1d",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_wmic_recon_csproduct.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_wmic_recon_csproduct/3e3ceccd-6c06-48b8-b5ff-ab1d25db8c1d.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "164eda96-11b2-430b-85ff-6a265c15bf32",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_wmic_recon_group.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_wmic_recon_group/164eda96-11b2-430b-85ff-6a265c15bf32.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "dfd2fcb7-8bd5-4daa-b132-5adb61d6ad45",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_wmic_recon_hotfix.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_wmic_recon_hotfix/dfd2fcb7-8bd5-4daa-b132-5adb61d6ad45.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "221b251a-357a-49a9-920a-271802777cc0",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_wmic_recon_process.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_wmic_recon_process/221b251a-357a-49a9-920a-271802777cc0.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "15434e33-5027-4914-88d5-3d4145ec25a9",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_wmic_recon_product.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_wmic_recon_product/15434e33-5027-4914-88d5-3d4145ec25a9.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "e568650b-5dcd-4658-8f34-ded0b1e13992",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_wmic_recon_product_class.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_wmic_recon_product_class/e568650b-5dcd-4658-8f34-ded0b1e13992.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "76f55eaa-d27f-4213-9d45-7b0e4b60bbae",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_wmic_recon_service.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_wmic_recon_service/76f55eaa-d27f-4213-9d45-7b0e4b60bbae.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "9d5a1274-922a-49d0-87f3-8c653483b909",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_wmic_recon_system_info_uncommon.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_wmic_recon_system_info_uncommon/9d5a1274-922a-49d0-87f3-8c653483b909.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "68bcd73b-37ef-49cb-95fc-edc809730be6",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_wmic_recon_unquoted_service_search.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_wmic_recon_unquoted_service_search/68bcd73b-37ef-49cb-95fc-edc809730be6.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "c79da740-5030-45ec-a2e0-479e824a562c",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_wmic_recon_volume.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_wmic_recon_volume/c79da740-5030-45ec-a2e0-479e824a562c.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "7773b877-5abb-4a3e-b9c9-fd0369b59b00",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_wmic_remote_execution.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_wmic_remote_execution/7773b877-5abb-4a3e-b9c9-fd0369b59b00.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "0b7163dc-7eee-4960-af17-c0cd517f92da",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_wmic_service_manipulation.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_wmic_service_manipulation/0b7163dc-7eee-4960-af17-c0cd517f92da.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "c0514f28-fdae-42df-b886-06e2b2bc5b37",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_wmic_service_startup_change.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_wmic_service_startup_change/c0514f28-fdae-42df-b886-06e2b2bc5b37.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "c453ab7a-1f5c-4716-a3b4-dea8135fb43a",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_wmic_stdregprov_reg_modification.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_wmic_stdregprov_reg_modification/c453ab7a-1f5c-4716-a3b4-dea8135fb43a.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "3c89a1e8-0fba-449e-8f1b-8409d6267ec8",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_wmic_susp_process_creation.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_wmic_susp_process_creation/3c89a1e8-0fba-449e-8f1b-8409d6267ec8.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "49d9671b-0a0a-4c09-8280-d215bfd30662",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_wmic_terminate_application.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_wmic_terminate_application/49d9671b-0a0a-4c09-8280-d215bfd30662.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "b53317a0-8acf-4fd1-8de8-a5401e776b96",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_wmic_uninstall_application.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_wmic_uninstall_application/b53317a0-8acf-4fd1-8de8-a5401e776b96.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "847d5ff3-8a31-4737-a970-aeae8fe21765",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_wmic_uninstall_security_products.yml",
+  "evtx": "regression_data/rules/windows/process_creation/proc_creation_win_wmic_uninstall_security_products/847d5ff3-8a31-4737-a970-aeae8fe21765.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "d645ef86-2396-48a1-a2b6-b629ca3f57ff",
+  "rule_path": "rules/windows/registry/registry_delete/registry_delete_disable_credential_guard.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_delete/registry_delete_disable_credential_guard/d645ef86-2396-48a1-a2b6-b629ca3f57ff.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "41d1058a-aea7-4952-9293-29eaaf516465",
+  "rule_path": "rules/windows/registry/registry_delete/registry_delete_removal_amsi_registry_key.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_delete/registry_delete_removal_amsi_registry_key/41d1058a-aea7-4952-9293-29eaaf516465.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "3a9b8c1e-5b2e-4f7a-9d1c-2a7f3b6e1c55",
+  "rule_path": "rules/windows/registry/registry_delete/registry_delete_runmru.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_delete/registry_delete_runmru/3a9b8c1e-5b2e-4f7a-9d1c-2a7f3b6e1c55.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "526cc8bc-1cdc-48ad-8b26-f19bff969cec",
+  "rule_path": "rules/windows/registry/registry_delete/registry_delete_schtasks_hide_task_via_index_value_removal.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_delete/registry_delete_schtasks_hide_task_via_index_value_removal/526cc8bc-1cdc-48ad-8b26-f19bff969cec.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "acd74772-5f88-45c7-956b-6a7b36c294d2",
+  "rule_path": "rules/windows/registry/registry_delete/registry_delete_schtasks_hide_task_via_sd_value_removal.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_delete/registry_delete_schtasks_hide_task_via_sd_value_removal/acd74772-5f88-45c7-956b-6a7b36c294d2.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "460479f3-80b7-42da-9c43-2cc1d54dbccd",
+  "rule_path": "rules/windows/registry/registry_event/registry_event_add_local_hidden_user.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_event/registry_event_add_local_hidden_user/460479f3-80b7-42da-9c43-2cc1d54dbccd.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "1547e27c-3974-43e2-a7d7-7f484fb928ec",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_add_load_service_in_safe_mode.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_add_load_service_in_safe_mode/1547e27c-3974-43e2-a7d7-7f484fb928ec.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "944e8941-f6f6-4ee8-ac05-1c224e923c0e",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_add_port_monitor.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_add_port_monitor/944e8941-f6f6-4ee8-ac05-1c224e923c0e.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "37b437cf-3fc5-4c8e-9c94-1d7c9aff842b",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_allow_rdp_remote_assistance_feature.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_allow_rdp_remote_assistance_feature/37b437cf-3fc5-4c8e-9c94-1d7c9aff842b.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "aa37cbb0-da36-42cb-a90f-fdf216fc7467",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_amsi_disable.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_amsi_disable/aa37cbb0-da36-42cb-a90f-fdf216fc7467.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "46dd5308-4572-4d12-aa43-8938f0184d4f",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_bypass_uac_using_delegateexecute.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_bypass_uac_using_delegateexecute/46dd5308-4572-4d12-aa43-8938f0184d4f.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "674202d0-b22a-4af4-ae5f-2eda1f3da1af",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_bypass_uac_using_eventviewer.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_bypass_uac_using_eventviewer/674202d0-b22a-4af4-ae5f-2eda1f3da1af.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "724ea201-6514-4f38-9739-e5973c34f49a",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_bypass_uac_using_silentcleanup_task.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_bypass_uac_using_silentcleanup_task/724ea201-6514-4f38-9739-e5973c34f49a.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "509e84b9-a71a-40e0-834f-05470369bd1e",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_change_rdp_port.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_change_rdp_port/509e84b9-a71a-40e0-834f-05470369bd1e.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "45e112d0-7759-4c2a-aa36-9f8fb79d3393",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_change_security_zones.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_change_security_zones/45e112d0-7759-4c2a-aa36-9f8fb79d3393.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "73921b9c-cafd-4446-b0c6-fdb0ace42bc0",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_credential_guard_disabled.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_credential_guard_disabled/73921b9c-cafd-4446-b0c6-fdb0ace42bc0.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "8b7273a4-ba5d-4d8a-b04f-11f2900d043a",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_deviceguard_hypervisorenforcedcodeintegrity_disabled.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_deviceguard_hypervisorenforcedcodeintegrity_disabled/8b7273a4-ba5d-4d8a-b04f-11f2900d043a.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "c7dcacd0-cc59-4004-b0a4-1d6cdebe6f3e",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_disable_administrative_share.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_disable_administrative_share/c7dcacd0-cc59-4004-b0a4-1d6cdebe6f3e.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "f37b4bce-49d0-4087-9f5b-58bffda77316",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_disable_autologger_sessions.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_disable_autologger_sessions/f37b4bce-49d0-4087-9f5b-58bffda77316.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "974515da-6cc5-4c95-ae65-f97f9150ec7f",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_disable_defender_firewall.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_disable_defender_firewall/974515da-6cc5-4c95-ae65-f97f9150ec7f.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "3ae1a046-f7db-439d-b7ce-b8b366b81fa6",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_disable_security_center_notifications.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_disable_security_center_notifications/3ae1a046-f7db-439d-b7ce-b8b366b81fa6.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "5de03871-5d46-4539-a82d-3aa992a69a83",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_disable_system_restore.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_disable_system_restore/5de03871-5d46-4539-a82d-3aa992a69a83.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "33efc23c-6ea2-4503-8cfe-bdf82ce8f705",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_persistence_amsi_providers.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_persistence_amsi_providers/33efc23c-6ea2-4503-8cfe-bdf82ce8f705.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "9b0f8a61-91b2-464f-aceb-0527e0a45020",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_persistence_com_key_linking.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_persistence_com_key_linking/9b0f8a61-91b2-464f-aceb-0527e0a45020.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "9ace0707-b560-49b8-b6ca-5148b42f39fb",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_persistence_logon_scripts_userinitmprlogonscript.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_persistence_logon_scripts_userinitmprlogonscript/9ace0707-b560-49b8-b6ca-5148b42f39fb.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "fecfd1a1-cc78-4313-a1ea-2ee2e8ec27a7",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_powershell_logging_disabled.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_powershell_logging_disabled/fecfd1a1-cc78-4313-a1ea-2ee2e8ec27a7.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "25ffa65d-76d8-4da5-a832-3f2b0136e133",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_pua_sysinternals_execution_via_eula.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_pua_sysinternals_execution_via_eula/25ffa65d-76d8-4da5-a832-3f2b0136e133.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "f50f3c09-557d-492d-81db-9064a8d4e211",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_pua_sysinternals_renamed_execution_via_eula.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_pua_sysinternals_renamed_execution_via_eula/f50f3c09-557d-492d-81db-9064a8d4e211.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "c7da8edc-49ae-45a2-9e61-9fd860e4e73d",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_pua_sysinternals_susp_execution_via_eula.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_pua_sysinternals_susp_execution_via_eula/c7da8edc-49ae-45a2-9e61-9fd860e4e73d.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "f8aebc67-a56d-4ec9-9fbe-7b0e8b7b4efd",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_special_accounts.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_special_accounts/f8aebc67-a56d-4ec9-9fbe-7b0e8b7b4efd.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "9c226817-8dc9-46c2-a58d-66655aafd7dc",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_susp_user_shell_folders.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_susp_user_shell_folders/9c226817-8dc9-46c2-a58d-66655aafd7dc.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "d526c60a-e236-4011-b165-831ffa52ab70",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_vulnerable_driver_blocklist_disable.yml",
+  "evtx": "regression_data/rules/windows/registry/registry_set/registry_set_vulnerable_driver_blocklist_disable/d526c60a-e236-4011-b165-831ffa52ab70.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "8ac03a65-6c84-4116-acad-dc1558ff7a77",
+  "rule_path": "rules/windows/sysmon/sysmon_config_modification.yml",
+  "evtx": "regression_data/rules/windows/sysmon/sysmon_config_modification/8ac03a65-6c84-4116-acad-dc1558ff7a77.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": true
+ },
+ {
+  "rule_id": "271de298-cc0e-4842-acd8-079a0a99ea65",
+  "rule_path": "rules-emerging-threats/2025/Exploits/CVE-2025-55182/proc_creation_win_exploit_cve_2025_55182_susp_nodejs_server_child_process.yml",
+  "evtx": "regression_data/rules-emerging-threats/2025/Exploits/CVE-2025-55182/proc_creation_win_exploit_cve_2025_55182_susp_nodejs_server_child_process/271de298-cc0e-4842-acd8-079a0a99ea65.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "af688c76-4ce4-4309-bfdd-e896f01acf27",
+  "rule_path": "rules-emerging-threats/2025/Malware/Grixba/proc_creation_win_malware_grixba_recon.yml",
+  "evtx": "regression_data/rules-emerging-threats/2025/Malware/Grixba/proc_creation_win_malware_grixba_recon/af688c76-4ce4-4309-bfdd-e896f01acf27.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "540703fb-a874-4385-a9d6-7cd1bfab268c",
+  "rule_path": "rules-emerging-threats/2025/Malware/Shai-Hulud/proc_creation_win_mal_shai_hulud_indicator.yml",
+  "evtx": "regression_data/rules-emerging-threats/2025/Malware/Shai-Hulud/proc_creation_win_mal_shai_hulud_indicator/540703fb-a874-4385-a9d6-7cd1bfab268c.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "5299fadf-f228-4526-8274-251db1960be9",
+  "rule_path": "rules-emerging-threats/2025/Malware/Shai-Hulud/proc_creation_win_mal_shai_hulud_malicious_node_bun_execution.yml",
+  "evtx": "regression_data/rules-emerging-threats/2025/Malware/Shai-Hulud/proc_creation_win_mal_shai_hulud_malicious_node_bun_execution/5299fadf-f228-4526-8274-251db1960be9.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "bae7c70b-8569-44e9-accf-b30073da8a5d",
+  "rule_path": "rules-emerging-threats/2025/Malware/Shai-Hulud/proc_creation_win_mal_shai_hulud_malicious_npm_package_installation.yml",
+  "evtx": "regression_data/rules-emerging-threats/2025/Malware/Shai-Hulud/proc_creation_win_mal_shai_hulud_malicious_npm_package_installation/bae7c70b-8569-44e9-accf-b30073da8a5d.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "7c3a5b1d-9e2f-4a8c-b5d7-1e0f3c6a9b2d",
+  "rule_path": "rules-emerging-threats/2026/Exploits/CVE-2026-33829/proc_creation_win_exploit_cve_2026_33829.yml",
+  "evtx": "regression_data/rules-emerging-threats/2026/Exploits/CVE-2026-33829/proc_creation_win_exploit_cve_2026_33829/7c3a5b1d-9e2f-4a8c-b5d7-1e0f3c6a9b2d.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "f2e4b7d9-5c3a-4f8b-9e1d-7a6c2b3f4e5d",
+  "rule_path": "rules-emerging-threats/2026/Exploits/RedSun/file_event_win_exploit_redsun_indicators.yml",
+  "evtx": "regression_data/rules-emerging-threats/2026/Exploits/RedSun/file_event_win_exploit_redsun_indicators/f2e4b7d9-5c3a-4f8b-9e1d-7a6c2b3f4e5d.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "9b4e7c2a-3f6d-4a8b-b5e9-1c7d3f2e6a4b",
+  "rule_path": "rules-emerging-threats/2026/Exploits/RedSun/pipe_created_win_exploit_redsun_named_pipe.yml",
+  "evtx": "regression_data/rules-emerging-threats/2026/Exploits/RedSun/pipe_created_win_exploit_redsun_named_pipe/9b4e7c2a-3f6d-4a8b-b5e9-1c7d3f2e6a4b.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "a7c3e5f2-8b1d-4e9a-b6c2-3d7f5e8a9b4c",
+  "rule_path": "rules-emerging-threats/2026/Exploits/RedSun/win_defender_exploit_redsun_tiering_engine_detected_as_eicar.yml",
+  "evtx": "regression_data/rules-emerging-threats/2026/Exploits/RedSun/win_defender_exploit_redsun_tiering_engine_detected_as_eicar/a7c3e5f2-8b1d-4e9a-b6c2-3d7f5e8a9b4c.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ },
+ {
+  "rule_id": "8a2f4b1c-3d5e-4f7a-9b2c-1e4f6d8a9c2b",
+  "rule_path": "rules-threat-hunting/windows/image_load/image_load_win_werfaultsecure_dbgcore_dbghelp_load.yml",
+  "evtx": "regression_data/rules-threat-hunting/windows/image_load/image_load_win_werfaultsecure_dbgcore_dbghelp_load/8a2f4b1c-3d5e-4f7a-9b2c-1e4f6d8a9c2b.evtx",
+  "test": "Positive Detection Test",
+  "in_scope": false
+ }
+]
