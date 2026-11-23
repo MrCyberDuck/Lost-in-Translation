@@ -7,7 +7,7 @@
 | SigmaHQ rules | tag `r2026-07-01`, commit `552f3fee420ef232a8e5790c4fae591847e32347`, as the git submodule `rules/sigma` |
 | Sigma specification | `SigmaHQ/sigma-specification` commit `ba9251aa834b11a70dbf80836b453dba99c5159e` (rules spec v2.1.0, modifiers appendix v2.1.0) |
 | pySigma and backends | `requirements.lock`: pySigma 1.5.1, sigma-cli 3.1.0, splunk 2.1.0, elasticsearch 2.1.1, opensearch 2.0.3, kusto 1.0.1, loki 0.15.1, sqlite 2.0.0 |
-| Engine images | see `compose/`: Elasticsearch 9.5.5, OpenSearch 3.10.0, Loki 3.6.22, Splunk 10.6.2, Kusto emulator `latest` (its image id is recorded per run) |
+| Engine images | see `compose/`: Elasticsearch 9.5.5, OpenSearch 3.10.0, Loki 3.6.22, Splunk 10.6.2, Kusto emulator pinned by digest `sha256:feb9b3bb8033…` (`latest` on 2026-11-23) |
 
 `r2026-07-01` was the newest SigmaHQ release tag on 23 Nov 2026.
 

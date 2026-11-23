@@ -23,7 +23,8 @@ services:
     mem_limit: 2560m
 
   kusto:
-    image: mcr.microsoft.com/azuredataexplorer/kustainer-linux:latest
+    # 'latest' as of 2026-11-23, pinned by digest (the image has no stable version tags)
+    image: mcr.microsoft.com/azuredataexplorer/kustainer-linux@sha256:feb9b3bb8033b042f342b3b8e4f6a645c7b38e7d4b452aabae69d73a390e8db5
     environment:
       - ACCEPT_EULA=Y
     ports: ["127.0.0.1:8080:8080"]

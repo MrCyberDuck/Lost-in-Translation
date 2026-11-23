@@ -30,6 +30,8 @@ docker compose -f compose/wave-b.yml down -v
 | Splunk 10.6.2 | 2.5 GB | 1.74 GB |
 | Kusto emulator | 3 GB | 0.58 GB |
 
+Measured in the cloud container. On Nik's Windows 11 laptop (Docker Desktop, WSL2) idle use was higher for two of them: Splunk 2.05 GB (82% of its limit) and OpenSearch 1.32 GB (88%). Neither has hit its limit, but OpenSearch has the least headroom; raise it to 2 GB if it is killed on larger datasets.
+
 Total with all five running: about 5 GB, so on a 16 GB laptop both waves can run together for small cases. Keep the two-wave split for full-corpus runs. On Windows, cap WSL2 in `%UserProfile%\.wslconfig`:
 
 ```ini
