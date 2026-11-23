@@ -31,3 +31,10 @@ def test_backend_bug_needs_cause_and_dependencies():
         classify(["S27"])
     with pytest.raises(ValueError):
         classify([], cause="engine")
+
+
+@pytest.mark.parametrize("clause", ["S10", "S11", "S24", "S33"])
+def test_closed_questions_still_give_spec_gap(clause):
+    # Nik, 23 Nov 2026: working interpretations kept, findings on these are spec gaps.
+    result = classify([clause, "S27"], cause="converter")
+    assert result["verdict"] == "spec-gap"

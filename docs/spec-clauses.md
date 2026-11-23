@@ -12,7 +12,7 @@ Source: [SigmaHQ/sigma-specification](https://github.com/SigmaHQ/sigma-specifica
 - `ambiguous`: the spec is silent, leaves it to the target SIEM, or can be read two ways.
 - `contradictory`: two parts of the spec disagree with each other.
 
-For every `ambiguous` or `contradictory` clause the evaluator follows the **working interpretation** given. Working interpretations were accepted by Nik on 23 Nov 2026 (the four open questions at the end still need the co-author).
+For every `ambiguous` or `contradictory` clause the evaluator follows the **working interpretation** given. Working interpretations were accepted by Nik on 23 Nov 2026, including the four questions that were open (see the end of this file). Accepting an interpretation does not make a clause clear: its status stays `ambiguous`, so any disagreement that depends on it is triaged as `spec-gap`, never `backend-bug`.
 
 **Spec-gap rule (decision of 23 Nov 2026).** Any disagreement whose expected verdict depends on an `ambiguous` or `contradictory` clause is labelled `spec-gap`, never `backend-bug`, whatever the backend does. It is reported as a proposed clarification to the Sigma specification, not filed against a backend. The full label set is in [triage-labels.md](triage-labels.md) and is enforced in `harness/triage.py`.
 
@@ -191,9 +191,11 @@ No global filters are shipped in the in-scope folder, so these are conformance c
 | --- | --- | --- | --- | --- | --- |
 | S84 | `Hashes` holds several hashes in one string (`SHA1=...,MD5=...,SHA256=...,IMPHASH=...`), as Sysmon writes it | Taxonomy appendix, Fields | clear for the neutral config; the production mapping to per-hash fields is a pipeline choice | 46 | Neutral config: plain string matching. Production config: differences are `config`, not bugs. |
 
-## Open questions for the co-author
+## Questions closed on 23 Nov 2026
 
-1. S10 keywords: substring in any field (current choice) or a full-text match on the raw message?
-2. S11 integers: string comparison (current choice) or numeric comparison when both sides parse?
-3. S24 null: absent-or-null (current choice), or absent only?
-4. S33 correlation windows: sliding (current choice) or tumbling?
+These four were open for the co-author. Nik decided on 23 Nov 2026 to keep the working interpretation for each. The clauses stay `ambiguous`, so every finding that depends on them is a `spec-gap`.
+
+1. S10 keywords: substring in any string field (kept), not a full-text match on the raw message.
+2. S11 integers: string comparison (kept), not numeric comparison.
+3. S24 null: absent or JSON null (kept), not absent only.
+4. S33 correlation windows: sliding (kept), not tumbling.
