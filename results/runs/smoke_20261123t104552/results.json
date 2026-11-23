@@ -1,0 +1,35 @@
+[
+  {
+    "target": "splunk",
+    "engine": "splunk",
+    "queries": [
+      "Image=\"*\\\\cmd.exe\" CommandLine=\"*whoami*\""
+    ],
+    "matched": [
+      "smoke-1"
+    ],
+    "status": "pass"
+  },
+  {
+    "target": "kusto",
+    "engine": "kusto",
+    "queries": [
+      "Image endswith \"\\\\cmd.exe\" and CommandLine contains \"whoami\""
+    ],
+    "matched": [
+      "smoke-1"
+    ],
+    "status": "pass"
+  },
+  {
+    "target": "sqlite",
+    "engine": "sqlite",
+    "queries": [
+      "SELECT * FROM logs WHERE Image LIKE '%\\\\cmd.exe' ESCAPE '\\' AND CommandLine LIKE '%whoami%' ESCAPE '\\'"
+    ],
+    "matched": [
+      "smoke-1"
+    ],
+    "status": "pass"
+  }
+]

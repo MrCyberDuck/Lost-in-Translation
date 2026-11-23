@@ -1,0 +1,3 @@
+[submodule "rules/sigma"]
+	path = rules/sigma
+	url = https://github.com/SigmaHQ/sigma.git

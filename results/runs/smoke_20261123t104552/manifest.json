@@ -1,0 +1,85 @@
+{
+  "run_id": "smoke_20261123t104552",
+  "created_utc": "2026-11-23T10:45:54+00:00",
+  "repo_commit": "3becfbc0ae48da5135c714e66f72a2e16afc7347",
+  "sigmahq_commit": "552f3fee420ef232a8e5790c4fae591847e32347",
+  "sigmahq_tag": "r2026-07-01",
+  "python": "3.13.18",
+  "platform": "Linux-6.18.44-fc-v726-x86_64-with-glibc2.39",
+  "packages": {
+    "pySigma": "1.5.1",
+    "sigma-cli": "3.1.0",
+    "pySigma-backend-splunk": "2.1.0",
+    "pySigma-backend-elasticsearch": "2.1.1",
+    "pySigma-backend-opensearch": "2.0.3",
+    "pySigma-backend-kusto": "1.0.1",
+    "pySigma-backend-loki": "0.15.1",
+    "pySigma-backend-sqlite": "2.0.0"
+  },
+  "containers": [
+    {
+      "container": "lit-wave-b-splunk-1",
+      "image": "splunk/splunk:10.6.2",
+      "image_id": "sha256:e26840dfe69ec9ff305c10681664900168849c3ff346a9cf49322b5351841f3f"
+    },
+    {
+      "container": "lit-wave-b-kusto-1",
+      "image": "mcr.microsoft.com/azuredataexplorer/kustainer-linux:latest",
+      "image_id": "sha256:b60aa99b1da74baaff640aa3f85be5d74090018881e290e15a7cc981ca36d4fa"
+    }
+  ],
+  "engines": {
+    "splunk": {
+      "targets": [
+        "splunk"
+      ],
+      "health": {
+        "version": "10.6.2.5",
+        "license": "Trial"
+      },
+      "storage": {
+        "ingest": "HEC /services/collector/event",
+        "sourcetype": "_json",
+        "field_extraction": "search-time JSON (KV_MODE=json via _json sourcetype)"
+      }
+    },
+    "kusto": {
+      "targets": [
+        "kusto"
+      ],
+      "health": {
+        "version": "2026-11-23T04:48:32Z"
+      },
+      "storage": {
+        "ingest": "inline CSV",
+        "types": "long/real/bool when all values are, else string",
+        "missing_field": "empty string (Kusto strings cannot be null)",
+        "schemas": {
+          "smoke_20261123t104552": {
+            "TimeGenerated": "datetime",
+            "event_id": "string",
+            "EventID": "long",
+            "Image": "string",
+            "CommandLine": "string",
+            "User": "string"
+          }
+        }
+      }
+    },
+    "sqlite": {
+      "targets": [
+        "sqlite"
+      ],
+      "health": {
+        "sqlite_version": "3.53.1"
+      },
+      "storage": {
+        "table": "logs",
+        "column_types": "none (dynamic typing)",
+        "missing_field": "NULL",
+        "regexp": "python re.search, as Zircolite"
+      }
+    }
+  },
+  "wave": "b"
+}

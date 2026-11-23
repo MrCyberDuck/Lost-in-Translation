@@ -1,0 +1,3 @@
+{"event_id": "smoke-1", "@timestamp": "2026-11-23T10:00:00Z", "EventID": 1, "Image": "C:\\Windows\\System32\\cmd.exe", "CommandLine": "cmd.exe /c whoami", "User": "LAB\\alice"}
+{"event_id": "smoke-2", "@timestamp": "2026-11-23T10:00:01Z", "EventID": 1, "Image": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe", "CommandLine": "powershell.exe -c whoami", "User": "LAB\\alice"}
+{"event_id": "smoke-3", "@timestamp": "2026-11-23T10:00:02Z", "EventID": 1, "Image": "C:\\Windows\\System32\\cmd.exe", "CommandLine": "cmd.exe /c dir", "User": "LAB\\bob"}
