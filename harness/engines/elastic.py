@@ -19,6 +19,11 @@ NEUTRAL_MAPPING = {
 }
 
 
+def _check(r, what: str) -> None:
+    if r.status_code >= 300:
+        raise RuntimeError(f"{what} failed {r.status_code}: {r.text[:500]}")
+
+
 class ElasticEngine(Engine):
     def __init__(self, flavor: str, url: str):
         self.name = flavor
@@ -61,20 +66,20 @@ class ElasticEngine(Engine):
                 "size": 10000, "_source": ["event_id"],
                 "query": {"query_string": {"query": query}},
             })
-            r.raise_for_status()
+            _check(r, "query_string search")
             return {h["_source"]["event_id"] for h in r.json()["hits"]["hits"]}
         if target == "esql":
             # The backend emits `from * metadata ...`; point it at the dataset index only.
             q = re.sub(r"^from\s+\S+(\s+metadata\s+[^|]*)?", f"from {index} ", query.strip(), count=1)
             q += " | keep event_id | limit 10000"
             r = self.http.post(f"{self.url}/_query", timeout=60, json={"query": q})
-            r.raise_for_status()
+            _check(r, "ES|QL query")
             return {row[0] for row in r.json()["values"]}
         if target == "eql":
             r = self.http.post(f"{self.url}/{index}/_eql/search", timeout=60, json={
                 "query": query, "size": 10000, "timestamp_field": "@timestamp",
             })
-            r.raise_for_status()
+            _check(r, "EQL search")
             return {e["_source"]["event_id"] for e in r.json()["hits"].get("events", [])}
         raise ValueError(f"{self.name} does not run target {target}")
 

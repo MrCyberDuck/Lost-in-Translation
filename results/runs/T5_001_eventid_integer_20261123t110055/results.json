@@ -1,0 +1,89 @@
+[
+  {
+    "target": "lucene",
+    "engine": "elasticsearch",
+    "queries": [
+      "EventID:4720"
+    ],
+    "matched": [
+      "u1"
+    ],
+    "status": "pass"
+  },
+  {
+    "target": "esql",
+    "engine": "elasticsearch",
+    "queries": [
+      "from * metadata _id, _index, _version | where EventID==4720"
+    ],
+    "matched": [
+      "u1"
+    ],
+    "status": "pass"
+  },
+  {
+    "target": "eql",
+    "engine": "elasticsearch",
+    "queries": [
+      "any where EventID:4720"
+    ],
+    "status": "query_error",
+    "error": "RuntimeError: EQL search failed 400: {\"error\":{\"root_cause\":[{\"type\":\"verification_exception\",\"reason\":\"Found 1 problem\\nline 1:11: first argument of [:] must be [string], found value [EventID] type [long]; consider using [==] instead\"}],\"type\":\"verification_exception\",\"reason\":\"Found 1 problem\\nline 1:11: first argument of [:] must be [string], found value [EventID] type [long]; consider using [==] instead\"},\"status\":400}",
+    "trace": "Traceback (most recent call last):\n  File \"/home/user/Lost-in-Translation/harness/smoke.py\", line 74, in main\n    got |= eng.query(run_id, target, q)\n           ~~~~~~~~~^^^^^^^^^^^^^^^^^^^\n  File \"/home/user/Lost-in-Translation/harness/engines/elastic.py\", line 82, in query\n    _check(r, \"EQL search\")\n    ~~~~~~^^^^^^^^^^^^^^^^^\n  File \"/home/user/Lost-in-Translation/harness/engines/elastic.py\", line 24, in _check\n    raise RuntimeError(f\"{what} failed {r.status_code}: {r.text[:500]}\")\nRuntimeError: EQL search failed 400: {\"error\":{\"root_cause\":[{\"type\":\"verification_exception\",\"reason\":\"Found 1 problem\\nline 1:11: first argument of [:] must be [string], found value [EventID] type [long]; consider using [==] instead\"}],\"type\":\"verification_exception\",\"reason\":\"Found 1 problem\\nline 1:11: first argument of [:] must be [string], found value [EventID] type [long]; consider using [==] instead\"},\"status\":400}\n"
+  },
+  {
+    "target": "kusto",
+    "engine": "kusto",
+    "queries": [
+      "EventID == 4720"
+    ],
+    "matched": [
+      "u1"
+    ],
+    "status": "pass"
+  },
+  {
+    "target": "loki",
+    "engine": "loki",
+    "queries": [
+      "{job=~\"eventlog|winlog|windows|fluentbit.*\"} | json | EventID=4720"
+    ],
+    "matched": [
+      "u1"
+    ],
+    "status": "pass"
+  },
+  {
+    "target": "opensearch_lucene",
+    "engine": "opensearch",
+    "queries": [
+      "EventID:4720"
+    ],
+    "matched": [
+      "u1"
+    ],
+    "status": "pass"
+  },
+  {
+    "target": "splunk",
+    "engine": "splunk",
+    "queries": [
+      "EventID=4720"
+    ],
+    "matched": [
+      "u1"
+    ],
+    "status": "pass"
+  },
+  {
+    "target": "sqlite",
+    "engine": "sqlite",
+    "queries": [
+      "SELECT * FROM logs WHERE EventID=4720"
+    ],
+    "matched": [
+      "u1"
+    ],
+    "status": "pass"
+  }
+]

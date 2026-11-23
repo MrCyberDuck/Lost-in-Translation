@@ -67,3 +67,14 @@ Case `conformance/T1-case/T1-001-upper-image`: the smoke rule against upper-case
 | lucene, esql, opensearch_lucene | 1 of 3 (only the lower-case event) |
 
 This is with the neutral `keyword` mapping and no pipeline, so it is not yet attributed: the cause may be the converter (no case-insensitive query), the mapping (no lower-case normaliser), or both. Attribution is Phase 3 and Phase 5 work. Run: `results/runs/T1_001_upper_image_20261123t104642/`.
+
+## Two more seed cases from real SigmaHQ rules (preliminary)
+
+Both were first spotted in the explainer demo (`/mnt/project-files/demo-2026-11-23/`) and reproduced here with the testbed.
+
+| Case | Expected | Deviating targets | Observation |
+| --- | --- | --- | --- |
+| `T9-logic/T9-001-whoami-all` (SigmaHQ `c248c896`) | w1, w2, w3 | lucene, esql, opensearch_lucene: miss `whoami /ALL` (w2). loki: also matches `cmd.exe /c dir /all` (w5) | Loki output has no brackets around the `Image`/`OriginalFileName` OR group, so `and` binds first. A converter bug candidate. |
+| `T5-types/T5-001-eventid-integer` (SigmaHQ `66b6be3d`) | u1 | eql: query rejected (HTTP 400) | EQL's `:` operator only accepts strings; `EventID` is a long. Any integer field rule fails in the neutral config. |
+
+Runs: `results/runs/T9_001_whoami_all_20261123t110035/`, `results/runs/T5_001_eventid_integer_20261123t110055/`.
