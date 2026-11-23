@@ -8,6 +8,8 @@ The living plan is kept as a Claude Doc: "Sigma Backend Differential Testing: Te
 2. **Scope:** Windows rules only for the first paper.
 3. **QRadar CE:** later, run separately at the end against the same frozen rules, events and reference verdicts.
 4. **Storage:** all scripts, data manifests and findings live in this repository.
+5. **Spec gaps are not backend bugs.** Any disagreement whose expected verdict depends on an ambiguous or contradictory spec clause is labelled `spec-gap` and reported as a proposed clarification to the Sigma specification, never as a backend bug. The working interpretations in `docs/spec-clauses.md` are accepted. Enforced by `harness/triage.py`; labels in `docs/triage-labels.md`.
+6. **No upstream bug reports before Phase 3.** Findings are collected until Phase 3, re-verified there in more detail, and reported upstream all at once.
 
 ## Core targets
 

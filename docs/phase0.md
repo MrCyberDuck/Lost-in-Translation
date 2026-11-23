@@ -32,4 +32,6 @@ Largest logsource groups in scope: `process_creation` 1,095, `registry_set` 190,
 
 ## Spec clauses
 
-See [spec-clauses.md](spec-clauses.md): 35 clauses, of which 13 are ambiguous and carry a working interpretation. Four of them (keywords, integer comparison, null, correlation windows) need agreement with the co-author before Phase 2 ends.
+See [spec-clauses.md](spec-clauses.md): 84 clauses (35 in the first version, 49 added after an audit of every spec file), of which 31 are ambiguous or contradictory and carry a working interpretation. Four of them (keywords, integer comparison, null, correlation windows) need agreement with the co-author before Phase 2 ends.
+
+`python -m harness.construct_census` counts how many in-scope rules use each construct (`results/phase0/construct_census.json`), so each clause shows how many rules it can affect.
