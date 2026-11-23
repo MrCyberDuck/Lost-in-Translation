@@ -1,0 +1,30 @@
+# Wave B: Splunk Enterprise (SPL) and the Azure Data Explorer Kusto emulator (KQL).
+# Budget about 5.5 GB. Splunk Web is still started by the image but is not needed.
+# Start:  SPLUNK_PASSWORD=... docker compose -f compose/wave-b.yml up -d
+# Stop:   docker compose -f compose/wave-b.yml down -v
+#
+# Licences:
+# - Splunk starts on its 60-day Enterprise Trial, then switch to the Free licence.
+# - Kusto emulator: free for development and testing only; benchmarking is prohibited by its licence.
+name: lit-wave-b
+
+services:
+  splunk:
+    image: splunk/splunk:10.6.2
+    environment:
+      - SPLUNK_START_ARGS=--accept-license
+      - SPLUNK_GENERAL_TERMS=--accept-sgt-current-at-splunk-com
+      - SPLUNK_PASSWORD=${SPLUNK_PASSWORD:-ChangeMe-lit-2026}
+      - SPLUNK_HEC_TOKEN=${SPLUNK_HEC_TOKEN:-00000000-0000-0000-0000-00000000c0de}
+    ports:
+      - "127.0.0.1:8089:8089"   # REST API (search)
+      - "127.0.0.1:8088:8088"   # HTTP Event Collector (ingest)
+      - "127.0.0.1:8000:8000"   # Splunk Web, optional
+    mem_limit: 2560m
+
+  kusto:
+    image: mcr.microsoft.com/azuredataexplorer/kustainer-linux:latest
+    environment:
+      - ACCEPT_EULA=Y
+    ports: ["127.0.0.1:8080:8080"]
+    mem_limit: 3g

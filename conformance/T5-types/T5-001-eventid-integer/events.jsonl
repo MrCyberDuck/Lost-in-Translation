@@ -1,0 +1,3 @@
+{"event_id":"u1","@timestamp":"2026-11-23T10:00:06Z","EventID":4720,"Provider_Name":"Microsoft-Windows-Security-Auditing","TargetUserName":"backdoor"}
+{"event_id":"u2","@timestamp":"2026-11-23T10:00:07Z","EventID":4722,"Provider_Name":"Microsoft-Windows-Security-Auditing","TargetUserName":"backdoor"}
+{"event_id":"u3","@timestamp":"2026-11-23T10:00:08Z","EventID":4624,"Provider_Name":"Microsoft-Windows-Security-Auditing","TargetUserName":"alice"}

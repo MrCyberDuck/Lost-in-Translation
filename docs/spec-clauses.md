@@ -1,0 +1,199 @@
+# Sigma spec clauses for the reference evaluator
+
+The reference evaluator is the oracle: it decides what each rule *should* match according to the Sigma specification. Each clause below is something the evaluator must implement, with a unit test per clause in Phase 2, and each clause is a place where a converter or engine can disagree with the spec.
+
+Source: [SigmaHQ/sigma-specification](https://github.com/SigmaHQ/sigma-specification) at commit `ba9251aa834b11a70dbf80836b453dba99c5159e` (9 Jun 2026): rules specification v2.1.0, modifiers appendix v2.1.0, filters specification v2.1.0, correlation specification and taxonomy appendix as of that commit.
+
+## How to read this list
+
+**Status** is one of:
+
+- `clear`: the spec text decides the behaviour.
+- `ambiguous`: the spec is silent, leaves it to the target SIEM, or can be read two ways.
+- `contradictory`: two parts of the spec disagree with each other.
+
+For every `ambiguous` or `contradictory` clause the evaluator follows the **working interpretation** given. Working interpretations were accepted by Nik on 23 Nov 2026 (the four open questions at the end still need the co-author).
+
+**Spec-gap rule (decision of 23 Nov 2026).** Any disagreement whose expected verdict depends on an `ambiguous` or `contradictory` clause is labelled `spec-gap`, never `backend-bug`, whatever the backend does. It is reported as a proposed clarification to the Sigma specification, not filed against a backend. The full label set is in [triage-labels.md](triage-labels.md) and is enforced in `harness/triage.py`.
+
+**Rules** is how many of the 2,247 in-scope rules use the construct, from `results/phase0/construct_census.json` (`python -m harness.construct_census`). A dash means it is not counted automatically.
+
+## Audit of the first version (35 clauses)
+
+The first version was **not exhaustive**. It covered value matching, modifiers, null handling, conditions and the four main correlation types, but it skipped or under-specified the following. All of them are added below as S36 to S84.
+
+| Missed area | Why it matters for mismatches | New clauses |
+| --- | --- | --- |
+| Logsource scoping and the taxonomy appendix | Without a pipeline, every backend drops the logsource, so a rule can match events of the wrong type. With a pipeline, each backend adds its own EventID/Channel filter. | S36 to S38 |
+| YAML typing of rule values | Unquoted `true`, `0x10`, `010` become booleans and integers before Sigma ever sees them. | S39, S40 |
+| Backslash pairs not followed by a wildcard | `\\` means one backslash, not two; 63 rules use it. | S41 |
+| Field names: case, dots, multi-valued fields | Engines differ on case-sensitive field names (SQLite is not), on dotted names and on arrays. | S42 to S44 |
+| Whitespace, newlines, Unicode normalisation | 532 rules have leading or trailing spaces in values; PowerShell script blocks are multi-line, and `*` across a newline differs by engine. | S45 to S48 |
+| Detection structure edge cases | Empty lists, `null` inside lists, keyword lists with `all`, undefined identifiers. | S49 to S54 |
+| Condition parsing details | Keyword case, `_` identifiers with explicit patterns, `and`/`or` mixing (61 rules). | S55 to S57 |
+| Modifier details | `neq` with lists, `cidr` notations, regex outside the spec subset (42+ rules), `base64offset` edges, `windash` scope, `expand` rejection, unknown modifiers. | S58 to S69 |
+| Correlation details and spec inconsistencies | The spec lists 4 allowed types but defines 7; `group-by` is both mandatory and optional; distinct-value case; chaining; aliases; must-error rules. | S70 to S80 |
+| Global filters (meta-filters) | A third rule kind the first version ignored. | S81 to S83 |
+| Field value formats from the taxonomy | `Hashes` packs several hashes into one string (46 rules). | S84 |
+
+What is still out of scope, on purpose: rule metadata that converters do not use (title, author, tags, level, references, dates, `fields`, `falsepositives`), file naming, and pySigma processing pipelines themselves, which are a pySigma feature rather than part of the Sigma spec (they are tested through the production configuration, taxonomy area T10).
+
+## Values and matching
+
+| ID | Clause | Spec source | Status | Rules | Evaluator behaviour / working interpretation |
+| --- | --- | --- | --- | --- | --- |
+| S1 | All values are compared as case-insensitive strings | Rules spec, Detection > General | clear for ASCII; ambiguous for non-ASCII | all | Case-fold with Unicode full case folding (`str.casefold()`). Non-ASCII folding is not specified; non-ASCII cases are a spec gap (taxonomy T1). |
+| S2 | `cased` makes matching case-sensitive | Modifiers > Generic | clear | 0 | Exact code-point comparison. |
+| S3 | A plain value (no modifier, no wildcard) matches the whole field value | Rules spec, Maps | clear | — | Full-string equality after S1. |
+| S4 | `*` matches any sequence (including empty); `?` matches exactly one character | Rules spec, String Wildcard | clear; ambiguous on what a "character" is | 19 inner `*`, 11 `?` | Anchored pattern over the whole value. One character = one Unicode code point (working interpretation). |
+| S5 | Escaping: `\*` and `\?` are literal; `\\*` is a literal backslash followed by a wildcard; `\\\*` is a literal backslash and a literal star; three or four backslashes are a literal `\\` | Rules spec, Escape Character | clear | 30 escaped wildcards | Implement every row of the spec list; follow pySigma's `SigmaString` parsing. |
+| S6 | `contains`, `startswith`, `endswith` add `*` around/after/before the value | Modifiers > Generic | clear | 1,617 / 225 / 1,385 | Applied before wildcard translation, so inner wildcards still work. |
+| S7 | Lists of values under one field are OR; `all` makes them AND | Rules spec, Lists; Modifiers > `all` | clear | 550 use `all` | |
+| S8 | A map's keys are AND | Rules spec, Maps | clear | all | |
+| S9 | A list of maps is OR | Rules spec, Lists | clear | 690 | |
+| S10 | Keyword lists (no field) search the "full log message" | Rules spec, Keywords search | ambiguous | 12 | Substring match (case-insensitive, wildcards honoured) against **any string field value** of the event, not token matching. |
+| S11 | Integers in rules are compared with the field value | Rules spec, Maps | ambiguous | 330 | Compare as strings ("all values are treated as strings"): `4688` matches int 4688 and string "4688"; `0x10` does **not** match `16`. |
+| S12 | Modifiers apply left to right in the order written | Rules spec, Value Modifiers | clear | — | |
+| S13 | Transformation modifiers expand values (`base64`, `base64offset`, `utf16le`/`wide`, `utf16be`, `utf16`, `windash`) | Modifiers > String | clear | 7 `base64offset`, 71 `windash` | Reuse pySigma's modifier implementations so expansion is identical to what backends receive; the oracle differs only in matching. |
+| S14 | `windash` permutes `-`, `/`, en dash, em dash, horizontal bar | Modifiers > String | clear | 71 | Five characters, all permutations. |
+| S15 | `re` uses a restricted PCRE subset; case-sensitive by default; sub-modifiers `i`, `m`, `s` | Modifiers > Regular Expression | clear on syntax; ambiguous on anchoring | 68 | **Unanchored search** (`re.search`), as PCRE does. Rules using metacharacters outside the subset: see S60. |
+| S16 | Numeric modifiers `lt`, `lte`, `gt`, `gte`, `neq` | Modifiers > Numeric | ambiguous for string-typed fields | 0 | Parse the field value as a number; if it does not parse, the comparison is false. |
+| S17 | `cidr` matches IPv4 and IPv6 networks | Modifiers > IP | ambiguous for IPv4-mapped IPv6 | 16 | Python `ipaddress`; `::ffff:a.b.c.d` does **not** match an IPv4 network. Unparseable value = no match. |
+| S18 | `exists: true/false` checks only presence of the field, not its value | Modifiers > Generic | clear | 0 | Present-but-empty and present-but-null both count as existing. |
+| S19 | `neq` on strings: field is different from the value | Modifiers > Generic | ambiguous for missing fields | 0 | A missing field does not satisfy `neq`. |
+| S20 | `fieldref` compares one field with another field of the same event | Modifiers > Specific | ambiguous on case | 1 | Case-insensitive (S1) unless `cased` is chained. |
+| S21 | `expand` placeholders must be resolved or the rule rejected | Rules spec, Placeholders | clear | 0 | Not in the main run; see S67 for the rejection test. |
+| S22 | Time modifiers (`minute`, `hour`, `day`, `week`, `month`, `year`) | Modifiers > Time | clear on range, ambiguous on time zone | 0 | Conformance cases only. |
+
+## Null, empty and missing
+
+| ID | Clause | Spec source | Status | Rules | Evaluator behaviour / working interpretation |
+| --- | --- | --- | --- | --- | --- |
+| S23 | `''` is an empty value | Rules spec, Special Field Values | clear | 31 | Matches a present field whose value is the empty string. |
+| S24 | `null` is a null value; "the application depends on the target SIEM" | Rules spec, Special Field Values | **ambiguous by design** | 65 | `field: null` matches when the field is absent **or** present with JSON null; it does not match `''`. |
+| S25 | A field missing from the event never matches a value condition | implied | clear | all | So `not sel` is true when `sel`'s field is missing. |
+
+## Conditions
+
+| ID | Clause | Spec source | Status | Rules | Evaluator behaviour / working interpretation |
+| --- | --- | --- | --- | --- | --- |
+| S26 | Operators `and`, `or`, `not`, brackets | Rules spec, Condition | clear | 596 use `not` | |
+| S27 | Precedence from loosest to tightest: `or`, `and`, `not`, `x of`, brackets | Rules spec, Condition | clear | 61 mix `and`/`or` | pySigma's condition parser. Missing brackets in output are converter bugs (seen in Loki, case T9-001). |
+| S28 | `1 of them` / `all of them` exclude identifiers that start with `_` | Rules spec, Condition | clear | 0 use `them` | |
+| S29 | `1 of pattern` / `all of pattern` with `*` wildcards in the pattern | Rules spec, Condition | clear | 1,125 | `all of` over zero matching identifiers is a rule error (pySigma raises). |
+| S30 | A condition given as a list is an OR of its items | Rules spec, Condition | clear | 0 | |
+
+## Correlation rules (original clauses)
+
+SigmaHQ r2026-07-01 contains **no** correlation rules in its rule folders, so every correlation clause is tested only with synthetic cases in the conformance suite (taxonomy T11).
+
+| ID | Clause | Spec source | Status | Evaluator behaviour / working interpretation |
+| --- | --- | --- | --- | --- |
+| S31 | `event_count`, `value_count`, `temporal`, `temporal_ordered` (plus `value_sum`, `value_avg`, `value_percentile`) | Correlation spec, Correlation Types | clear on meaning | |
+| S32 | `group-by` fields are ANDed into one grouping key | Correlation spec, Grouping | ambiguous for missing group fields | Events with a missing group-by field are not grouped (excluded). |
+| S33 | `timespan` is a period in which the correlation applies; "should not be restricted to boundaries if this is not required by the given backend" | Correlation spec, Time Selection, Temporal | **ambiguous** | A **sliding** window. |
+| S34 | Condition operators `gt`, `gte`, `lt`, `lte`, `eq`, `neq`, combinable as a range | Correlation spec, Condition | clear | |
+| S35 | `temporal_ordered`: events appear in the order of the `rules` list | Correlation spec | ambiguous on equal timestamps | Equal timestamps do not count as ordered. |
+
+## New: logsource and taxonomy
+
+| ID | Clause | Spec source | Status | Rules | Evaluator behaviour / working interpretation |
+| --- | --- | --- | --- | --- | --- |
+| S36 | `logsource` (category, product, service) selects which events a rule applies to | Rules spec, LogSource | clear on intent; implementation left to converters | all | **Neutral config:** every event in a dataset belongs to the rule's logsource, so logsource is not evaluated. **Production config:** apply S37. A converter that silently drops the logsource while claiming a pipeline is applied is a `backend-bug`. |
+| S37 | The taxonomy appendix maps Windows categories to EventID + Channel (for example `process_creation` = Sysmon EventID 1, `ps_script` = EventID 4104 on two PowerShell channels) | Taxonomy appendix, Windows Folder | clear for Sysmon-based categories; ambiguous where other sources (Security 4688) also provide the category | 2,247 | Use the appendix table as the logsource filter in production-config runs. A pipeline that also accepts Security 4688 for `process_creation` is recorded as a `config` difference. |
+| S38 | `definition` in logsource is not evaluated by converters | Rules spec, LogSource | clear | — | Ignored. |
+
+## New: YAML and value typing
+
+| ID | Clause | Spec source | Status | Rules | Evaluator behaviour / working interpretation |
+| --- | --- | --- | --- | --- | --- |
+| S39 | Rules are YAML; unquoted scalars are typed by the YAML loader (`true` is a boolean, `0x10` is the integer 16, `010` is the integer 8 in YAML 1.1) | Rules spec, Yaml File; General ("treated as strings") | **contradictory**: YAML typing vs "all values are strings" | 1 boolean in scope; 3 `true` values in Windows rules overall | Use pySigma's loader (it keeps booleans as booleans). Compare a boolean `true` case-insensitively with the strings `true`/`True`. Any mismatch on typed values is a spec gap. |
+| S40 | Quoting: only the YAML quote character needs escaping in values | Rules spec, Detection > General | clear | 95 | Escaping of quotes in the target query is the converter's job; a broken query is a `backend-bug`. |
+| S41 | A backslash not followed by a wildcard may be written single or double: `\\` means one backslash | Rules spec, Escape Character | clear (but surprising) | 63 | `C:\\Windows` means `C:\Windows`. A backend that searches for two backslashes is a `backend-bug`. UNC paths therefore need `\\\\` in the rule. |
+
+## New: field names and field values
+
+| ID | Clause | Spec source | Status | Rules | Evaluator behaviour / working interpretation |
+| --- | --- | --- | --- | --- | --- |
+| S42 | Field names are given as they appear in the log source; whether they are case-sensitive is not stated | Rules spec, Field Usage | ambiguous | all | Field names are case-sensitive (exact). SQLite column names are case-insensitive, so `image` and `Image` collide there; such cases are a spec gap. |
+| S43 | Windows XML attributes become `Tag_Attribute` names (`Provider_Name`); dotted names (`event.category`) are allowed in other taxonomies | Rules spec, Field Usage | clear for underscores; ambiguous for dots (flat key or nested object) | — | Dotted names are flat keys in the neutral config. |
+| S44 | A field holding several values (an array) | not covered | ambiguous | — | The field matches if **any** element matches. |
+| S45 | Leading and trailing spaces inside a value are part of the value | Rules spec, Maps (implied) | clear | 532 | No trimming, on either side. |
+| S46 | Whether `*` and `?` match a newline | not covered | ambiguous | 158 `ps_script` rules match multi-line script blocks | `*` matches any character including newline. Matters for Loki and regex-based translations. |
+| S47 | Unicode normalisation (composed vs decomposed characters) | not covered | ambiguous | 23 non-ASCII values | No normalisation; compare code points. |
+| S48 | Repeated spaces and tabs inside values are literal | implied by S3 | clear | 7 | No whitespace collapsing. |
+
+## New: detection structure
+
+| ID | Clause | Spec source | Status | Rules | Evaluator behaviour / working interpretation |
+| --- | --- | --- | --- | --- | --- |
+| S49 | `null` cannot be part of a list of values and must be its own selection | Rules spec, Special Field Values | clear | 0 violations | The evaluator rejects such rules. A backend that converts them silently is noted, not counted. |
+| S50 | Keyword lists with `'\|all':` mean every keyword must appear | Rules spec, Keywords search | ambiguous: in one field or each in any field | — | Each keyword may appear in a different field. |
+| S51 | An empty list of values or an empty selection | not covered | ambiguous | 0 | Rule error. |
+| S52 | A condition that names an identifier which is not defined | Rules spec, Condition (implied) | clear | 0 | Rule error. A backend that converts it is a `backend-bug`. |
+| S53 | Identifiers defined but not used in the condition are ignored | Rules spec, Condition (implied) | clear | — | |
+| S54 | Several fields in one map, one of them missing from the event | S8 + S25 | clear | — | The selection is false. |
+
+## New: condition parsing
+
+| ID | Clause | Spec source | Status | Rules | Evaluator behaviour / working interpretation |
+| --- | --- | --- | --- | --- | --- |
+| S55 | Case of the condition keywords (`and` vs `AND`) | Rules spec, Condition (examples are lower case) | ambiguous | — | Accept what pySigma accepts. |
+| S56 | `1 of _filter*`: an explicit pattern that matches identifiers starting with `_` | Rules spec, Condition (the `_` exclusion is stated only for `them`) | ambiguous | 0 | Explicit patterns **include** `_` identifiers. |
+| S57 | `not` applied to `1 of` / `all of` (`not 1 of filter_*`) | Rules spec, Condition (precedence list) | clear | part of 596 | `not` binds looser than `x of`. |
+
+## New: modifier details
+
+| ID | Clause | Spec source | Status | Rules | Evaluator behaviour / working interpretation |
+| --- | --- | --- | --- | --- | --- |
+| S58 | `neq` with a list of values | Modifiers > Generic | ambiguous: different from all (AND) or from any (OR) | 0 | Different from **all** listed values. |
+| S59 | `cidr` value notations: compressed IPv6, zone IDs (`fe80::1%eth0`), IPv4 with leading zeros (`010.0.0.1`) | Modifiers > IP | ambiguous | 16 | Zone IDs and leading-zero IPv4 do not parse, so no match. |
+| S60 | `re` metacharacters outside the spec subset (`\d`, `\w`, `\s`, `(?:`, inline flags, lazy quantifiers, lookaround, backreferences) "are unsupported and can not be used" | Modifiers > Regular Expression | clear | 42 shorthand classes, 19 `(?:`, 10 inline flags, 9 lazy | Rules that use them are **outside the spec**: label `rule-out-of-spec`, reported separately, never as a backend bug or spec gap. The evaluator still runs them with Python `re` for information. |
+| S61 | `re\|i`, `re\|m`, `re\|s` sub-modifiers | Modifiers > Regular Expression | clear | 1 | Map to the regex flags. |
+| S62 | `re` values do not get Sigma wildcard or escape processing | Modifiers > Regular Expression (implied) | clear | 68 | `*` is a regex quantifier, `\` is a regex escape. |
+| S63 | `base64offset` must sit next to `contains` to make sense | Modifiers > Encoding | clear in practice | 7 | Use pySigma's three offset variants. |
+| S64 | `windash` also permutes a `/` that is already in the value, and every dash in the value | Modifiers > String | clear | 71 | All occurrences, all five characters. |
+| S65 | `cased` combined with `contains`, `startswith`, `endswith` and wildcards | Modifiers > Generic | clear | 0 | Wildcards still apply; only case folding is off. |
+| S66 | `exists` takes a boolean, not a string | Modifiers > Generic | clear | 0 | `exists: 'true'` is a rule error. |
+| S67 | A tool that cannot resolve a placeholder (`expand`) must reject the rule | Rules spec, Placeholders | clear | 0 in scope; 17 in `rules-placeholder` | Conformance case: every backend without a placeholder pipeline must refuse to convert. Emitting the literal `%name%` is a `backend-bug`. |
+| S68 | Unknown or misspelled modifiers | not covered | ambiguous | 0 | Rule error. |
+| S69 | Numeric modifiers with float or negative values, or with numbers quoted as strings in the rule | Modifiers > Numeric | ambiguous | 0 | Parse both sides as numbers; quoted numbers are accepted. |
+
+## New: correlation details
+
+| ID | Clause | Spec source | Status | Evaluator behaviour / working interpretation |
+| --- | --- | --- | --- | --- |
+| S70 | Allowed correlation types are listed as 4, but `value_sum`, `value_avg` and `value_percentile` are defined later | Correlation spec, Correlation type vs Correlation Types | **contradictory** | Accept all 7. A backend that rejects the last 3 is not a bug. |
+| S71 | `group-by` is "Use: mandatory" but the text says it "optionally defines" fields | Correlation spec, Grouping | **contradictory** | A correlation without `group-by` groups all events together. |
+| S72 | `value_count` counts distinct values; whether `Admin` and `admin` are distinct is not stated | Correlation spec, Value Count + S1 | ambiguous | Distinct after case folding (S1). |
+| S73 | `value_count` with several `field` values links them with AND | Correlation spec, Value Count | ambiguous (counted as tuples or separately) | Count distinct tuples. |
+| S74 | `value_percentile` semantics ("check when a certain percentage of observed values occur") | Correlation spec, Value Percentile | ambiguous | Treat as: the value's share of all events in the group, in percent, compared with the condition. Spec gap on every disagreement. |
+| S75 | `aliases` map one group-by name to different fields per referenced rule | Correlation spec, Field Name Aliases | clear | |
+| S76 | Referenced rules may be given by `id` or `name`; correlations may reference correlations (chains) | Correlation spec, Related rules | clear | |
+| S77 | `generate`: by default only the correlation query is produced, not the referenced rules | Correlation spec, Generate | clear | A backend that emits the base rules as alerts by default is a `backend-bug`. |
+| S78 | A backend must raise an error rather than convert a feature it cannot support where the spec says "must" (counting by group, applying the condition) | Correlation spec, Compatibility | clear | A silent conversion that drops grouping or the condition is a `backend-bug`. |
+| S79 | A backend should warn when it can only approximate a "should" feature (ordering, sliding windows) | Correlation spec, Compatibility | clear | A tumbling window **with** a warning is a spec gap (S33); **without** a warning it is a `backend-bug` against this clause. |
+| S80 | `timespan` format is a number plus `s`, `m`, `h` or `d` in lower case | Correlation spec, Time Selection | clear | Other formats are rule errors. |
+
+## New: global filters (meta-filters)
+
+No global filters are shipped in the in-scope folder, so these are conformance cases only.
+
+| ID | Clause | Spec source | Status | Evaluator behaviour / working interpretation |
+| --- | --- | --- | --- | --- |
+| S81 | A filter applies its selection to the rules listed in `filter.rules` to suppress their matches | Filters spec, Global Filter | ambiguous: the spec says "suppress" but does not give the boolean form | `rule condition and not filter condition`. |
+| S82 | The filter's logsource versus the rule's logsource | Filters spec, Log source | ambiguous | The filter applies only when the logsources are equal. |
+| S83 | A filter that references a rule id that does not exist | not covered | ambiguous | Ignored with a warning. |
+
+## New: field value formats
+
+| ID | Clause | Spec source | Status | Rules | Evaluator behaviour / working interpretation |
+| --- | --- | --- | --- | --- | --- |
+| S84 | `Hashes` holds several hashes in one string (`SHA1=...,MD5=...,SHA256=...,IMPHASH=...`), as Sysmon writes it | Taxonomy appendix, Fields | clear for the neutral config; the production mapping to per-hash fields is a pipeline choice | 46 | Neutral config: plain string matching. Production config: differences are `config`, not bugs. |
+
+## Open questions for the co-author
+
+1. S10 keywords: substring in any field (current choice) or a full-text match on the raw message?
+2. S11 integers: string comparison (current choice) or numeric comparison when both sides parse?
+3. S24 null: absent-or-null (current choice), or absent only?
+4. S33 correlation windows: sliding (current choice) or tumbling?

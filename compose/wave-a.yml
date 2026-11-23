@@ -1,0 +1,45 @@
+# Wave A: Elasticsearch (Lucene, ES|QL, EQL), OpenSearch (Lucene), Grafana Loki (LogQL).
+# Budget about 4 GB. No GUIs: Kibana and Grafana are left out on purpose.
+# Start:  docker compose -f compose/wave-a.yml up -d
+# Stop:   docker compose -f compose/wave-a.yml down -v
+name: lit-wave-a
+
+services:
+  elasticsearch:
+    # Official image, also published as docker.elastic.co/elasticsearch/elasticsearch:9.5.5
+    image: elasticsearch:9.5.5
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.ml.enabled=false
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+      - cluster.routing.allocation.disk.threshold_enabled=false
+    ports: ["127.0.0.1:9200:9200"]
+    mem_limit: 2g
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s || exit 1"]
+      interval: 10s
+      retries: 30
+
+  opensearch:
+    # Mirror if Docker Hub rate-limits you: public.ecr.aws/opensearchproject/opensearch:3.10.0
+    image: opensearchproject/opensearch:3.10.0
+    environment:
+      - discovery.type=single-node
+      - DISABLE_SECURITY_PLUGIN=true
+      - DISABLE_INSTALL_DEMO_CONFIG=true
+      - OPENSEARCH_JAVA_OPTS=-Xms768m -Xmx768m
+      - cluster.routing.allocation.disk.threshold_enabled=false
+    ports: ["127.0.0.1:9201:9200"]
+    mem_limit: 1536m
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fs http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s || exit 1"]
+      interval: 10s
+      retries: 30
+
+  loki:
+    image: grafana/loki:3.6.22
+    command: ["-config.file=/etc/loki/lit.yaml"]
+    volumes: ["./loki-config.yaml:/etc/loki/lit.yaml:ro"]
+    ports: ["127.0.0.1:3100:3100"]
+    mem_limit: 512m

@@ -1,0 +1,184 @@
+{
+  "run_id": "T9_001_whoami_all_20261123t110035",
+  "created_utc": "2026-11-23T11:00:41+00:00",
+  "repo_commit": "13c38a966138681b59df0f5e99239481b0051e64",
+  "sigmahq_commit": "552f3fee420ef232a8e5790c4fae591847e32347",
+  "sigmahq_tag": "r2026-07-01",
+  "python": "3.13.18",
+  "platform": "Linux-6.18.44-fc-v726-x86_64-with-glibc2.39",
+  "packages": {
+    "pySigma": "1.5.1",
+    "sigma-cli": "3.1.0",
+    "pySigma-backend-splunk": "2.1.0",
+    "pySigma-backend-elasticsearch": "2.1.1",
+    "pySigma-backend-opensearch": "2.0.3",
+    "pySigma-backend-kusto": "1.0.1",
+    "pySigma-backend-loki": "0.15.1",
+    "pySigma-backend-sqlite": "2.0.0"
+  },
+  "containers": [
+    {
+      "container": "lit-wave-a-loki-1",
+      "image": "grafana/loki:3.6.22",
+      "image_id": "sha256:4cf4ceb20e88b0543c88b541a71797c22a46eade04dd588dcdebf9f2b9c36063"
+    },
+    {
+      "container": "lit-wave-a-elasticsearch-1",
+      "image": "elasticsearch:9.5.5",
+      "image_id": "sha256:6f11b295d5099c18b8774d280a82725d1184d0d5cb08373b12785ce7cd7a9bfb"
+    },
+    {
+      "container": "lit-wave-a-opensearch-1",
+      "image": "opensearchproject/opensearch:3.10.0",
+      "image_id": "sha256:02d6d6e40c820ae08233b60540aa5d3d9364d64e2dc724e38d6c8c794879b2a0"
+    },
+    {
+      "container": "lit-wave-b-splunk-1",
+      "image": "splunk/splunk:10.6.2",
+      "image_id": "sha256:e26840dfe69ec9ff305c10681664900168849c3ff346a9cf49322b5351841f3f"
+    },
+    {
+      "container": "lit-wave-b-kusto-1",
+      "image": "mcr.microsoft.com/azuredataexplorer/kustainer-linux:latest",
+      "image_id": "sha256:b60aa99b1da74baaff640aa3f85be5d74090018881e290e15a7cc981ca36d4fa"
+    }
+  ],
+  "engines": {
+    "elasticsearch": {
+      "targets": [
+        "lucene",
+        "esql",
+        "eql"
+      ],
+      "health": {
+        "distribution": "elasticsearch",
+        "version": "9.5.5"
+      },
+      "storage": {
+        "index_template": "raw-keyword",
+        "mapping": {
+          "dynamic_templates": [
+            {
+              "strings_as_keyword": {
+                "match_mapping_type": "string",
+                "mapping": {
+                  "type": "keyword",
+                  "ignore_above": 32766
+                }
+              }
+            }
+          ],
+          "properties": {
+            "@timestamp": {
+              "type": "date"
+            },
+            "event_id": {
+              "type": "keyword"
+            }
+          }
+        }
+      }
+    },
+    "kusto": {
+      "targets": [
+        "kusto"
+      ],
+      "health": {
+        "version": "2026-11-23T04:48:32Z"
+      },
+      "storage": {
+        "ingest": "inline CSV",
+        "types": "long/real/bool when all values are, else string",
+        "missing_field": "empty string (Kusto strings cannot be null)",
+        "schemas": {
+          "t9_001_whoami_all_20261123t110035": {
+            "TimeGenerated": "datetime",
+            "event_id": "string",
+            "EventID": "long",
+            "Image": "string",
+            "OriginalFileName": "string",
+            "CommandLine": "string"
+          }
+        }
+      }
+    },
+    "loki": {
+      "targets": [
+        "loki"
+      ],
+      "health": {
+        "version": "3.6.22"
+      },
+      "storage": {
+        "line_format": "JSON object per event",
+        "labels": [
+          "lit_dataset"
+        ],
+        "timestamp": "event @timestamp"
+      }
+    },
+    "opensearch": {
+      "targets": [
+        "opensearch_lucene"
+      ],
+      "health": {
+        "distribution": "opensearch",
+        "version": "3.10.0"
+      },
+      "storage": {
+        "index_template": "raw-keyword",
+        "mapping": {
+          "dynamic_templates": [
+            {
+              "strings_as_keyword": {
+                "match_mapping_type": "string",
+                "mapping": {
+                  "type": "keyword",
+                  "ignore_above": 32766
+                }
+              }
+            }
+          ],
+          "properties": {
+            "@timestamp": {
+              "type": "date"
+            },
+            "event_id": {
+              "type": "keyword"
+            }
+          }
+        }
+      }
+    },
+    "splunk": {
+      "targets": [
+        "splunk"
+      ],
+      "health": {
+        "version": "10.6.2.5",
+        "license": "Trial"
+      },
+      "storage": {
+        "ingest": "HEC /services/collector/event",
+        "sourcetype": "_json",
+        "field_extraction": "search-time JSON (KV_MODE=json via _json sourcetype)"
+      }
+    },
+    "sqlite": {
+      "targets": [
+        "sqlite"
+      ],
+      "health": {
+        "sqlite_version": "3.53.1"
+      },
+      "storage": {
+        "table": "logs",
+        "column_types": "none (dynamic typing)",
+        "missing_field": "NULL",
+        "regexp": "python re.search, as Zircolite"
+      }
+    }
+  },
+  "wave": "all",
+  "case": "conformance/T9-logic/T9-001-whoami-all"
+}

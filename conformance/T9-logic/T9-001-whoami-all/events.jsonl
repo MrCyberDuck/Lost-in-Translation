@@ -1,0 +1,5 @@
+{"event_id":"w1","@timestamp":"2026-11-23T10:00:01Z","EventID":1,"Image":"C:\\Windows\\System32\\whoami.exe","OriginalFileName":"whoami.exe","CommandLine":"whoami /all"}
+{"event_id":"w2","@timestamp":"2026-11-23T10:00:02Z","EventID":1,"Image":"C:\\Windows\\System32\\whoami.exe","OriginalFileName":"whoami.exe","CommandLine":"whoami /ALL"}
+{"event_id":"w3","@timestamp":"2026-11-23T10:00:03Z","EventID":1,"Image":"C:\\Windows\\System32\\whoami.exe","OriginalFileName":"whoami.exe","CommandLine":"whoami \u2013all"}
+{"event_id":"w4","@timestamp":"2026-11-23T10:00:04Z","EventID":1,"Image":"C:\\Windows\\System32\\whoami.exe","OriginalFileName":"whoami.exe","CommandLine":"whoami /groups"}
+{"event_id":"w5","@timestamp":"2026-11-23T10:00:05Z","EventID":1,"Image":"C:\\Windows\\System32\\cmd.exe","OriginalFileName":"Cmd.Exe","CommandLine":"cmd.exe /c dir /all"}

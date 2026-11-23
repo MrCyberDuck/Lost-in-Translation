@@ -1,0 +1,104 @@
+[
+  {
+    "target": "lucene",
+    "engine": "elasticsearch",
+    "queries": [
+      "(Image:*\\\\whoami.exe OR OriginalFileName:whoami.exe) AND CommandLine:(*\\ \\-all* OR *\\ \\/all* OR *\\ \u2013all* OR *\\ \u2014all* OR *\\ \u2015all*)"
+    ],
+    "matched": [
+      "w1",
+      "w3"
+    ],
+    "status": "fail"
+  },
+  {
+    "target": "esql",
+    "engine": "elasticsearch",
+    "queries": [
+      "from * metadata _id, _index, _version | where (ends_with(Image, \"\\\\whoami.exe\") or OriginalFileName==\"whoami.exe\") and (CommandLine like \"* -all*\" or CommandLine like \"* /all*\" or CommandLine like \"* \u2013all*\" or CommandLine like \"* \u2014all*\" or CommandLine like \"* \u2015all*\")"
+    ],
+    "matched": [
+      "w1",
+      "w3"
+    ],
+    "status": "fail"
+  },
+  {
+    "target": "eql",
+    "engine": "elasticsearch",
+    "queries": [
+      "any where (Image:\"*\\\\whoami.exe\" or OriginalFileName:\"whoami.exe\") and CommandLine like~ (\"* -all*\", \"* /all*\", \"* \u2013all*\", \"* \u2014all*\", \"* \u2015all*\")"
+    ],
+    "matched": [
+      "w1",
+      "w2",
+      "w3"
+    ],
+    "status": "pass"
+  },
+  {
+    "target": "kusto",
+    "engine": "kusto",
+    "queries": [
+      "(Image endswith \"\\\\whoami.exe\" or OriginalFileName =~ \"whoami.exe\") and (CommandLine contains \" -all\" or CommandLine contains \" /all\" or CommandLine contains \" \u2013all\" or CommandLine contains \" \u2014all\" or CommandLine contains \" \u2015all\")"
+    ],
+    "matched": [
+      "w1",
+      "w2",
+      "w3"
+    ],
+    "status": "pass"
+  },
+  {
+    "target": "loki",
+    "engine": "loki",
+    "queries": [
+      "{job=~\"eventlog|winlog|windows|fluentbit.*\"} | json | (Image=~`(?i).*\\\\whoami\\.exe$` or OriginalFileName=~`(?i)^whoami\\.exe$`) and CommandLine=~`(?i).*\\ \\-all.*` or CommandLine=~`(?i).*\\ /all.*` or CommandLine=~`(?i).*\\ \u2013all.*` or CommandLine=~`(?i).*\\ \u2014all.*` or CommandLine=~`(?i).*\\ \u2015all.*`"
+    ],
+    "matched": [
+      "w1",
+      "w2",
+      "w3",
+      "w5"
+    ],
+    "status": "fail"
+  },
+  {
+    "target": "opensearch_lucene",
+    "engine": "opensearch",
+    "queries": [
+      "(Image:*\\\\whoami.exe OR OriginalFileName:whoami.exe) AND CommandLine:(*\\ \\-all* OR *\\ \\/all* OR *\\ \u2013all* OR *\\ \u2014all* OR *\\ \u2015all*)"
+    ],
+    "matched": [
+      "w1",
+      "w3"
+    ],
+    "status": "fail"
+  },
+  {
+    "target": "splunk",
+    "engine": "splunk",
+    "queries": [
+      "Image=\"*\\\\whoami.exe\" OR OriginalFileName=\"whoami.exe\" CommandLine=\"* -all*\" OR CommandLine=\"* /all*\" OR CommandLine=\"* \u2013all*\" OR CommandLine=\"* \u2014all*\" OR CommandLine=\"* \u2015all*\""
+    ],
+    "matched": [
+      "w1",
+      "w2",
+      "w3"
+    ],
+    "status": "pass"
+  },
+  {
+    "target": "sqlite",
+    "engine": "sqlite",
+    "queries": [
+      "SELECT * FROM logs WHERE (Image LIKE '%\\\\whoami.exe' ESCAPE '\\' OR OriginalFileName='whoami.exe') AND (CommandLine LIKE '% -all%' ESCAPE '\\' OR CommandLine LIKE '% /all%' ESCAPE '\\' OR CommandLine LIKE '% \u2013all%' ESCAPE '\\' OR CommandLine LIKE '% \u2014all%' ESCAPE '\\' OR CommandLine LIKE '% \u2015all%' ESCAPE '\\')"
+    ],
+    "matched": [
+      "w1",
+      "w2",
+      "w3"
+    ],
+    "status": "pass"
+  }
+]

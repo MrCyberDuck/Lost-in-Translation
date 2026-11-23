@@ -1,0 +1,11 @@
+# Direct dependencies. Exact versions used in runs are in requirements.lock.
+sigma-cli
+pySigma
+pySigma-backend-splunk
+pySigma-backend-elasticsearch
+pySigma-backend-opensearch
+pySigma-backend-kusto
+pySigma-backend-loki
+pySigma-backend-sqlite
+requests
+pytest

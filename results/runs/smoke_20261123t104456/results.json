@@ -1,0 +1,68 @@
+[
+  {
+    "target": "lucene",
+    "engine": "elasticsearch",
+    "queries": [
+      "Image:*\\\\cmd.exe AND CommandLine:*whoami*"
+    ],
+    "matched": [
+      "smoke-1"
+    ],
+    "status": "pass"
+  },
+  {
+    "target": "esql",
+    "engine": "elasticsearch",
+    "queries": [
+      "from * metadata _id, _index, _version | where ends_with(Image, \"\\\\cmd.exe\") and CommandLine like \"*whoami*\""
+    ],
+    "matched": [
+      "smoke-1"
+    ],
+    "status": "pass"
+  },
+  {
+    "target": "eql",
+    "engine": "elasticsearch",
+    "queries": [
+      "any where Image:\"*\\\\cmd.exe\" and CommandLine:\"*whoami*\""
+    ],
+    "matched": [
+      "smoke-1"
+    ],
+    "status": "pass"
+  },
+  {
+    "target": "opensearch_lucene",
+    "engine": "opensearch",
+    "queries": [
+      "Image:*\\\\cmd.exe AND CommandLine:*whoami*"
+    ],
+    "matched": [
+      "smoke-1"
+    ],
+    "status": "pass"
+  },
+  {
+    "target": "loki",
+    "engine": "loki",
+    "queries": [
+      "{job=~\"eventlog|winlog|windows|fluentbit.*\"} | json | Image=~`(?i).*\\\\cmd\\.exe$` and CommandLine=~`(?i).*whoami.*`"
+    ],
+    "matched": [
+      "smoke-1"
+    ],
+    "status": "pass"
+  },
+  {
+    "target": "sqlite",
+    "engine": "sqlite",
+    "queries": [
+      "SELECT * FROM logs WHERE Image LIKE '%\\\\cmd.exe' ESCAPE '\\' AND CommandLine LIKE '%whoami%' ESCAPE '\\'"
+    ],
+    "matched": [
+      "smoke-1"
+    ],
+    "status": "pass"
+  }
+]
