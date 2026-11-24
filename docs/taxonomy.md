@@ -21,7 +21,7 @@ We examined the question from nine perspectives, then had the draft reviewed by 
 | P1 | Spec clauses | Mapped each of S1 to S87 ([spec-clauses.md](spec-clauses.md)) onto an area | 16 clauses have their primary home outside T1 to T14 (S22, S36 to S40, S42 to S44, S81 to S87) |
 | P2 | Processing layers | Followed one rule from YAML file to engine verdict and asked at each step what can change the meaning (section 3) | Rule loading (T18), query structure (T19), storage schema (T25), event representation (T26) |
 | P3 | Target languages | For each query language (Lucene, ES\|QL, EQL, KQL, SPL, LogQL, SQL), listed the semantics that differ from Sigma: case, anchoring, tokenisation, null handling, typing, quoting | Literal escaping per language (T3, T14), anchoring (T2, T7), bare-string keywords (T12), three-valued logic outside Chainsaw (T4) |
-| P4 | Backend source and options | Read the class attributes and constructor options of each pySigma backend (precedence, escaping, wildcard tokens, quoting patterns, null and exists expressions, `convert_or_as_in`, deferred parts) | Field-name quoting (T15), `?` mapped to `*` (T2), case lost in value lists (T1), deferred parts (T19), backend options (T10.6) |
+| P4 | Backend source and options | Read the class attributes and constructor options of each pySigma backend (precedence, escaping, wildcard tokens, quoting patterns, null and exists expressions, `convert_or_as_in`, deferred parts) | Field-name quoting (T15), `?` mapped to `*` (T2), case lost in value lists (T1), deferred parts (T19), backend options (sub-area T10.6) |
 | P5 | Conversion probes | Converted 66 one-feature rules with all 8 pySigma targets ([harness/probe_conversion.py](../harness/probe_conversion.py), output [results/taxonomy/conversion_probe.json](../results/taxonomy/conversion_probe.json)), plus correlation and filter probes ([probe_correlation.py](../harness/probe_correlation.py), [probe_filters.py](../harness/probe_filters.py), outputs in [results/taxonomy/](../results/taxonomy/)) | The conversion evidence quoted in section 5 |
 | P6 | Our own findings | Placed every measured deviation (D1 to D3 from the demo, C1 to C9 and H1 to H4 from Phase 2) in an area | Section 7 |
 | P7 | Event source and ingest | Asked how the same Windows event reaches each engine: XML to JSON, rendered vs raw values, index mappings, field types, size limits | T13, T25, T26 |
@@ -36,6 +36,8 @@ We examined the question from nine perspectives, then had the draft reviewed by 
 4. Every backend class attribute that changes matching semantics maps to an area. Backend options and pipeline transformation types are listed in T10.6 and T10.2 as far as we have read them; that list is **not yet complete**, so check 4 is partial.
 
 A new mechanism that fits no area gets a new ID (T27 and up). IDs are never reused or renumbered.
+
+**IDs.** `T1` to `T26` are areas; `Tn.m` is sub-area *m* of area *Tn* (for example `T10.6`, backend options), defined in section 5.
 
 **Evidence labels.** Each claim about a target carries one label.
 
@@ -129,7 +131,7 @@ Areas with no primary clause (T10, T19, T20, T21, T24, T25, T26) have no spec ve
 
 ## 5. Areas in detail
 
-Each area gives the Sigma intent, its sub-areas with evidence per target, and an example case. Target names: Lucene, OpenSearch (OpenSearch Lucene), ES\|QL, EQL, KQL (Kusto), SPL (Splunk), LogQL (Loki), SQLite, Chainsaw, Hayabusa.
+Each area gives the Sigma intent, its sub-areas with evidence per target, and an example case. A sub-area ID has the form `Tn.m`: sub-area *m* of area *Tn*. For example, `T10.6` is the sixth sub-area of T10 ("Backend options"). The other sections refer to sub-areas by these IDs, and findings are labelled with them. Target names: Lucene, OpenSearch (OpenSearch Lucene), ES\|QL, EQL, KQL (Kusto), SPL (Splunk), LogQL (Loki), SQLite, Chainsaw, Hayabusa.
 
 ### T1. Case
 
