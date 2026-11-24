@@ -361,6 +361,13 @@ def test_s60_out_of_spec_regex_flagged():
     assert comp.out_of_spec
 
 
+def test_s88_all_on_single_value_flagged_but_matches():
+    comp = compile_rule(rule("sel:\n    CommandLine|contains|all: 'a'\ncondition: sel"))
+    assert comp.out_of_spec and "S88" in comp.clauses
+    assert one("CommandLine|contains|all: 'a'", {"CommandLine": "xay"})
+    assert not compile_rule(rule("sel:\n    CommandLine|contains|all: ['a', 'b']\ncondition: sel")).out_of_spec
+
+
 def test_s61_regex_flags():
     assert one("CommandLine|re|i: 'WHOAMI'", {"CommandLine": "whoami"})
     assert one("CommandLine|re|s: 'a.b'", {"CommandLine": "a\nb"})

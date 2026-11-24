@@ -1,0 +1,40 @@
+===== event_count
+  lucene   'ERR: NotImplementedError: Backend does not support correlation rules.'
+  esql     'Q: from * metadata _id, _index, _version | where EventID==4624 ;; from * metadata _id, _index, _version | where EventID==4625\n| eval timebucket=date_trunc(5minutes, @timestamp) | stats event_count=count() by timebucket, TargetUserName\n| where event_count >= 5'
+  eql      'Q: any where EventID:4624 ;; sequence by TargetUserName with maxspan=5m \n [any where EventID:4625]  with runs=5'
+  opensearch_lucene 'ERR: NotImplementedError: Backend does not support correlation rules.'
+  kusto    'ERR: NotImplementedError: Backend does not support correlation rules.'
+===== value_count
+  lucene   'ERR: NotImplementedError: Backend does not support correlation rules.'
+  esql     'Q: from * metadata _id, _index, _version | where EventID==4624 ;; from * metadata _id, _index, _version | where EventID==4625\n| eval timebucket=date_trunc(5minutes, @timestamp) | stats value_count=count_distinct(TargetUserName) by timebucket, IpAddress\n| where value_count >= 5'
+  eql      'Q: any where EventID:4624 ;; sequence by IpAddress with maxspan=5m \n [any where EventID:4625] by TargetUserName with runs=5'
+  opensearch_lucene 'ERR: NotImplementedError: Backend does not support correlation rules.'
+  kusto    'ERR: NotImplementedError: Backend does not support correlation rules.'
+===== temporal_ordered
+  lucene   'ERR: NotImplementedError: Backend does not support correlation rules.'
+  esql     "ERR: NotImplementedError: Correlation type 'temporal_ordered' is not supported by backend."
+  eql      'Q: sequence by TargetUserName with maxspan=5m \n [any where EventID:4625] \n [any where EventID:4624] by  with runs=2'
+  opensearch_lucene 'ERR: NotImplementedError: Backend does not support correlation rules.'
+  kusto    'ERR: NotImplementedError: Backend does not support correlation rules.'
+===== no_groupby
+  lucene   'ERR: NotImplementedError: Backend does not support correlation rules.'
+  esql     'Q: from * metadata _id, _index, _version | where EventID==4624 ;; from * metadata _id, _index, _version | where EventID==4625\n| eval timebucket=date_trunc(5minutes, @timestamp) | stats event_count=count() by timebucket\n| where event_count >= 5'
+  eql      'Q: any where EventID:4624 ;; sequence  with maxspan=5m \n [any where EventID:4625]  with runs=5'
+  opensearch_lucene 'ERR: NotImplementedError: Backend does not support correlation rules.'
+  kusto    'ERR: NotImplementedError: Backend does not support correlation rules.'
+===== event_count
+  splunk   'Q: EventID=4624 ;; EventID=4625\n\n| bin _time span=5m\n| stats count as event_count by _time TargetUserName\n\n| search event_count >= 5'
+  loki     'Q: {job=~"eventlog|winlog|windows|fluentbit.*"} | json | EventID=4624 ;; sum by (TargetUserName) (count_over_time({job=~"eventlog|winlog|windows|fluentbit.*"} | json | EventID=4625 [5m])) >= 5'
+  sqlite   "Q: SELECT * FROM logs WHERE EventID=4624 ;; WITH sigma_402a56b8b14d_raw0 AS (SELECT CAST(`rowid` AS TEXT) AS rid, '0:' || CASE WHEN instr(CAST(`rowid` AS TEXT), char(0)) OR instr(CAST(`rowid` AS TEXT), char(1)) THEN json_extract(replace(replace(replace(json_quote(CAST(`rowid` AS TEXT)), '\\\\', '\\u005c'), '\\u0001', '\\u00011'), '\\u0000', '\\u00010'), '$') ELSE CAST(`rowid` AS TEXT) END AS eid, ROUND((julianday(timestamp)"
+===== value_count
+  splunk   'Q: EventID=4624 ;; EventID=4625\n\n| bin _time span=5m\n| stats dc(TargetUserName) as value_count by _time IpAddress\n\n| search value_count >= 5'
+  loki     'Q: {job=~"eventlog|winlog|windows|fluentbit.*"} | json | EventID=4624 ;; count without (TargetUserName) (sum by (IpAddress, TargetUserName) (count_over_time({job=~"eventlog|winlog|windows|fluentbit.*"} | json | EventID=4625 [5m]))) >= 5'
+  sqlite   "Q: SELECT * FROM logs WHERE EventID=4624 ;; WITH sigma_b0998fee7f91_raw0 AS (SELECT CAST(`rowid` AS TEXT) AS rid, '0:' || CASE WHEN instr(CAST(`rowid` AS TEXT), char(0)) OR instr(CAST(`rowid` AS TEXT), char(1)) THEN json_extract(replace(replace(replace(json_quote(CAST(`rowid` AS TEXT)), '\\\\', '\\u005c'), '\\u0001', '\\u00011'), '\\u0000', '\\u00010'), '$') ELSE CAST(`rowid` AS TEXT) END AS eid, ROUND((julianday(timestamp)"
+===== temporal_ordered
+  splunk   'Q: | multisearch\n[ search EventID=4625 | eval event_type="base" ]\n[ search EventID=4624 | eval event_type="base2" ]\n\n| bin _time span=5m\n| stats dc(event_type) as event_type_count earliest(eval(if(event_type="base",_time,null()))) as first_base earliest(eval(if(event_type="base2",_time,null()))) as first_base2 by _time TargetUserName\n\n| search event_type_count >= 2\n| where first_base < first_base2'
+  loki     "ERR: SigmaFeatureNotSupportedByBackendError: Ordered temporal correlation rules are not supported by the Loki backend, as LogQL's logical/set operators do not support enforcing an order between events."
+  sqlite   "Q: WITH sigma_3797028fdabb_raw0 AS (SELECT CAST(`rowid` AS TEXT) AS rid, '0:' || CASE WHEN instr(CAST(`rowid` AS TEXT), char(0)) OR instr(CAST(`rowid` AS TEXT), char(1)) THEN json_extract(replace(replace(replace(json_quote(CAST(`rowid` AS TEXT)), '\\\\', '\\u005c'), '\\u0001', '\\u00011'), '\\u0000', '\\u00010'), '$') ELSE CAST(`rowid` AS TEXT) END AS eid, ROUND((julianday(timestamp) - 2440587.5) * 86400000) / 1000.0 AS ts,"
+===== no_groupby
+  splunk   'Q: EventID=4624 ;; EventID=4625\n\n| bin _time span=5m\n| stats count as event_count by _time\n\n| search event_count >= 5'
+  loki     'Q: {job=~"eventlog|winlog|windows|fluentbit.*"} | json | EventID=4624 ;; sum(count_over_time({job=~"eventlog|winlog|windows|fluentbit.*"} | json | EventID=4625 [5m])) >= 5'
+  sqlite   "Q: SELECT * FROM logs WHERE EventID=4624 ;; WITH sigma_36705606374c_raw0 AS (SELECT CAST(`rowid` AS TEXT) AS rid, '0:' || CASE WHEN instr(CAST(`rowid` AS TEXT), char(0)) OR instr(CAST(`rowid` AS TEXT), char(1)) THEN json_extract(replace(replace(replace(json_quote(CAST(`rowid` AS TEXT)), '\\\\', '\\u005c'), '\\u0001', '\\u00011'), '\\u0000', '\\u00010'), '$') ELSE CAST(`rowid` AS TEXT) END AS eid, ROUND((julianday(timestamp)"

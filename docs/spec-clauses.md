@@ -199,6 +199,14 @@ No global filters are shipped in the in-scope folder, so these are conformance c
 | S86 | Windows events that carry their payload in `<UserData>` instead of `<EventData>` (WMI-Activity 5858, some Task Scheduler and AppLocker events) | Rules spec, Field Usage, point 3 covers `<EventData>` `Data Name` only | ambiguous | 1 in the regression data | The children of the single `<UserData>` wrapper element are fields under their own names (`harness/datasets.py`). Chainsaw's mapping only reaches `EventData`, Hayabusa reaches both. |
 | S87 | Unnamed `<Data>` elements in `<EventData>` (classic Application-log providers such as ESENT, MsiInstaller, MSSQL, and PowerShell classic 400/600/800) | not covered (point 3 assumes every `Data` has a `Name`) | ambiguous | SigmaHQ rules address them as `Data` | They form one multi-valued field `Data`; a value matches if any element matches (S44). Hayabusa does the same. |
 
+## New with the taxonomy (24 Nov 2026)
+
+Added by Nik's decision of 24 Nov 2026 while reviewing [taxonomy.md](taxonomy.md) (area T9.5).
+
+| ID | Clause | Spec source | Status | Rules | Evaluator behaviour / working interpretation |
+| --- | --- | --- | --- | --- | --- |
+| S88 | `all` on a single value is not allowed: "Single item values are not allowed to have an `all` modifier as some back-ends cannot support it" | Modifiers > Generic, `all` | clear | 0 of the 2,729 Windows rule files | The rule is outside the spec: label `rule-out-of-spec`, as for S60. The evaluator flags it and still matches it as the single value. pySigma 1.5.1 and 2.1.1 accept it silently on all 8 targets. |
+
 ## Questions closed on 23 Nov 2026
 
 These four were open for the co-author. Nik decided on 23 Nov 2026 to keep the working interpretation for each. The clauses stay `ambiguous`, so every finding that depends on them is a `spec-gap`.
