@@ -105,6 +105,8 @@ python -m harness.explain evtx-attack-samples
 
 Results are in `results/phase2/<dataset>/`. The attack-samples event file (31 MB) is not committed; regenerate it with the command above.
 
+On another machine (for example Windows), point the harness at the native tools with environment variables. `LIT_NATIVE` sets a base folder; `LIT_CHAINSAW`, `LIT_CHAINSAW_MAPPING`, `LIT_HAYABUSA`, `LIT_HAYABUSA_CONFIG` and `LIT_HAYABUSA_CONVERTED` override single paths. When `LIT_CHAINSAW_MAPPING` is unset, the mapping is looked up next to the Chainsaw binary (release zip) and then two levels up (cargo build). `harness/explain.py` and production Hayabusa runs also need the rules converted by sigma-to-hayabusa-converter in `LIT_HAYABUSA_CONVERTED`.
+
 ### Data
 
 - **SigmaHQ regression data** (pinned tag): 197 EVTX files, 233 events, one test per (rule, EVTX) pair, 197 tests, 149 of them for in-scope rules.
