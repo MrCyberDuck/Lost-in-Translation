@@ -4,7 +4,7 @@
 
 **Result: gate passed.** On the regression data with logsource applied (production config), the evaluator agrees with Hayabusa on 2,279 of 2,279 rules (100%) and with Chainsaw on 2,263 of 2,266 rules Chainsaw can load (99.87%). The evaluator passes 197 of 197 SigmaHQ regression tests (Hayabusa 197, Chainsaw 195). On a second, larger real dataset (37,364 events) agreement is 99.96% with Hayabusa and 99.38% with Chainsaw. **Every** remaining disagreement, 343 (rule, event) pairs over both datasets and both configs, is reproduced exactly by switching on a specific, documented behaviour of the engine in the evaluator (section 3); none is left unexplained.
 
-The cross-check found two evaluator bugs, both fixed, and both turned out to be gaps in the clause list: S85 (field names with spaces) and S87 (unnamed `Data` elements). It also made S86 (UserData) explicit. The clause list now has 87 clauses.
+The cross-check found two evaluator bugs, both fixed, and both turned out to be gaps in the clause list: S85 (field names with spaces) and S87 (unnamed `Data` elements). It also made S86 (UserData) explicit. The clause list now has 88 clauses.
 
 ## 1. Design
 
@@ -62,9 +62,9 @@ rule YAML ──► pySigma parser ──► SigmaRule (detections, modified val
 **Two configurations**, as in the plan:
 
 - `neutral`: logsource ignored; every event is in scope. This isolates detection logic.
-- `production`: logsource applied through `harness/evaluator/taxonomy_windows.json`, built from the taxonomy appendix by `python -m harness.evaluator.build_taxonomy`. Categories without a channel mapping (`file_access`, `file_rename`: ETW only) raise `UnsupportedLogsource`.
+- `production`: logsource applied through `harness/evaluator/taxonomy_windows.json`, built from the Sigma spec's taxonomy appendix by `python -m harness.evaluator.build_taxonomy`. Categories without a channel mapping (`file_access`, `file_rename`: ETW only) raise `UnsupportedLogsource`.
 
-**Not in Phase 2:** correlation rules (S31 to S35, S70 to S80) and global filters (S81 to S83). SigmaHQ r2026-07-01 has no correlation rules or filters in scope, so they cannot be cross-checked on real data; they come with the Phase 3 synthetic cases (taxonomy area T11).
+**Not in Phase 2:** correlation rules (S31 to S35, S70 to S80) and global filters (S81 to S83). SigmaHQ r2026-07-01 has no correlation rules or filters in scope, so they cannot be cross-checked on real data; they come with the Phase 3 synthetic cases (taxonomy areas T11 and T23).
 
 ### Usage
 
@@ -197,7 +197,7 @@ Full per-pair tables: `results/phase2/<dataset>/explained.json`; per-rule match 
 
 1. **The oracle is trustworthy for Phase 3.** Two independent Sigma engines with their own parsers agree with it on 99.4% to 100% of rules on real attack data, and every difference is a known, reproducible engine behaviour. A pySigma parsing bug would have shown up as evaluator-vs-native disagreement; none did.
 2. **The clause list was still incomplete, and the cross-check is how it gets completed.** S85 to S87 came from real data, not from reading the spec. Expect more of these when Phase 3 adds synthetic events.
-3. **Missing-field negation is the biggest real-world gap so far.** Chainsaw drops true positives whenever a filter field is absent: 16 LSASS-dump detections (`proc_access_win_lsass_memdump`) on the attack samples in production config. SQL-style three-valued logic in some SIEM backends is likely to behave the same way, so this is a priority area (T6 null/missing) for Phase 3.
+3. **Missing-field negation is the biggest real-world gap so far.** Chainsaw drops true positives whenever a filter field is absent: 16 LSASS-dump detections (`proc_access_win_lsass_memdump`) on the attack samples in production config. ES|QL documents the same pattern: `field != "value"` also excludes events where the field is null ([ES|QL WHERE](https://www.elastic.co/docs/reference/query-languages/esql/commands/where)). This makes it a priority area for Phase 3 (taxonomy T4.3, negation over a missing field).
 4. **`null` versus missing (S24) and string-versus-typed values (S11, S39) are the largest spec gaps** in volume (118 and 14 pairs in the neutral config). They are reported as spec clarifications, not bugs, as decided.
 5. **A spec-faithful engine can miss what the rule author meant.** The Pass-the-Hash rule expects `NtLmSsp`, but Windows writes `NtLmSsp ` with a trailing space. Hayabusa matches only because it trims values (H1, against the spec); the evaluator and Chainsaw miss it. This is a rule-quality finding for SigmaHQ as well as an engine deviation.
 
@@ -232,6 +232,8 @@ Counting disagreements isn't enough. For a paper and for upstream reports, every
 | no clause: only the engine's mapping, config or ingest | `config` | The setup that ships with the engine, not the matching logic. It can usually be fixed by configuration. |
 
 The rules are applied in this order, which is the cautious one (`label()` in `harness/explain.py`). If any mechanism that explains the pair touches an open clause, the pair is a `spec-gap`. Otherwise, if one explanation uses only config mechanisms, it is `config`. Otherwise it is a `backend-bug`. `A&B` means both mechanisms are needed together; `A+B` means either one alone explains the pair. For example, `C1&C4` is a `backend-bug` (C4 is engine logic against a clear clause), and `C1+C3` is a `spec-gap` (C3 touches the ambiguous S86).
+
+The taxonomy area of each mechanism is listed in [taxonomy.md](taxonomy.md), section 7.
 
 ### Summary table
 
