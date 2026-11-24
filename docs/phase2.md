@@ -152,7 +152,7 @@ The Chainsaw negation logic (C4) is not documented anywhere, so it was pinned do
 | Bug | Found by | Fix |
 | --- | --- | --- |
 | Rule field `SourceName` did not match event field `Source Name` (Defender events) | Regression test for the RedSun rule: evaluator missed it, Hayabusa (through its converter) passed it | New clause **S85**: the spec says rule field names are log field names "with all spaces stripped". Evaluator adds space-stripped aliases. |
-| Unnamed `<Data>` elements (ESENT, MsiInstaller, MSSQL, PowerShell classic) became `{"#text": [...]}` and never matched `Data|contains` | EVTX-ATTACK-SAMPLES: Hayabusa matched 12 events the evaluator missed | New clause **S87**: they form the multi-valued field `Data`. Fixed in `harness/datasets.py`. |
+| Unnamed `<Data>` elements (ESENT, MsiInstaller, MSSQL, PowerShell classic) became `{"#text": [...]}` and never matched `Data\|contains` | EVTX-ATTACK-SAMPLES: Hayabusa matched 12 events the evaluator missed | New clause **S87**: they form the multi-valued field `Data`. Fixed in `harness/datasets.py`. |
 
 There was also one bug in the comparison harness (not the evaluator): converted Hayabusa rules were first linked to SigmaHQ rules by their `related: derived` id alone, which SigmaHQ also uses between its own rules, so a few converted rules were attributed to the wrong original. Fixed by matching file name plus link.
 
