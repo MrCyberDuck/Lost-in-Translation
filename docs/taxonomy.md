@@ -528,6 +528,8 @@ Every clause has one primary area; secondary areas list where else it matters. `
 | S86 | T15 | T26 |
 | S87 | T17 | T15 |
 
+The line below counts how many of the 87 clauses have each area as their primary home (it sums to 87). Areas not listed have none: the spec says nothing about them, so they have no spec verdict of their own (section 4). A low count also marks where the spec is thin, and spec gaps are likely there.
+
 Clauses per primary area: T1 3, T2 4, T3 2, T4 8, T5 3, T6 2, T7 4, T8 9, T9 15, T11 16, T12 2, T13 1, T14 2, T15 4, T16 3, T17 3, T18 2, T22 1, T23 3.
 
 ## 7. Measured deviations by area
