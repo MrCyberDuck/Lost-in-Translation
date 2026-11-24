@@ -35,8 +35,18 @@ import yaml
 
 NATIVE = pathlib.Path(os.environ.get("LIT_NATIVE", "/home/user/native"))
 CHAINSAW = pathlib.Path(os.environ.get("LIT_CHAINSAW", NATIVE / "chainsaw/target/release/chainsaw"))
-CHAINSAW_MAPPING = pathlib.Path(os.environ.get(
-    "LIT_CHAINSAW_MAPPING", NATIVE / "chainsaw/mappings/sigma-event-logs-all.yml"))
+
+
+def _default_chainsaw_mapping() -> pathlib.Path:
+    """Next to the binary (release zip layout) or two levels up (cargo build layout)."""
+    name = pathlib.Path("mappings/sigma-event-logs-all.yml")
+    for root in (CHAINSAW.parent, CHAINSAW.parent.parent.parent):
+        if (root / name).exists():
+            return root / name
+    return NATIVE / "chainsaw" / name
+
+
+CHAINSAW_MAPPING = pathlib.Path(os.environ.get("LIT_CHAINSAW_MAPPING") or _default_chainsaw_mapping())
 HAYABUSA = pathlib.Path(os.environ.get("LIT_HAYABUSA", NATIVE / "hayabusa/target/release/hayabusa"))
 HAYABUSA_CONFIG = pathlib.Path(os.environ.get("LIT_HAYABUSA_CONFIG", NATIVE / "hayabusa-rules/config"))
 HAYABUSA_CONVERTED = pathlib.Path(os.environ.get("LIT_HAYABUSA_CONVERTED", NATIVE / "hayabusa-converted"))
