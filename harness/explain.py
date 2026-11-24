@@ -127,8 +127,10 @@ def chainsaw_mechanisms() -> list[Mechanism]:
         Mechanism("C8", "chainsaw", "a number in the rule (3389) does not match a string event value ('3389')",
                   ["S11"], "semantics", sem={"strict_number": True}),
         Mechanism("C7", "chainsaw", "logsource preconditions by Provider/EventID (process_creation also 4688; "
-                  "unlisted categories and services run on every event; title exclusions)", ["S37"], "config",
+                  "unlisted categories and services run on every event)", ["S37"], "config",
                   production_only=True),
+        Mechanism("C9", "chainsaw", "rules listed by title under `exclusions` in the mapping file never run",
+                  [], "config", production_only=True),
     ]
 
 
@@ -183,10 +185,10 @@ def _run(comp_cache, rid, events, mechs: list[Mechanism], config: str, cs_pre=No
     out = set()
     lsf = None
     if config == "production":
+        if "C9" in keys and comp.rule.title in cs_pre[1]:
+            return set()
         if "C7" in keys:
             lsf = chainsaw_logsource(comp.rule, cs_pre[0])
-            if comp.rule.title in cs_pre[1]:
-                return set()
         elif comp.logsource_error is None:
             lsf = comp.logsource_filter
     for e in events:

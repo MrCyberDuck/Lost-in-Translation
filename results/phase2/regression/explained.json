@@ -58,10 +58,16 @@
   },
   "C7": {
    "engine": "chainsaw",
-   "description": "logsource preconditions by Provider/EventID (process_creation also 4688; unlisted categories and services run on every event; title exclusions)",
+   "description": "logsource preconditions by Provider/EventID (process_creation also 4688; unlisted categories and services run on every event)",
    "clauses": [
     "S37"
    ],
+   "kind": "config"
+  },
+  "C9": {
+   "engine": "chainsaw",
+   "description": "rules listed by title under `exclusions` in the mapping file never run",
+   "clauses": [],
    "kind": "config"
   },
   "H1": {
