@@ -10,6 +10,8 @@ The living plan is kept as a Claude Doc: "Sigma Backend Differential Testing: Te
 4. **Storage:** all scripts, data manifests and findings live in this repository.
 5. **Spec gaps are not backend bugs.** Any disagreement whose expected verdict depends on an ambiguous or contradictory spec clause is labelled `spec-gap` and reported as a proposed clarification to the Sigma specification, never as a backend bug. The working interpretations in `docs/spec-clauses.md` are accepted. Enforced by `harness/triage.py`; labels in `docs/triage-labels.md`.
 6. **No upstream bug reports before Phase 3.** Findings are collected until Phase 3, re-verified there in more detail, and reported upstream all at once.
+7. **S25 stays clear.** A missing field never matches, so `not sel` is true; Chainsaw's three-valued negation is a `backend-bug` (Phase 2, `docs/phase2.md`).
+8. **Every backend at its latest release, even across pySigma majors.** The unit under test is each converter as released (backend plus its pySigma core). Until the Elasticsearch, OpenSearch and Kusto backends support pySigma 2.x, Phase 3 uses two environments: pySigma 1.5.x for those three, pySigma 2.x for Splunk, Loki, SQLite and Zircolite. All versions are frozen on one date and recorded per run. Control: the last 1.x release of each moved backend also runs, so differences caused by the pySigma core are attributed to pySigma, not to the backend. The evaluator keeps pySigma 1.5.1 parsing; pySigma 2.x's built-in matcher (`sigma.matching`) is added as an extra cross-check.
 
 ## Core targets
 

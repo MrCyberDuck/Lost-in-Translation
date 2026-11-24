@@ -4,3 +4,6 @@ __pycache__/
 venv/
 results/sqlite/
 .env
+# Phase 2: native-engine scratch folders and the large regenerated event file
+results/phase2/*/work/
+results/phase2/evtx-attack-samples_events.jsonl

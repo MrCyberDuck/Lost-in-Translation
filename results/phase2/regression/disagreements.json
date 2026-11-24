@@ -1,0 +1,190 @@
+[
+ {
+  "rule_id": "d4f1a2b3-7c8e-4d5f-b6a9-1e0c2d3f4e5b",
+  "rule_path": "rules/windows/builtin/wmi/win_wmi_activity_nteventlogfile_cleareventlog.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "regression_data/rules/windows/builtin/wmi/win_wmi_activity_nteventlogfile_cleareventlog/d4f1a2b3-7c8e-4d5f-b6a9-1e0c2d3f4e5b.evtx#5314": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "5ef9853e-4d0e-4a70-846f-a9ca37d876da",
+  "rule_path": "rules/windows/process_access/proc_access_win_lsass_memdump.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "regression_data/rules/windows/process_access/proc_access_win_susp_dbgcore_dbghelp_load/9f5c1d59-33be-4e60-bcab-85d2f566effd.evtx#676404": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "f4bbd493-b796-416e-bbf2-121235348529",
+  "rule_path": "rules/windows/process_creation/proc_creation_win_powershell_non_interactive_execution.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "regression_data/rules/windows/process_creation/proc_creation_win_credential_guard_registry_tampering/c17d47b7-dcd6-4109-87eb-d1817bd4cbc9.evtx#23573": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "regression_data/rules/windows/process_creation/proc_creation_win_powershell_base64_invoke/6385697e-9f1b-40bd-8817-f4a91f40508e.evtx#74514": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "regression_data/rules/windows/process_creation/proc_creation_win_susp_eventlog_content_recon/beaa66d6-aa1b-4e3c-80f5-e0145369bfaf.evtx#26765": [
+    "evaluator",
+    "chainsaw",
+    "hayabusa"
+   ],
+   "regression_data/rules/windows/registry/registry_delete/registry_delete_removal_amsi_registry_key/41d1058a-aea7-4952-9293-29eaaf516465.evtx#16786799": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "regression_data/rules/windows/registry/registry_set/registry_set_amsi_disable/aa37cbb0-da36-42cb-a90f-fdf216fc7467.evtx#16031": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "regression_data/rules/windows/registry/registry_set/registry_set_bypass_uac_using_delegateexecute/46dd5308-4572-4d12-aa43-8938f0184d4f.evtx#27772045": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "regression_data/rules/windows/registry/registry_set/registry_set_change_security_zones/45e112d0-7759-4c2a-aa36-9f8fb79d3393.evtx#28344631": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "regression_data/rules/windows/registry/registry_set/registry_set_change_security_zones/45e112d0-7759-4c2a-aa36-9f8fb79d3393.evtx#28344632": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "regression_data/rules/windows/registry/registry_set/registry_set_change_security_zones/45e112d0-7759-4c2a-aa36-9f8fb79d3393.evtx#28344633": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "regression_data/rules/windows/registry/registry_set/registry_set_credential_guard_disabled/73921b9c-cafd-4446-b0c6-fdb0ace42bc0.evtx#23575": [
+    "evaluator",
+    "hayabusa"
+   ],
+   "regression_data/rules/windows/registry/registry_set/registry_set_susp_user_shell_folders/9c226817-8dc9-46c2-a58d-66655aafd7dc.evtx#74886": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "4720b7df-40c3-48fd-bbdf-fd4b3c464f0d",
+  "rule_path": "rules/windows/registry/registry_set/registry_set_taskcache_entry.yml",
+  "in_scope": true,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "regression_data/rules/windows/registry/registry_delete/registry_delete_schtasks_hide_task_via_index_value_removal/526cc8bc-1cdc-48ad-8b26-f19bff969cec.evtx#156421": [
+    "chainsaw"
+   ],
+   "regression_data/rules/windows/registry/registry_delete/registry_delete_schtasks_hide_task_via_sd_value_removal/acd74772-5f88-45c7-956b-6a7b36c294d2.evtx#155709": [
+    "chainsaw"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "a7c3e5f2-8b1d-4e9a-b6c2-3d7f5e8a9b4c",
+  "rule_path": "rules-emerging-threats/2026/Exploits/RedSun/win_defender_exploit_redsun_tiering_engine_detected_as_eicar.yml",
+  "in_scope": false,
+  "config": "neutral",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "regression_data/rules-emerging-threats/2026/Exploits/RedSun/win_defender_exploit_redsun_tiering_engine_detected_as_eicar/a7c3e5f2-8b1d-4e9a-b6c2-3d7f5e8a9b4c.evtx#542": [
+    "evaluator"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "d4f1a2b3-7c8e-4d5f-b6a9-1e0c2d3f4e5b",
+  "rule_path": "rules/windows/builtin/wmi/win_wmi_activity_nteventlogfile_cleareventlog.yml",
+  "in_scope": true,
+  "config": "production",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "regression_data/rules/windows/builtin/wmi/win_wmi_activity_nteventlogfile_cleareventlog/d4f1a2b3-7c8e-4d5f-b6a9-1e0c2d3f4e5b.evtx#5314": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "5ef9853e-4d0e-4a70-846f-a9ca37d876da",
+  "rule_path": "rules/windows/process_access/proc_access_win_lsass_memdump.yml",
+  "in_scope": true,
+  "config": "production",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "regression_data/rules/windows/process_access/proc_access_win_susp_dbgcore_dbghelp_load/9f5c1d59-33be-4e60-bcab-85d2f566effd.evtx#676404": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ },
+ {
+  "rule_id": "a7c3e5f2-8b1d-4e9a-b6c2-3d7f5e8a9b4c",
+  "rule_path": "rules-emerging-threats/2026/Exploits/RedSun/win_defender_exploit_redsun_tiering_engine_detected_as_eicar.yml",
+  "in_scope": false,
+  "config": "production",
+  "engines": [
+   "evaluator",
+   "chainsaw",
+   "hayabusa"
+  ],
+  "events": {
+   "regression_data/rules-emerging-threats/2026/Exploits/RedSun/win_defender_exploit_redsun_tiering_engine_detected_as_eicar/a7c3e5f2-8b1d-4e9a-b6c2-3d7f5e8a9b4c.evtx#542": [
+    "evaluator",
+    "hayabusa"
+   ]
+  },
+  "hayabusa_builtin_extra": []
+ }
+]

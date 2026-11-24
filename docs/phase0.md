@@ -7,7 +7,7 @@
 | SigmaHQ rules | tag `r2026-07-01`, commit `552f3fee420ef232a8e5790c4fae591847e32347`, as the git submodule `rules/sigma` |
 | Sigma specification | `SigmaHQ/sigma-specification` commit `ba9251aa834b11a70dbf80836b453dba99c5159e` (rules spec v2.1.0, modifiers appendix v2.1.0) |
 | pySigma and backends | `requirements.lock`: pySigma 1.5.1, sigma-cli 3.1.0, splunk 2.1.0, elasticsearch 2.1.1, opensearch 2.0.3, kusto 1.0.1, loki 0.15.1, sqlite 2.0.0 |
-| Engine images | see `compose/`: Elasticsearch 9.5.5, OpenSearch 3.10.0, Loki 3.6.22, Splunk 10.6.2, Kusto emulator `latest` (its image id is recorded per run) |
+| Engine images | see `compose/`: Elasticsearch 9.5.5, OpenSearch 3.10.0, Loki 3.6.22, Splunk 10.6.2, Kusto emulator pinned by digest `sha256:feb9b3bb8033…` (`latest` on 2026-11-23) |
 
 `r2026-07-01` was the newest SigmaHQ release tag on 23 Nov 2026.
 
@@ -32,6 +32,6 @@ Largest logsource groups in scope: `process_creation` 1,095, `registry_set` 190,
 
 ## Spec clauses
 
-See [spec-clauses.md](spec-clauses.md): 84 clauses (35 in the first version, 49 added after an audit of every spec file), of which 31 are ambiguous or contradictory and carry a working interpretation. Nik accepted all working interpretations on 23 Nov 2026, including the four that had been open (keywords, integer comparison, null, correlation windows). They stay ambiguous, so findings that depend on them are `spec-gap`.
+See [spec-clauses.md](spec-clauses.md): 84 clauses (35 in the first version, 49 added after an audit of every spec file), of which 31 are ambiguous or contradictory and carry a working interpretation. Nik accepted all working interpretations on 23 Nov 2026, including the four that had been open (keywords, integer comparison, null, correlation windows). They stay ambiguous, so findings that depend on them are `spec-gap`. Phase 2 added S85 to S87, found by the native-engine cross-check ([phase2.md](phase2.md)).
 
 `python -m harness.construct_census` counts how many in-scope rules use each construct (`results/phase0/construct_census.json`), so each clause shows how many rules it can affect.

@@ -1,0 +1,523 @@
+{
+ "category": {
+  "clipboard_capture": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    24
+   ]
+  },
+  "create_remote_thread": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    8
+   ]
+  },
+  "create_stream_hash": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    15
+   ]
+  },
+  "dns_query": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    22
+   ]
+  },
+  "driver_load": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    6
+   ]
+  },
+  "file_access": {
+   "channels": [],
+   "event_ids": []
+  },
+  "file_block_executable": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    27
+   ]
+  },
+  "file_block_shredding": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    28
+   ]
+  },
+  "file_change": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    2
+   ]
+  },
+  "file_delete": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    23
+   ]
+  },
+  "file_delete_detected": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    26
+   ]
+  },
+  "file_event": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    11
+   ]
+  },
+  "file_executable_detected": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    29
+   ]
+  },
+  "file_rename": {
+   "channels": [],
+   "event_ids": []
+  },
+  "image_load": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    7
+   ]
+  },
+  "network_connection": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    3
+   ]
+  },
+  "pipe_created": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    17,
+    18
+   ]
+  },
+  "process_access": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    10
+   ]
+  },
+  "process_creation": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    1
+   ]
+  },
+  "process_tampering": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    25
+   ]
+  },
+  "process_termination": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    5
+   ]
+  },
+  "ps_classic_provider_start": {
+   "channels": [
+    "Windows PowerShell"
+   ],
+   "event_ids": [
+    600
+   ]
+  },
+  "ps_classic_script": {
+   "channels": [
+    "Windows PowerShell"
+   ],
+   "event_ids": [
+    800
+   ]
+  },
+  "ps_classic_start": {
+   "channels": [
+    "Windows PowerShell"
+   ],
+   "event_ids": [
+    400
+   ]
+  },
+  "ps_module": {
+   "channels": [
+    "Microsoft-Windows-PowerShell/Operational",
+    "PowerShellCore/Operational"
+   ],
+   "event_ids": [
+    4103
+   ]
+  },
+  "ps_script": {
+   "channels": [
+    "Microsoft-Windows-PowerShell/Operational",
+    "PowerShellCore/Operational"
+   ],
+   "event_ids": [
+    4104
+   ]
+  },
+  "raw_access_thread": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    9
+   ]
+  },
+  "registry_add": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    12
+   ]
+  },
+  "registry_delete": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    12
+   ]
+  },
+  "registry_event": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    12,
+    13,
+    14
+   ]
+  },
+  "registry_rename": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    14
+   ]
+  },
+  "registry_set": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    13
+   ]
+  },
+  "sysmon_error": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    255
+   ]
+  },
+  "sysmon_status": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    4,
+    16
+   ]
+  },
+  "wmi_event": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ],
+   "event_ids": [
+    19,
+    20,
+    21
+   ]
+  }
+ },
+ "service": {
+  "application": {
+   "channels": [
+    "Application"
+   ]
+  },
+  "application-experience": {
+   "channels": [
+    "Microsoft-Windows-Application-Experience/Program-Telemetry",
+    "Microsoft-Windows-Application-Experience/Program-Compatibility-Assistant"
+   ]
+  },
+  "applocker": {
+   "channels": [
+    "Microsoft-Windows-AppLocker/MSI and Script",
+    "Microsoft-Windows-AppLocker/EXE and DLL",
+    "Microsoft-Windows-AppLocker/Packaged app-Deployment",
+    "Microsoft-Windows-AppLocker/Packaged app-Execution"
+   ]
+  },
+  "appmodel-runtime": {
+   "channels": [
+    "Microsoft-Windows-AppModel-Runtime/Admin"
+   ]
+  },
+  "appxdeployment-server": {
+   "channels": [
+    "Microsoft-Windows-AppXDeploymentServer/Operational"
+   ]
+  },
+  "appxpackaging-om": {
+   "channels": [
+    "Microsoft-Windows-AppxPackaging/Operational"
+   ]
+  },
+  "bitlocker": {
+   "channels": [
+    "Microsoft-Windows-BitLocker/BitLocker Management"
+   ]
+  },
+  "bits-client": {
+   "channels": [
+    "Microsoft-Windows-Bits-Client/Operational"
+   ]
+  },
+  "capi2": {
+   "channels": [
+    "Microsoft-Windows-CAPI2/Operational"
+   ]
+  },
+  "certificateservicesclient-lifecycle-system": {
+   "channels": [
+    "Microsoft-Windows-CertificateServicesClient-Lifecycle-System/Operational"
+   ]
+  },
+  "codeintegrity-operational": {
+   "channels": [
+    "Microsoft-Windows-CodeIntegrity/Operational"
+   ]
+  },
+  "dhcp": {
+   "channels": [
+    "Microsoft-Windows-DHCP-Server/Operational"
+   ]
+  },
+  "diagnosis-scripted": {
+   "channels": [
+    "Microsoft-Windows-Diagnosis-Scripted/Operational"
+   ]
+  },
+  "dns-client": {
+   "channels": [
+    "Microsoft-Windows-DNS Client Events/Operational"
+   ]
+  },
+  "dns-server": {
+   "channels": [
+    "DNS Server"
+   ]
+  },
+  "dns-server-analytic": {
+   "channels": [
+    "Microsoft-Windows-DNS-Server/Analytical"
+   ]
+  },
+  "dns-server-audit": {
+   "channels": [
+    "Microsoft-Windows-DNS-Server/Audit"
+   ]
+  },
+  "driver-framework": {
+   "channels": [
+    "Microsoft-Windows-DriverFrameworks-UserMode/Operational"
+   ]
+  },
+  "firewall-as": {
+   "channels": [
+    "Microsoft-Windows-Windows Firewall With Advanced Security/Firewall"
+   ]
+  },
+  "hyper-v-worker": {
+   "channels": [
+    "Microsoft-Windows-Hyper-V-Worker"
+   ]
+  },
+  "iis-configuration": {
+   "channels": [
+    "Microsoft-IIS-Configuration/Operational"
+   ]
+  },
+  "kernel-event-tracing": {
+   "channels": [
+    "Microsoft-Windows-Kernel-EventTracing"
+   ]
+  },
+  "kernel-shimengine": {
+   "channels": [
+    "Microsoft-Windows-Kernel-ShimEngine/Operational",
+    "WinEventLog:Microsoft-Windows-Kernel-ShimEngine/Diagnostic"
+   ]
+  },
+  "ldap": {
+   "channels": [
+    "Microsoft-Windows-LDAP-Client/Debug"
+   ]
+  },
+  "lsa-server": {
+   "channels": [
+    "Microsoft-Windows-LSA/Operational"
+   ]
+  },
+  "msexchange-management": {
+   "channels": [
+    "MSExchange Management"
+   ]
+  },
+  "ntfs": {
+   "channels": [
+    "Microsoft-Windows-Ntfs/Operational"
+   ]
+  },
+  "ntlm": {
+   "channels": [
+    "Microsoft-Windows-NTLM/Operational"
+   ]
+  },
+  "openssh": {
+   "channels": [
+    "OpenSSH/Operational"
+   ]
+  },
+  "powershell": {
+   "channels": [
+    "Microsoft-Windows-PowerShell/Operational"
+   ]
+  },
+  "powershell-classic": {
+   "channels": [
+    "Windows PowerShell"
+   ]
+  },
+  "printservice-admin": {
+   "channels": [
+    "Microsoft-Windows-PrintService/Admin"
+   ]
+  },
+  "printservice-operational": {
+   "channels": [
+    "Microsoft-Windows-PrintService/Operational"
+   ]
+  },
+  "security": {
+   "channels": [
+    "Security"
+   ]
+  },
+  "security-mitigations": {
+   "channels": [
+    "Microsoft-Windows-Security-Mitigations/Kernel Mode",
+    "Microsoft-Windows-Security-Mitigations/User Mode"
+   ]
+  },
+  "sense": {
+   "channels": [
+    "Microsoft-Windows-SENSE/Operational"
+   ]
+  },
+  "servicebus-client": {
+   "channels": [
+    "Microsoft-ServiceBus-Client/Operational",
+    "Microsoft-ServiceBus-Client/Admin"
+   ]
+  },
+  "shell-core": {
+   "channels": [
+    "Microsoft-Windows-Shell-Core/Operational"
+   ]
+  },
+  "smbclient-security": {
+   "channels": [
+    "Microsoft-Windows-SmbClient/Security"
+   ]
+  },
+  "sysmon": {
+   "channels": [
+    "Microsoft-Windows-Sysmon/Operational"
+   ]
+  },
+  "system": {
+   "channels": [
+    "System"
+   ]
+  },
+  "taskscheduler": {
+   "channels": [
+    "Microsoft-Windows-TaskScheduler/Operational"
+   ]
+  },
+  "terminalservices-localsessionmanager": {
+   "channels": [
+    "Microsoft-Windows-TerminalServices-LocalSessionManager/Operational"
+   ]
+  },
+  "vhdmp": {
+   "channels": [
+    "Microsoft-Windows-VHDMP/Operational"
+   ]
+  },
+  "windefend": {
+   "channels": [
+    "Microsoft-Windows-Windows Defender/Operational"
+   ]
+  },
+  "wmi": {
+   "channels": [
+    "Microsoft-Windows-WMI-Activity/Operational"
+   ]
+  }
+ }
+}

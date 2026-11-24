@@ -47,6 +47,12 @@ class LokiEngine(Engine):
             if r.status_code >= 300:
                 raise RuntimeError(f"loki push failed {r.status_code}: {r.text[:300]}")
         self._range[label] = (min(stamps) - 1_000_000_000, max(stamps) + 1_000_000_000)
+        # Loki accepts lines older than about 3 h but only serves them from flushed chunks: the
+        # querier asks ingesters only for recent data (query_ingesters_within). Flush so old
+        # timestamps (smoke cases, EVTX corpora) become queryable. Found on Nik's laptop, 2026-11-23.
+        r = self.http.post(f"{self.url}/flush", timeout=60)
+        if r.status_code >= 300:
+            raise RuntimeError(f"loki flush failed {r.status_code}: {r.text[:300]}")
         # wait until all lines are queryable
         want = len(events)
         for _ in range(60):
