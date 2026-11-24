@@ -2,7 +2,7 @@
 
 This file lists every area where a Sigma rule can end up detecting different events on different targets, and why. It is the reference for the conformance suite (Phase 3), for the area label on each finding (Phase 5), and for the per-area results in the paper (Phase 6).
 
-Status: draft of 24 Nov 2026, reviewed once by an independent agent (section 11). It replaces the seed list T1 to T14 in the testbed plan. T1 to T14 keep their IDs; T15 to T26 are new.
+Status: draft of 24 Nov 2026, reviewed once by an independent agent (section 9). It replaces the seed list T1 to T14 in the testbed plan. T1 to T14 keep their IDs; T15 to T26 are new.
 
 ## 1. Why a new taxonomy
 
@@ -14,11 +14,11 @@ The plan started from 14 areas (T1 to T14) taken from experience with Sigma conv
 
 ## 2. Method
 
-We examined the question from nine perspectives, then had the draft reviewed by an independent agent that re-ran the probes and checked vendor documentation (section 11).
+We examined the question from nine perspectives, then had the draft reviewed by an independent agent that re-ran the probes and checked vendor documentation (section 9).
 
 | # | Perspective | What we did | What it found |
 | --- | --- | --- | --- |
-| P1 | Spec clauses | Mapped each of S1 to S87 ([spec-clauses.md](spec-clauses.md)) onto an area | 16 clauses have their primary home outside T1 to T14 (S22, S36 to S40, S42 to S44, S81 to S87) |
+| P1 | Spec clauses | Mapped each of S1 to S88 ([spec-clauses.md](spec-clauses.md)) onto an area | 16 clauses have their primary home outside T1 to T14 (S22, S36 to S40, S42 to S44, S81 to S87) |
 | P2 | Processing layers | Followed one rule from YAML file to engine verdict and asked at each step what can change the meaning (section 3) | Rule loading (T18), query structure (T19), storage schema (T25), event representation (T26) |
 | P3 | Target languages | For each query language (Lucene, ES\|QL, EQL, KQL, SPL, LogQL, SQL), listed the semantics that differ from Sigma: case, anchoring, tokenisation, null handling, typing, quoting | Literal escaping per language (T3, T14), anchoring (T2, T7), bare-string keywords (T12), three-valued logic outside Chainsaw (T4) |
 | P4 | Backend source and options | Read the class attributes and constructor options of each pySigma backend (precedence, escaping, wildcard tokens, quoting patterns, null and exists expressions, `convert_or_as_in`, deferred parts) | Field-name quoting (T15), `?` mapped to `*` (T2), case lost in value lists (T1), deferred parts (T19), backend options (sub-area T10.6) |
@@ -30,12 +30,14 @@ We examined the question from nine perspectives, then had the draft reviewed by 
 
 **What "exhaustive" means here.** A taxonomy of an open system cannot be proven complete. We use four closure checks instead; the repository tests the first two.
 
-1. Every spec clause S1 to S87 has exactly one primary area (section 6, `tests/test_taxonomy_coverage.py`).
+1. Every spec clause S1 to S88 has exactly one primary area (section 6, `tests/test_taxonomy_coverage.py`).
 2. Every layer L1 to L7 has at least one area (L8 is covered by section 8), and the layer table in section 3.1 agrees with section 4 (same test).
 3. Every measured deviation so far has an area (section 7).
 4. Every backend class attribute that changes matching semantics maps to an area. Backend options and pipeline transformation types are listed in T10.6 and T10.2 as far as we have read them; that list is **not yet complete**, so check 4 is partial.
 
 A new mechanism that fits no area gets a new ID (T27 and up). IDs are never reused or renumbered.
+
+**What counts as a divergence.** A divergence is a rule that matches different events on different targets, or on a target and the reference evaluator, because meaning was lost or changed somewhere between the rule file and the engine's verdict. Two things are out of scope. Evasions that work the same on every target (for example inserting `^` into a `cmd` command line) are rule-quality issues, not translation divergence; they are studied elsewhere (SPECTRA). Performance and query cost are out of scope too, also because the Kusto emulator licence forbids benchmarks.
 
 **IDs.** `T1` to `T26` are areas; `Tn.m` is sub-area *m* of area *Tn* (for example `T10.6`, backend options), defined in section 5.
 
@@ -108,7 +110,7 @@ Each case runs in the **neutral** config (no pipeline, logsource ignored) and, f
 | T6 | CIDR and IP addresses | IPv6, IPv4-mapped IPv6, prefix expansion, ip-typed fields | L2, L4, L5, L6 | S17, S59 | Medium | Phase 3 |
 | T7 | Regex dialect | Flavour, anchoring, inline flags, unsupported syntax | L2, L4, L5 | S15, S60, S61, S62 | High | Phase 3 |
 | T8 | Value modifiers | `base64offset`, `utf16*`, `windash`, `fieldref`, `expand`, chaining | L2, L4 | S12, S13, S14, S20, S21, S63, S64, S67, S68 | High | Phase 3 |
-| T9 | Lists and boolean logic | Precedence, grouping of expansions, `x of`, `them`, list and condition edge cases | L2, L4, L5 | S7, S8, S9, S26 to S30, S51 to S53, S55 to S58 | Medium | Phase 3 |
+| T9 | Lists and boolean logic | Precedence, grouping of expansions, `x of`, `them`, list and condition edge cases | L2, L4, L5 | S7, S8, S9, S26 to S30, S51 to S53, S55 to S58, S88 | Medium | Phase 3 |
 | T10 | Field mapping, pipelines and options | Renames, value transforms, dropped items, pipeline versions, backend options | L3, L4 | none | Low | Phase 4 |
 | T11 | Correlation | Support, window type, grouping, distinct counting, ordering | L4, L5 | S31 to S35, S70 to S80 | Medium | Phase 3 (Q2) |
 | T12 | Keywords and full-text search | What "the full log message" is, tokens vs substrings | L4, L5, L6 | S10, S50 | High | Phase 3 |
@@ -254,7 +256,7 @@ Example case: `CommandLine|windash|contains: ' -enc '` against ` /enc `, ` –en
 - **T9.2 Precedence of explicit conditions.** `a and (b or c)` is bracketed by every backend (**conv**). `a or b and c` is emitted as `x=1 or y=2 and z=3` by LogQL (**conv**); with left-to-right evaluation that means `(a or b) and c`, not Sigma's `a or (b and c)` (**hyp**, strong). Lucene, OpenSearch and EQL list their precedence tuple as (NOT, OR, AND), the reverse of Sigma, but still bracketed every mixed group in our probes (**conv**). The LogQL tuple has no NOT at all.
 - **T9.3 Negated groups.** `sel and not 1 of filter_*` becomes `NOT (x:1 OR y:2)` on most targets and De Morgan's `x!=1 and y!=2` on LogQL (**conv**). Equivalent in two-valued logic, not under T5.4's conversion-failure rule (**hyp**).
 - **T9.4 `neq` with a list** (S58). OR of `neq` values is always true for two distinct values; AND is the likely intent. The spec does not say (ambiguous).
-- **T9.5 Edge conditions are mostly silent.** All eight targets convert these without an error (**conv**): an empty list `Details: []` becomes a null test (`NOT _exists_:Details`, `isnull(Details)`, ...); `null` inside a list becomes `x OR null-test` (against S49); `|all` on a single value is accepted although the modifiers appendix allows `all` only on lists. Only upper-case `AND` (S55), unknown modifiers and `exists: 'true'` (S66) are rejected.
+- **T9.5 Edge conditions are mostly silent.** All eight targets convert these without an error (**conv**): an empty list `Details: []` becomes a null test (`NOT _exists_:Details`, `isnull(Details)`, ...); `null` inside a list becomes `x OR null-test` (against S49); `|all` on a single value is accepted although the modifiers appendix forbids it (S88, clear; such a rule is labelled `rule-out-of-spec`, and no SigmaHQ Windows rule does it). Only upper-case `AND` (S55), unknown modifiers and `exists: 'true'` (S66) are rejected.
 
 Example cases: `condition: a or b and c` with an event matching only `a`; `Image|endswith` plus `CommandLine|windash|contains` with an event matching only the second dash variant.
 
@@ -289,7 +291,7 @@ Example case: `event_count` of failed logons per `TargetUserName`, `gte: 5`, `ti
 **Intent.** A keyword list searches "the full log message" (S10, ambiguous). `'|all'` means every keyword must appear (S50).
 
 - **T12.1 What is searched.** Lucene `*mimikatz*` searches the default field(s); SPL `"mimikatz"` searches the raw event; EQL emits `any where "mimikatz"`; KQL emits a bare `"mimikatz"`, which the harness wraps as `T | where "mimikatz"`, a non-boolean predicate that is expected to error (**conv**, **hyp** for the engines). ES\|QL and SQLite reject keywords (**conv**, loud; SQLite needs a full-text column).
-- **T12.2 Tokens vs substrings.** SPL matches indexed terms, so `mimikatz` may not match `xmimikatzx`, while Lucene `*mimikatz*` and LogQL `|~` do (**hyp**). KQL `has` and `has_all` (T2.2) are term matches (**doc**).
+- **T12.2 Tokens vs substrings.** The S10 working interpretation is a substring match against any string field value, not token matching, so a target that matches whole tokens only diverges as `spec-gap`. SPL matches indexed terms, so `mimikatz` may not match `xmimikatzx`, while Lucene `*mimikatz*` and LogQL `|~` do (**hyp**). KQL `has` and `has_all` (T2.2) are term matches (**doc**).
 - **T12.3 JSON line in LogQL.** `|~ (?i)mimikatz` runs over the whole stored JSON line, so it also matches field names and sees JSON escapes (`\\` for each backslash, `\"` for quotes) (**conv**, **hyp** for effect).
 - **T12.4 `|all`.** Converted as AND on all targets that support keywords (**conv**).
 
@@ -527,10 +529,11 @@ Every clause has one primary area; secondary areas list where else it matters. `
 | S85 | T15 | |
 | S86 | T15 | T26 |
 | S87 | T17 | T15 |
+| S88 | T9 | T18 |
 
-The line below counts how many of the 87 clauses have each area as their primary home (it sums to 87). Areas not listed have none: the spec says nothing about them, so they have no spec verdict of their own (section 4). A low count also marks where the spec is thin, and spec gaps are likely there.
+The line below counts how many of the 88 clauses have each area as their primary home (it sums to 88). Areas not listed have none: the spec says nothing about them, so they have no spec verdict of their own (section 4). A low count also marks where the spec is thin, and spec gaps are likely there.
 
-Clauses per primary area: T1 3, T2 4, T3 2, T4 8, T5 3, T6 2, T7 4, T8 9, T9 15, T11 16, T12 2, T13 1, T14 2, T15 4, T16 3, T17 3, T18 2, T22 1, T23 3.
+Clauses per primary area: T1 3, T2 4, T3 2, T4 8, T5 3, T6 2, T7 4, T8 9, T9 16, T11 16, T12 2, T13 1, T14 2, T15 4, T16 3, T17 3, T18 2, T22 1, T23 3.
 
 ## 7. Measured deviations by area
 
@@ -572,28 +575,10 @@ These change results without any Sigma meaning being lost. They are checked and 
 - **Version freeze.** All versions frozen at one date (decision 8); a change of any converter, pipeline or engine image is a new run.
 - **Search time range and clocks.** Old timestamps need explicit time ranges (T22.3).
 
-## 9. Gaps and proposals
-
-The review showed that most questions raised here already have a clause with a working interpretation (S1 for non-ASCII case, S15 for regex anchoring, S17 for IPv4-mapped addresses, S65 for `cased` with `contains`). Two questions have none. Adding clauses changes triage, so they wait for Nik's approval:
-
-| Proposed clause | Area | Status it would get | Working interpretation we would propose |
-| --- | --- | --- | --- |
-| A keyword matches a substring of the message, not only a whole token (`mimikatz` in `xmimikatzx`) | T12.2 | ambiguous (S10 says "full log message" only) | substring |
-| `all` on a single value is invalid (the modifiers appendix says so; pySigma accepts it) | T9.5 | clear | rule rejected |
-
-**Out of scope.** Evasions that work the same on every target (for example inserting `^` into a `cmd` command line) are rule-quality issues, not translation divergence; they are already studied elsewhere (SPECTRA). Performance and query cost are out of scope, also because the Kusto emulator licence forbids benchmarks.
-
-## 10. What this changes elsewhere
-
-- **Phase 3 plan.** Scope grows from T1 to T14 to the areas marked "Phase 3" in section 4; T10, T16, T24, T25 and T26 move to Phase 4's production config. The case budget (about 200) needs re-weighting. Strong hypotheses go first: T1.3, T1.4, T2.2, T3.3, T3.4, T4.1, T4.3 (ES\|QL), T5.4, T6.1, T7.2, T7.3, T8.6, T9.1, T9.2, T11.3, T14.2, T15.1, T23.1.
-- **Findings to re-verify.** D2 is open again (T9.1).
-- **Conformance seed table** (`conformance/README.md`) will use the sub-area IDs (for example `T2.1`).
-- **Triage.** `harness/triage.py` gains an `area` field per finding, taken from this file.
-
-## 11. Review log
+## 9. Review log
 
 An independent agent reviewed the first draft on 24 Nov 2026. It re-ran the probes, wrote new ones (now in the probe scripts), and checked vendor documentation; a second agent fetched the cited documentation pages to confirm the quotes. Changes made as a result:
 
-- **Corrected.** D2 is not fixed in LogQL 0.16.0 (T9.1); LogQL evaluates left to right, not `and` first (T9.2); `cased` is silently lost in value lists (T1.3); regex anchoring on LogQL and EQL (T7.1, T7.2); C6 direction (T5.5); KQL keyword search goes through the harness wrapper (T12.1); edge conditions are mostly silent, not loud (T9.5); the `windash` limit is loud on 2.x (T8.4); version comparisons are **conv**, not **run**; S78 and S79 moved from T21 to T11; four of seven proposed clauses already existed (section 9); the T7 example now uses `[0-9]{3}` instead of out-of-spec `\d{3}`; the layer table is now checked against section 4.
+- **Corrected.** D2 is not fixed in LogQL 0.16.0 (T9.1); LogQL evaluates left to right, not `and` first (T9.2); `cased` is silently lost in value lists (T1.3); regex anchoring on LogQL and EQL (T7.1, T7.2); C6 direction (T5.5); KQL keyword search goes through the harness wrapper (T12.1); edge conditions are mostly silent, not loud (T9.5); the `windash` limit is loud on 2.x (T8.4); version comparisons are **conv**, not **run**; S78 and S79 moved from T21 to T11; the proposed new clauses were dropped: four already existed, keyword token matching is decided by S10's working interpretation, and `all` on a single value became S88 (Nik, 24 Nov 2026); the out-of-scope note moved to section 2 and the plan notes moved to the Phase 3 plan; the T7 example now uses `[0-9]{3}` instead of out-of-spec `\d{3}`; the layer table is now checked against section 4.
 - **Added.** ES\|QL `LIKE` backslashes (T3.3), escaped wildcards (T3.4), LogQL numeric conversion failures (T5.4), three-valued logic on ES\|QL and KQL (T4.3, T4.1), unknown fields as errors (T4.6), the KQL list path (T2.2), EQL correlation emulation (T11.3), filter combination (T23), Lucene tabs and newlines (T14.2), LogQL placeholders (T8.6), `utf16le` (T8.3), backend options (T10.6), more pipeline transformations (T10.2), and **doc** citations for the strong hypotheses.
 - **Not verified yet.** Engine behaviour for T4.6 and T14.2, the ES\|QL `rlike` dialect, and the ES\|QL multi-valued-field quote in T17.1.

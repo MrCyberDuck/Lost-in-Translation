@@ -371,6 +371,9 @@ class _Compiler:
         linking_all = item.value_linking is ConditionAND  # S7: OR, or AND with |all
         if linking_all:
             self.clauses.add("S7")
+            if len(values) == 1:  # S88: `all` on a single value is not allowed; it still matches as the value
+                self.clauses.add("S88")
+                self.out_of_spec.append(f"{item.field or 'keywords'}: all on a single value")
 
         def base(e: Event) -> bool:
             if linking_all:
