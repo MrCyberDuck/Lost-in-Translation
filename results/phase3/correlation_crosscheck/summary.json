@@ -1,0 +1,1542 @@
+{
+ "summary": {
+  "matcher": {
+   "agree": 16,
+   "differ": 12,
+   "error": 2,
+   "n/a": 1
+  },
+  "zircolite": {
+   "agree": 26,
+   "differ": 3,
+   "error": 2,
+   "n/a": 0
+  },
+  "hayabusa": {
+   "agree": 13,
+   "differ": 9,
+   "error": 9,
+   "n/a": 0
+  }
+ },
+ "cases": [
+  {
+   "case": "C01",
+   "clauses": [
+    "S31"
+   ],
+   "what": "event_count: 3 failures for bob, 2 for eve, within 5 minutes",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C02",
+   "clauses": [
+    "S33"
+   ],
+   "what": "event_count: a burst at 04:00, 05:00, 06:00 straddles a 5-minute boundary",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C03",
+   "clauses": [
+    "S91"
+   ],
+   "what": "event_count: first and last event exactly 5 minutes apart",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C04",
+   "clauses": [
+    "S33"
+   ],
+   "what": "event_count: first and last event 5 minutes and 1 second apart",
+   "evaluator": {
+    "c1": {
+     "groups": [],
+     "alerts": 0
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   }
+  },
+  {
+   "case": "C05",
+   "clauses": [
+    "S32"
+   ],
+   "what": "event_count: the third event has no User field",
+   "evaluator": {
+    "c1": {
+     "groups": [],
+     "alerts": 0
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   }
+  },
+  {
+   "case": "C06",
+   "clauses": [
+    "S90"
+   ],
+   "what": "event_count: User is Bob, BOB and bob",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   }
+  },
+  {
+   "case": "C07",
+   "clauses": [
+    "S71"
+   ],
+   "what": "event_count without group-by: 3 events of 3 users",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      []
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       []
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       []
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "error",
+    "result": {
+     "error": "Hayabusa: 1 rule parsing error(s), 2 rules loaded",
+     "partial": {
+      "c1": {
+       "groups": [],
+       "alerts": 0
+      }
+     }
+    }
+   }
+  },
+  {
+   "case": "C08",
+   "clauses": [
+    "S34"
+   ],
+   "what": "event_count range gt 1, lte 2: bob has 2 events, eve 3 at the same second",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "error",
+    "result": {
+     "error": "SigmaCorrelationConditionError: Sigma correlation condition must have exactly one condition item"
+    }
+   },
+   "zircolite": {
+    "verdict": "error",
+    "result": {
+     "error": "exit 1, no output: [-] Cannot load <work>/rules/C08.yml: Sigma correlation condition must have exactly one condition item in"
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ],
+       [
+        "eve"
+       ]
+      ],
+      "alerts": 2
+     }
+    }
+   }
+  },
+  {
+   "case": "C09",
+   "clauses": [
+    "S34"
+   ],
+   "what": "event_count neq 1: bob has 2 events at one second, eve 1",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "error",
+    "result": {
+     "error": "Hayabusa: 1 rule parsing error(s), 2 rules loaded",
+     "partial": {
+      "c1": {
+       "groups": [],
+       "alerts": 0
+      }
+     }
+    }
+   }
+  },
+  {
+   "case": "C10",
+   "clauses": [
+    "S72",
+    "S90"
+   ],
+   "what": "value_count of User per Host, gte 3: Admin, admin, root",
+   "evaluator": {
+    "c1": {
+     "groups": [],
+     "alerts": 0
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "h"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "h"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C11",
+   "clauses": [
+    "S72"
+   ],
+   "what": "value_count of User per Host, gte 2: one event has no User",
+   "evaluator": {
+    "c1": {
+     "groups": [],
+     "alerts": 0
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "h"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C12",
+   "clauses": [
+    "S73"
+   ],
+   "what": "value_count of [User, Src], gte 3: 2 users, 2 sources, 3 pairs",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "h"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "error",
+    "result": {
+     "error": "match TypeError: unhashable type: 'list'"
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "h"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "h"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C13",
+   "clauses": [
+    "S31"
+   ],
+   "what": "temporal: bob has a failure and a success, eve only failures",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C14",
+   "clauses": [
+    "S35"
+   ],
+   "what": "temporal_ordered failed then success: eve in order, bob reversed",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "eve"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "eve"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "eve"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "eve"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C15",
+   "clauses": [
+    "S35"
+   ],
+   "what": "temporal_ordered failed then success at the same second",
+   "evaluator": {
+    "c1": {
+     "groups": [],
+     "alerts": 0
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C16",
+   "clauses": [
+    "S92"
+   ],
+   "what": "temporal over 3 rules without a condition: bob has 2 of them, eve all 3",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "eve"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "eve"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "eve"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "eve"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C17",
+   "clauses": [
+    "S31"
+   ],
+   "what": "temporal over 3 rules with gte 2: bob has 2 kinds, eve 2 events of one kind",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   }
+  },
+  {
+   "case": "C18",
+   "clauses": [
+    "S76"
+   ],
+   "what": "event_count referencing the base rule by id",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C19",
+   "clauses": [
+    "S76"
+   ],
+   "what": "chain: inner gte 2 in 5m per User, outer gte 2 inner alerts in 1h; bob has 2 bursts, eve 1",
+   "evaluator": {
+    "c2": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "result": {
+     "c2": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c2": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "error",
+    "result": {
+     "error": "Hayabusa: 1 rule parsing error(s), 3 rules loaded",
+     "partial": {
+      "c2": {
+       "groups": [],
+       "alerts": 0
+      }
+     }
+    }
+   }
+  },
+  {
+   "case": "C20",
+   "clauses": [
+    "S75"
+   ],
+   "what": "temporal with aliases: ip is DestIp in conn_in and SrcIp in conn_out",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "10.0.0.1"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "none"
+       ]
+      ],
+      "alerts": 3
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "10.0.0.1"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "null"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C21",
+   "clauses": [
+    "S70"
+   ],
+   "what": "value_sum of Bytes per Host, gte 25: 10 + 10 + 10",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "h"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "h"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "h"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "error",
+    "result": {
+     "error": "Hayabusa: 1 rule parsing error(s), 2 rules loaded",
+     "partial": {
+      "c1": {
+       "groups": [],
+       "alerts": 0
+      }
+     }
+    }
+   }
+  },
+  {
+   "case": "C22",
+   "clauses": [
+    "S70"
+   ],
+   "what": "value_avg of Bytes per Host: gte 9 fires for h (avg 10), not for g (avg 5)",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "h"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "h"
+       ]
+      ],
+      "alerts": 3
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "h"
+       ]
+      ],
+      "alerts": 3
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "error",
+    "result": {
+     "error": "Hayabusa: 1 rule parsing error(s), 2 rules loaded",
+     "partial": {
+      "c1": {
+       "groups": [],
+       "alerts": 0
+      }
+     }
+    }
+   }
+  },
+  {
+   "case": "C23",
+   "clauses": [
+    "S74"
+   ],
+   "what": "value_percentile of Image per Host, lte 10: one rare image among 11 events",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "h"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "error",
+    "result": {
+     "error": "exit 1, no output: [\u2713] Converted 0 rules (1 failed)"
+    }
+   },
+   "hayabusa": {
+    "verdict": "error",
+    "result": {
+     "error": "Hayabusa: 1 rule parsing error(s), 2 rules loaded",
+     "partial": {
+      "c1": {
+       "groups": [],
+       "alerts": 0
+      }
+     }
+    }
+   }
+  },
+  {
+   "case": "C24",
+   "clauses": [
+    "S81"
+   ],
+   "what": "filter User|startswith adm_ with condition: sel on the base rule",
+   "evaluator": {
+    "rule_matches": [
+     "C24-e2"
+    ]
+   },
+   "matcher": {
+    "verdict": "differ",
+    "result": {
+     "rule_matches": [
+      "C24-e1"
+     ]
+    }
+   },
+   "zircolite": {
+    "verdict": "differ",
+    "result": {
+     "rule_matches": [
+      "C24-e1"
+     ]
+    }
+   },
+   "hayabusa": {
+    "verdict": "error",
+    "result": {
+     "error": "Hayabusa: 1 rule parsing error(s), 1 rules loaded",
+     "partial": {
+      "rule_matches": [
+       "C24-e1",
+       "C24-e2"
+      ]
+     }
+    }
+   }
+  },
+  {
+   "case": "C25",
+   "clauses": [
+    "S89"
+   ],
+   "what": "filter on the base rule of an event_count without group-by, gte 3: one of 3 events is filtered",
+   "evaluator": {
+    "c1": {
+     "groups": [],
+     "alerts": 0
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "error",
+    "result": {
+     "error": "Hayabusa: 2 rule parsing error(s), 2 rules loaded",
+     "partial": {
+      "c1": {
+       "groups": [],
+       "alerts": 0
+      }
+     }
+    }
+   }
+  },
+  {
+   "case": "C26",
+   "clauses": [
+    "S80"
+   ],
+   "what": "timespan 5M (upper-case unit)",
+   "evaluator": {
+    "error": "S80: timespan '5M' is not a number followed by s, m, h or d in lower case"
+   },
+   "matcher": {
+    "verdict": "differ",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "differ",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "result": {
+     "error": "Hayabusa: 1 rule parsing error(s), 2 rules loaded",
+     "partial": {
+      "c1": {
+       "groups": [],
+       "alerts": 0
+      }
+     }
+    }
+   }
+  },
+  {
+   "case": "C27",
+   "clauses": [
+    "S93"
+   ],
+   "what": "event_count gte 3: 6 events in 6 seconds, then 3 more 20 minutes later",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 2
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 5
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 5
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 2
+     }
+    }
+   }
+  },
+  {
+   "case": "C28",
+   "clauses": [
+    "S77"
+   ],
+   "what": "base rule referenced without generate: are its matches emitted",
+   "evaluator": {
+    "base_emitted": false
+   },
+   "matcher": {
+    "verdict": "n/a",
+    "result": {
+     "base_emitted": null,
+     "note": "library API: base-rule matches are always returned"
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "base_emitted": false
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "result": {
+     "base_emitted": false
+    }
+   }
+  },
+  {
+   "case": "C29",
+   "clauses": [
+    "S81",
+    "S89"
+   ],
+   "what": "same as C25 with gte 2: 2 events are left after the filter, 1 if the filter is ANDed in",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      []
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "differ",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "error",
+    "result": {
+     "error": "Hayabusa: 2 rule parsing error(s), 2 rules loaded",
+     "partial": {
+      "c1": {
+       "groups": [],
+       "alerts": 0
+      }
+     }
+    }
+   }
+  },
+  {
+   "case": "C30",
+   "clauses": [
+    "S32"
+   ],
+   "what": "event_count gte 3: three events, none with the User field",
+   "evaluator": {
+    "c1": {
+     "groups": [],
+     "alerts": 0
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "none"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "null"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C31",
+   "clauses": [
+    "S33"
+   ],
+   "what": "temporal over 3 rules, 5m: success at 00:00, failed at 05:00, other at 10:00 (10 minutes end to end)",
+   "evaluator": {
+    "c1": {
+     "groups": [],
+     "alerts": 0
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  }
+ ]
+}

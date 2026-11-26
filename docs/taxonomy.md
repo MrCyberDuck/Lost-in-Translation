@@ -18,7 +18,7 @@ We examined the question from nine perspectives, then had the draft reviewed by 
 
 | # | Perspective | What we did | What it found |
 | --- | --- | --- | --- |
-| P1 | Spec clauses | Mapped each of S1 to S88 ([spec-clauses.md](spec-clauses.md)) onto an area | 16 clauses have their primary home outside T1 to T14 (S22, S36 to S40, S42 to S44, S81 to S87) |
+| P1 | Spec clauses | Mapped each of S1 to S93 ([spec-clauses.md](spec-clauses.md)) onto an area | 17 clauses have their primary home outside T1 to T14 (S22, S36 to S40, S42 to S44, S81 to S87, S89) |
 | P2 | Processing layers | Followed one rule from YAML file to engine verdict and asked at each step what can change the meaning (section 3) | Rule loading (T18), query structure (T19), storage schema (T25), event representation (T26) |
 | P3 | Target languages | For each query language (Lucene, ES\|QL, EQL, KQL, SPL, LogQL, SQL), listed the semantics that differ from Sigma: case, anchoring, tokenisation, null handling, typing, quoting | Literal escaping per language (T3, T14), anchoring (T2, T7), bare-string keywords (T12), three-valued logic outside Chainsaw (T4) |
 | P4 | Backend source and options | Read the class attributes and constructor options of each pySigma backend (precedence, escaping, wildcard tokens, quoting patterns, null and exists expressions, `convert_or_as_in`, deferred parts) | Field-name quoting (T15), `?` mapped to `*` (T2), case lost in value lists (T1), deferred parts (T19), backend options (sub-area T10.6) |
@@ -30,7 +30,7 @@ We examined the question from nine perspectives, then had the draft reviewed by 
 
 **What "exhaustive" means here.** A taxonomy of an open system cannot be proven complete. We use four closure checks instead; the repository tests the first two.
 
-1. Every spec clause S1 to S88 has exactly one primary area (section 6, `tests/test_taxonomy_coverage.py`).
+1. Every spec clause S1 to S93 has exactly one primary area (section 6, `tests/test_taxonomy_coverage.py`).
 2. Every layer L1 to L7 has at least one area (L8 is covered by section 8), and the layer table in section 3.1 agrees with section 4 (same test).
 3. Every measured deviation so far has an area (section 7).
 4. Every backend class attribute that changes matching semantics maps to an area. Backend options and pipeline transformation types are listed in T10.6 and T10.2 as far as we have read them; that list is **not yet complete**, so check 4 is partial.
@@ -112,7 +112,7 @@ Each case runs in the **neutral** config (no pipeline, logsource ignored) and, f
 | T8 | Value modifiers | `base64offset`, `utf16*`, `windash`, `fieldref`, `expand`, chaining | L2, L4 | S12, S13, S14, S20, S21, S63, S64, S67, S68 | High | Phase 3 |
 | T9 | Lists and boolean logic | Precedence, grouping of expansions, `x of`, `them`, list and condition edge cases | L2, L4, L5 | S7, S8, S9, S26 to S30, S51 to S53, S55 to S58, S88 | Medium | Phase 3 |
 | T10 | Field mapping, pipelines and options | Renames, value transforms, dropped items, pipeline versions, backend options | L3, L4 | none | Low | Phase 4 |
-| T11 | Correlation | Support, window type, grouping, distinct counting, ordering | L4, L5 | S31 to S35, S70 to S80 | Medium | Phase 3 (Q2) |
+| T11 | Correlation | Support, window type, grouping, distinct counting, ordering, alert granularity, conditions, references | L4, L5 | S31 to S35, S70 to S80, S90 to S93 | Medium | Phase 3 (Q2) |
 | T12 | Keywords and full-text search | What "the full log message" is, tokens vs substrings | L4, L5, L6 | S10, S50 | High | Phase 3 |
 | T13 | Value length and encoding | Truncation of long values, non-ASCII, Unicode normalisation, NUL | L5, L6, L7 | S47 | High | Phase 3 |
 | T14 | Whitespace, quotes and special characters | Spaces, tabs, newlines in queries, quotes, characters special to the language | L4, L5 | S45, S48 | High | Phase 3 |
@@ -124,7 +124,7 @@ Each case runs in the **neutral** config (no pipeline, logsource ignored) and, f
 | T20 | Query and engine limits | Clause counts, query length, regex size, result caps, timeouts | L5 | none | Low | Phase 3 and 4 |
 | T21 | Unsupported features and lossy emulation | Loud error vs silent drop vs approximation, across all areas | L2, L4 | none | Medium | Phase 3 |
 | T22 | Time and ordering | Time modifiers, event vs ingest time, time zones, ties | L5, L6 | S22 | Low | Phase 3 (with T11) |
-| T23 | Sigma filters and meta-rules | How a global filter is combined with the rule, logsource, references | L1, L2, L3 | S81, S82, S83 | Low | Phase 3 (conversion), Phase 4 |
+| T23 | Sigma filters and meta-rules | How a global filter is combined with the rule, logsource, references, correlations | L1, L2, L3 | S81, S82, S83, S89 | Low | Phase 3 (conversion), Phase 4 |
 | T24 | Rule-authoring quirks | Rules whose literal text only works on some targets | L1, L5 | none | Medium | Phase 4 |
 | T25 | Storage schema and field types | Keyword vs text, typed fields, dynamic mapping | L6 | none | Medium | Phase 4 |
 | T26 | Event value representation | Rendered vs raw, hex vs decimal, `%%` codes, path forms | L7 | none | Medium | Phase 4 |
@@ -275,14 +275,17 @@ Example: a rule on `ParentImage` through the Microsoft XDR pipeline, compared wi
 
 ### T11. Correlation
 
-**Intent.** Types `event_count`, `value_count`, `temporal`, `temporal_ordered` and `value_sum`, `value_avg`, `value_percentile` (S31, S70 contradictory on the list). `group-by` ANDed (S32, S71 contradictory on optional). `timespan` should not be bound to fixed boundaries unless the backend needs it (S33). Condition operators (S34). Order (S35). Distinct counting and case (S72), several fields (S73), percentile semantics (S74), aliases (S75), references and chains (S76), `generate` (S77), errors where "must" features are unsupported (S78), warnings for approximations (S79), timespan format (S80).
+**Intent.** Types `event_count`, `value_count`, `temporal`, `temporal_ordered` and `value_sum`, `value_avg`, `value_percentile` (S31, S70 contradictory on the list). `group-by` ANDed (S32, S71 contradictory on optional), with values that differ only in case not covered (S90). `timespan` should not be bound to fixed boundaries unless the backend needs it (S33); whether the window includes its start is not covered (S91). Condition operators (S34), and whether `temporal` needs one (S92 contradictory). Order (S35). How many alerts one burst gives is not covered (S93). Distinct counting and case (S72), several fields (S73), percentile semantics (S74), aliases (S75), references and chains (S76), `generate` (S77), errors where "must" features are unsupported (S78), warnings for approximations (S79), timespan format (S80).
 
 - **T11.1 Support.** SPL (`bin _time span=5m | stats`), ES\|QL (`stats` by `date_trunc`), EQL (`sequence ... with maxspan`), LogQL (`count_over_time`) and SQLite convert `event_count` and `value_count`; Lucene, OpenSearch and KQL reject correlations (**conv**, loud). ES\|QL and LogQL reject `temporal_ordered` (**conv**, loud) ([correlation_probe.txt](../results/taxonomy/correlation_probe.txt)).
-- **T11.2 Window type.** SPL and ES\|QL use fixed buckets, which miss bursts that straddle a boundary (S33); LogQL slides (**conv** for the query shape, **hyp** for counts). Neither SPL nor ES\|QL warns (S79). Security Data Works reported a backend dropping the window entirely (prior work).
+- **T11.2 Window type.** SPL and ES\|QL use fixed buckets, which miss bursts that straddle a boundary (S33); LogQL slides (**conv** for the query shape, **hyp** for counts). Neither SPL nor ES\|QL warns (S79). Security Data Works reported a backend dropping the window entirely (prior work). Hayabusa's `temporal` looks `timespan` before and after the first rule's event, so three events 10 minutes apart correlate under a 5-minute timespan (**run**, H12). sigma.matching and Zircolite slide (**run**) ([correlation_crosscheck](../results/phase3/correlation_crosscheck/README.md)).
 - **T11.3 EQL emulation.** `value_count` becomes `sequence by IpAddress with maxspan=5m [any where ...] by TargetUserName with runs=5` (**conv**): the inner `by` forces all five events to share the same `TargetUserName`, the opposite of counting distinct values. `temporal_ordered` and a correlation without `group-by` produce `by  with runs=2` and `sequence  with maxspan`, which look malformed (**conv**, **hyp** that EQL rejects them).
-- **T11.4 Grouping with missing values.** Events where a `group-by` field is missing form a null group on some engines and are dropped on others; SPL's `stats ... by` drops them (**hyp**).
-- **T11.5 Distinct counting and case** (S72). `Admin` and `admin` counted as one or two values.
-- **T11.6 Ordering and ties.** `temporal_ordered` with two events at the same timestamp (**hyp**, T22).
+- **T11.4 Grouping with missing values.** Events where a `group-by` field is missing form a null group on some engines and are dropped on others (S32). sigma.matching and Hayabusa form the null group, Zircolite drops them (**run**, M9, H6); SPL's `stats ... by` drops them (**hyp**). Unapplied `aliases` put every event in the null group, so unrelated events correlate (**run**, M15, H11).
+- **T11.5 Distinct counting and case** (S72, S73, S90). `Admin` and `admin` counted as one or two values, or as one or two groups: sigma.matching and Hayabusa count two, Zircolite one (**run**, M8, H5). Hayabusa counts a missing field as a value (**run**, H8). sigma.matching crashes on `value_count` over two fields (**run**, M10).
+- **T11.6 Ordering and ties.** `temporal_ordered` with two events at the same timestamp: sigma.matching and Hayabusa accept them as ordered, Zircolite does not (**run**, M11, H9, T22). An event exactly `timespan` before the last one is inside the window on all three (S91, **run**).
+- **T11.7 Alert granularity** (S93). SPL and ES\|QL give one row per group and bucket, LogQL one sample per evaluation step, the evaluator one alert per rising edge, so alert counts are not comparable across targets and cases compare the groups that fire (**hyp**). sigma.matching and Zircolite raise one alert per event once the count is reached, Hayabusa one per window (**run**).
+- **T11.8 Conditions and timespan.** pySigma rejects a range condition (S34), reading "a map of exactly one condition criterion" literally (**run**, P1, loud); Hayabusa keeps only its first operator (**run**, H7, silent). pySigma accepts `timespan: 5M` (S80, **run**, P2). sigma.matching and Hayabusa ignore the condition of `temporal` and need every rule (S31, **run**, M12, H10). `value_percentile` differs or is refused (S74, **run**, M16).
+- **T11.9 References and chains** (S76). sigma.matching ignores a reference by `id` (M13) and never fires a correlation over a correlation (M14), both silently; Hayabusa refuses chains (**run**).
 
 Example case: `event_count` of failed logons per `TargetUserName`, `gte: 5`, `timespan: 5m`, with 5 events spread across a five-minute boundary.
 
@@ -401,12 +404,13 @@ Example case: `'event.code': '1'` on a JSON event `{"event": {"code": "1"}}` and
 
 ### T23. Sigma filters and meta-rules
 
-**Intent.** A global filter suppresses matches of the rules it lists (S81, ambiguous; working interpretation `rule condition and not filter condition`). It applies only when the logsources are equal (S82, ambiguous). A reference to a missing rule is not covered (S83). Probes: [filters_probe.txt](../results/taxonomy/filters_probe.txt).
+**Intent.** A global filter suppresses matches of the rules it lists (S81, ambiguous; working interpretation `rule condition and not filter condition`). It applies only when the logsources are equal (S82, ambiguous). A reference to a missing rule is not covered (S83), nor is the order of filters and correlations (S89). Probes: [filters_probe.txt](../results/taxonomy/filters_probe.txt).
 
 - **T23.1 Combination.** pySigma ANDs the filter's condition into the rule: rule `Image|endswith: '\cmd.exe'` with a filter on `User: admin` and `condition: selection` gives `Image="*\\cmd.exe" User="admin"` on SPL and the same shape on every target (**conv**). Under S81's interpretation that is inverted: the spec's own example (`User|startswith: 'adm_'`, `condition: selection`) would keep only the admin events it was written to suppress. pySigma expects the filter author to write `not`; the spec example does not. `spec-gap` (S81 ambiguous), but worth a clarification to both.
 - **T23.2 Logsource.** A filter with `{product: windows}` is applied to a `process_creation` rule (subset match), while S82's interpretation requires equal logsources; a filter with another product is not applied (**conv**).
 - **T23.3 Missing references.** A filter that names a rule id that does not exist is silently ignored (**conv**, S83).
-- **T23.4 Native engines.** Chainsaw and Hayabusa may not support global filters at all (**hyp**).
+- **T23.4 Native engines.** Hayabusa reports a global filter as a rule parsing error and runs the rule without it (**run**); Chainsaw may not support them at all (**hyp**). sigma.matching and Zircolite inherit T23.1 from pySigma (**run**, P3).
+- **T23.5 Filters and correlations.** A filter on a rule that a correlation counts removes events before counting (S89); a converter may filter the base query, the correlation, or neither (**hyp**).
 
 ### T24. Rule-authoring quirks
 
@@ -530,10 +534,15 @@ Every clause has one primary area; secondary areas list where else it matters. `
 | S86 | T15 | T26 |
 | S87 | T17 | T15 |
 | S88 | T9 | T18 |
+| S89 | T23 | T11 |
+| S90 | T11 | T1 |
+| S91 | T11 | T22 |
+| S92 | T11 | |
+| S93 | T11 | |
 
-The line below counts how many of the 88 clauses have each area as their primary home (it sums to 88). Areas not listed have none: the spec says nothing about them, so they have no spec verdict of their own (section 4). A low count also marks where the spec is thin, and spec gaps are likely there.
+The line below counts how many of the 93 clauses have each area as their primary home (it sums to 93). Areas not listed have none: the spec says nothing about them, so they have no spec verdict of their own (section 4). A low count also marks where the spec is thin, and spec gaps are likely there.
 
-Clauses per primary area: T1 3, T2 4, T3 2, T4 8, T5 3, T6 2, T7 4, T8 9, T9 16, T11 16, T12 2, T13 1, T14 2, T15 4, T16 3, T17 3, T18 2, T22 1, T23 3.
+Clauses per primary area: T1 3, T2 4, T3 2, T4 8, T5 3, T6 2, T7 4, T8 9, T9 16, T11 20, T12 2, T13 1, T14 2, T15 4, T16 3, T17 3, T18 2, T22 1, T23 4.
 
 ## 7. Measured deviations by area
 
@@ -559,6 +568,28 @@ Clauses per primary area: T1 3, T2 4, T3 2, T4 8, T5 3, T6 2, T7 4, T8 9, T9 16,
 | H2 no `Channel` | Hayabusa | T16.1 | `config` |
 | H3 spaces in names (raw rules) | Hayabusa | T15.4 | `config` |
 | H4 classic `Data` split | Hayabusa | T17.3 | `spec-gap` |
+| M1 `*` matches a missing field | sigma.matching | T4.2 | `backend-bug` candidate |
+| M2 spaces in names not stripped | sigma.matching | T15.4 | `backend-bug` candidate |
+| M3 `fieldref` with both fields missing matches | sigma.matching | T4.2 | `backend-bug` candidate |
+| M4 `''` matches a missing field | sigma.matching | T4.2 | `backend-bug` candidate |
+| M5 escaped `\*` and `\?` not literal | sigma.matching | T3.4 | `backend-bug` candidate |
+| M6 rule integer vs event string | sigma.matching | T5.1 | `spec-gap` |
+| M7 list field matched as JSON text | sigma.matching | T17.1 | `backend-bug` candidate |
+| P1 range condition rejected | pySigma (all backends) | T11.8 | loud (conversion failure, not triaged) |
+| P2 `timespan: 5M` accepted | pySigma (all backends) | T11.8 | `backend-bug` candidate |
+| P3 filter ANDed into the rule | pySigma (all backends) | T23.1 | `spec-gap` |
+| M8, H5 case-sensitive groups and values | sigma.matching, Hayabusa | T11.5 | `spec-gap` |
+| M9, H6 null group for a missing group-by field | sigma.matching, Hayabusa | T11.4 | `spec-gap` |
+| M10 `value_count` over two fields crashes | sigma.matching | T11.5 | `backend-bug` candidate |
+| M11, H9 equal timestamps count as ordered | sigma.matching, Hayabusa | T11.6 | `spec-gap` |
+| M12, H10 `temporal` ignores its condition | sigma.matching, Hayabusa | T11.8 | `backend-bug` candidate |
+| M13 reference by `id` ignored | sigma.matching | T11.9 | `backend-bug` candidate |
+| M14 chain never fires | sigma.matching | T11.9 | `backend-bug` candidate |
+| M15, H11 `aliases` not applied | sigma.matching, Hayabusa | T11.4 | `backend-bug` candidate |
+| M16 `value_percentile` | sigma.matching | T11.8 | `spec-gap` |
+| H7 range keeps its first operator | Hayabusa | T11.8 | `backend-bug` candidate |
+| H8 missing field counted as a value | Hayabusa | T11.5 | `spec-gap` |
+| H12 `temporal` spans twice the timespan | Hayabusa | T11.2 | `backend-bug` candidate |
 
 Version comparisons (converter output only, **conv**): splunk 2.1.0 vs 3.0.1 (T19.1), SQLite IPv6 expansion (T6.3), `windash` limit (T8.4).
 

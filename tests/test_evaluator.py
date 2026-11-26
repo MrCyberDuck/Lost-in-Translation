@@ -1,7 +1,6 @@
 """One or more tests per spec clause (docs/spec-clauses.md) for the reference evaluator.
 
-Correlation (S31 to S35, S70 to S80) and global filters (S81 to S83) are not implemented in
-Phase 2; see docs/phase2.md.
+Correlation and global filters are tested in tests/test_collection.py.
 """
 import textwrap
 

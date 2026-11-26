@@ -3,14 +3,16 @@ import pytest
 from harness.triage import classify, clause_status
 
 
-def test_all_88_clauses_parsed():
+def test_all_93_clauses_parsed():
     status = clause_status()
-    assert len(status) == 88
+    assert len(status) == 93
     assert status["S27"] == "clear"
     assert status["S24"] == "ambiguous"
     assert status["S1"] == "ambiguous"      # "clear for ASCII; ambiguous for non-ASCII" counts as open
     assert status["S70"] == "contradictory"
     assert status["S88"] == "clear"
+    assert status["S92"] == "contradictory"
+    assert status["S93"] == "ambiguous"
 
 
 def test_ambiguous_clause_always_wins_over_backend_bug():

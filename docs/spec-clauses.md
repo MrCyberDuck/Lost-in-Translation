@@ -1,6 +1,6 @@
 # Sigma spec clauses for the reference evaluator
 
-The reference evaluator is the oracle: it decides what each rule *should* match according to the Sigma specification. Each clause below is something the evaluator must implement, with a unit test per clause in Phase 2, and each clause is a place where a converter or engine can disagree with the spec.
+The reference evaluator is the oracle: it decides what each rule *should* match according to the Sigma specification. Each clause below is something the evaluator must implement, with a unit test per clause (`tests/test_evaluator.py`, and `tests/test_collection.py` for correlations and filters), and each clause is a place where a converter or engine can disagree with the spec.
 
 Source: [SigmaHQ/sigma-specification](https://github.com/SigmaHQ/sigma-specification) at commit `ba9251aa834b11a70dbf80836b453dba99c5159e` (9 Jun 2026): rules specification v2.1.0, modifiers appendix v2.1.0, filters specification v2.1.0, correlation specification and taxonomy appendix as of that commit.
 
@@ -12,7 +12,7 @@ Source: [SigmaHQ/sigma-specification](https://github.com/SigmaHQ/sigma-specifica
 - `ambiguous`: the spec is silent, leaves it to the target SIEM, or can be read two ways.
 - `contradictory`: two parts of the spec disagree with each other.
 
-For every `ambiguous` or `contradictory` clause the evaluator follows the **working interpretation** given. Working interpretations were accepted by Nik on 23 Nov 2026, including the four questions that were open (see the end of this file). Accepting an interpretation does not make a clause clear: its status stays `ambiguous`, so any disagreement that depends on it is triaged as `spec-gap`, never `backend-bug`.
+For every `ambiguous` or `contradictory` clause the evaluator follows the **working interpretation** given. The working interpretations of S1 to S88 were accepted by Nik on 23 and 24 Nov 2026, including the four questions that were open (see the end of this file). Those of S89 to S93 were written on 26 Nov 2026, when the evaluator gained correlations and filters in Phase 3 step 2, and wait for Nik's acceptance. Accepting an interpretation does not make a clause clear: its status stays `ambiguous`, so any disagreement that depends on it is triaged as `spec-gap`, never `backend-bug`.
 
 **Spec-gap rule (decision of 23 Nov 2026).** Any disagreement whose expected verdict depends on an `ambiguous` or `contradictory` clause is labelled `spec-gap`, never `backend-bug`, whatever the backend does. It is reported as a proposed clarification to the Sigma specification, not filed against a backend. The full label set is in [triage-labels.md](triage-labels.md) and is enforced in `harness/triage.py`.
 
@@ -92,7 +92,7 @@ SigmaHQ r2026-07-01 contains **no** correlation rules in its rule folders, so ev
 | S31 | `event_count`, `value_count`, `temporal`, `temporal_ordered` (plus `value_sum`, `value_avg`, `value_percentile`) | Correlation spec, Correlation Types | clear on meaning | |
 | S32 | `group-by` fields are ANDed into one grouping key | Correlation spec, Grouping | ambiguous for missing group fields | Events with a missing group-by field are not grouped (excluded). |
 | S33 | `timespan` is a period in which the correlation applies; "should not be restricted to boundaries if this is not required by the given backend" | Correlation spec, Time Selection, Temporal | **ambiguous** | A **sliding** window. |
-| S34 | Condition operators `gt`, `gte`, `lt`, `lte`, `eq`, `neq`, combinable as a range | Correlation spec, Condition | clear | |
+| S34 | Condition operators `gt`, `gte`, `lt`, `lte`, `eq`, `neq`, combinable as a range | Correlation spec, Condition | clear | Every operator given must hold, so two operators form a range. pySigma 1.5.1 rejects a range: it reads "a map of exactly one condition criterion" literally. |
 | S35 | `temporal_ordered`: events appear in the order of the `rules` list | Correlation spec | ambiguous on equal timestamps | Equal timestamps do not count as ordered. |
 
 ## New: logsource and taxonomy
@@ -165,15 +165,19 @@ SigmaHQ r2026-07-01 contains **no** correlation rules in its rule folders, so ev
 | --- | --- | --- | --- | --- |
 | S70 | Allowed correlation types are listed as 4, but `value_sum`, `value_avg` and `value_percentile` are defined later | Correlation spec, Correlation type vs Correlation Types | **contradictory** | Accept all 7. A backend that rejects the last 3 is not a bug. |
 | S71 | `group-by` is "Use: mandatory" but the text says it "optionally defines" fields | Correlation spec, Grouping | **contradictory** | A correlation without `group-by` groups all events together. |
-| S72 | `value_count` counts distinct values; whether `Admin` and `admin` are distinct is not stated | Correlation spec, Value Count + S1 | ambiguous | Distinct after case folding (S1). |
+| S72 | `value_count` counts distinct values; whether `Admin` and `admin` are distinct is not stated | Correlation spec, Value Count + S1 | ambiguous | Distinct after case folding (S1). An event without the field adds no value. |
 | S73 | `value_count` with several `field` values links them with AND | Correlation spec, Value Count | ambiguous (counted as tuples or separately) | Count distinct tuples. |
-| S74 | `value_percentile` semantics ("check when a certain percentage of observed values occur") | Correlation spec, Value Percentile | ambiguous | Treat as: the value's share of all events in the group, in percent, compared with the condition. Spec gap on every disagreement. |
+| S74 | `value_percentile` semantics ("check when a certain percentage of observed values occur") | Correlation spec, Value Percentile | ambiguous | The condition holds when some value of `field` has a share, in percent, of the window's events that have the field, that meets the condition (`lte: 1` fires on a value seen in at most 1% of them). Spec gap on every disagreement. |
 | S75 | `aliases` map one group-by name to different fields per referenced rule | Correlation spec, Field Name Aliases | clear | |
 | S76 | Referenced rules may be given by `id` or `name`; correlations may reference correlations (chains) | Correlation spec, Related rules | clear | |
 | S77 | `generate`: by default only the correlation query is produced, not the referenced rules | Correlation spec, Generate | clear | A backend that emits the base rules as alerts by default is a `backend-bug`. |
 | S78 | A backend must raise an error rather than convert a feature it cannot support where the spec says "must" (counting by group, applying the condition) | Correlation spec, Compatibility | clear | A silent conversion that drops grouping or the condition is a `backend-bug`. |
 | S79 | A backend should warn when it can only approximate a "should" feature (ordering, sliding windows) | Correlation spec, Compatibility | clear | A tumbling window **with** a warning is a spec gap (S33); **without** a warning it is a `backend-bug` against this clause. |
-| S80 | `timespan` format is a number plus `s`, `m`, `h` or `d` in lower case | Correlation spec, Time Selection | clear | Other formats are rule errors. |
+| S80 | `timespan` format is a number plus `s`, `m`, `h` or `d` in lower case | Correlation spec, Time Selection | clear | Other formats are rule errors. pySigma 1.5.1 also accepts `w`, `M` and `y`. |
+| S90 | Whether `group-by` values that differ only in case form one group | not covered; S1 makes value comparison case-insensitive | ambiguous | One group: values are case-folded as in S1, so `Bob` and `bob` are counted together. |
+| S91 | Whether an event exactly `timespan` before the last event is inside the window | Correlation spec, Time Selection, does not say | ambiguous | Inside: the window ending at an event at time t is `[t - timespan, t]`, both ends included. |
+| S92 | `condition` is "Use: mandatory", but `temporal` and `temporal_ordered` list only `group-by` and `timespan` as required and their examples have no condition | Correlation spec, Condition vs Temporal Proximity | **contradictory** | Without a condition, every referenced rule must match in the window, which is also pySigma's default (`gte` the number of rules). |
+| S93 | What one correlation match is: how many alerts a burst gives and when | not covered | ambiguous | One alert per group each time the condition becomes true, at the event that ends the first window where it holds; it fires again only after the condition has been false. Results are compared with backends by the set of groups that fire, not by alert counts. |
 
 ## New: global filters (meta-filters)
 
@@ -184,6 +188,7 @@ No global filters are shipped in the in-scope folder, so these are conformance c
 | S81 | A filter applies its selection to the rules listed in `filter.rules` to suppress their matches | Filters spec, Global Filter | ambiguous: the spec says "suppress" but does not give the boolean form | `rule condition and not filter condition`. |
 | S82 | The filter's logsource versus the rule's logsource | Filters spec, Log source | ambiguous | The filter applies only when the logsources are equal. |
 | S83 | A filter that references a rule id that does not exist | not covered | ambiguous | Ignored with a warning. |
+| S89 | Whether a filter applies to a rule's matches before a correlation that references the rule counts them | not covered | ambiguous | Yes: a correlation counts only the matches left after the filters. |
 
 ## New: field value formats
 
