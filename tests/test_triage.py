@@ -3,9 +3,9 @@ import pytest
 from harness.triage import classify, clause_status
 
 
-def test_all_93_clauses_parsed():
+def test_all_97_clauses_parsed():
     status = clause_status()
-    assert len(status) == 93
+    assert len(status) == 97
     assert status["S27"] == "clear"
     assert status["S24"] == "ambiguous"
     assert status["S1"] == "ambiguous"      # "clear for ASCII; ambiguous for non-ASCII" counts as open

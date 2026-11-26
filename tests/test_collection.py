@@ -1,5 +1,5 @@
 """One or more tests per clause for global filters (S81 to S83, S89) and correlation rules (S31 to S35,
-S70 to S77, S80, S90 to S93) in the reference evaluator (harness/evaluator/collection.py).
+S70 to S77, S80, S90 to S97) in the reference evaluator (harness/evaluator/collection.py).
 
 S78 and S79 are obligations of a conversion backend (error or warn when it cannot express a feature),
 not of the oracle, so they are checked against the backends in the conformance runs, not here.
@@ -74,9 +74,9 @@ logsource:
     service: security
 filter:
     rules: [{ref}]
-    sel:
+    selection:
         User|startswith: adm_
-    condition: sel
+    condition: selection
 """
 
 
@@ -88,7 +88,7 @@ def test_s81_filter_suppresses_matches_it_selects():
 
 
 def test_s81_filter_with_not_keeps_only_the_selected_events():
-    text = docs(base(), FILTER.format(ref=R1).replace("condition: sel", "condition: not sel"))
+    text = docs(base(), FILTER.format(ref=R1).replace("condition: selection", "condition: not selection"))
     assert run(text, [ev(1, 0, User="adm_bob"), ev(2, 0, User="alice")]).rules[R1] == ["e1"]
 
 
@@ -464,3 +464,111 @@ def test_alert_carries_window_events_and_time():
     a = run(text, [ev(1, 0, User="bob"), ev(2, 1, User="bob"), ev(3, 2, User="bob")]).alerts["c1"][0]
     assert a.events == ["e1", "e2", "e3"]
     assert a.time.isoformat() == "2026-01-01T00:02:00+00:00"
+
+
+def test_filter_needs_selection_and_condition():
+    with pytest.raises(RuleError, match="selection"):
+        compile_collection(docs(base(), FILTER.format(ref=R1).replace("selection:", "sel:")))
+
+
+# ---------------------------------------------------------------- found by the step 2 review
+
+
+def test_s94_chain_groups_by_its_own_field():
+    # The spec's example: the inner rule groups by Host, the outer correlation by User.
+    inner = corr(COUNT3.replace("[User]", "[Host]").replace("gte: 3", "gte: 2"), "c1", "burst")
+    outer = corr("""\
+        type: temporal_ordered
+        rules: [burst, success]
+        group-by: [User]
+        timespan: 10m
+        """, "c2", "outer")
+    text = docs(base(), base(R2, "success", 4624), inner, outer)
+    events = [ev(1, 0, Host="h", User="bob"), ev(2, 1, Host="h", User="bob"), ev(3, 2, eid=4624, User="bob")]
+    assert [a.group for a in run(text, events).alerts["c2"]] == [("bob",)]
+
+
+def test_s94_chain_sees_every_window_where_the_inner_condition_holds():
+    # One burst of 3 events with inner gte 2 holds at the 2nd and the 3rd event: 2 inner matches.
+    inner = corr(COUNT3.replace("gte: 3", "gte: 2"), "c1", "burst")
+    outer = corr(COUNT3.replace("[failed]", "[burst]").replace("gte: 3", "gte: 2"), "c2", "bursts")
+    text = docs(base(), inner, outer)
+    assert [a.group for a in run(text, [ev(i, i, User="eve") for i in range(3)]).alerts["c2"]] == [("eve",)]
+
+
+def test_s94_brute_force_then_success():
+    # Failures every 2 minutes for 14 minutes, then a success: the inner condition still holds at 14:00.
+    inner = corr(COUNT3, "c1", "many_failed")
+    outer = corr("""\
+        type: temporal_ordered
+        rules: [many_failed, success]
+        group-by: [User]
+        timespan: 2m
+        """, "c2", "outer")
+    text = docs(base(), base(R2, "success", 4624), inner, outer)
+    events = [ev(i, 2 * i, User="bob") for i in range(8)] + [ev(9, 15, eid=4624, User="bob")]
+    assert [a.group for a in run(text, events).alerts["c2"]] == [("bob",)]
+
+
+def test_s95_event_matched_by_two_rules_counts_once():
+    text = docs(base(), base(R2, "failed2"), corr(COUNT3.replace("[failed]", "[failed, failed2]").replace("gte: 3", "gte: 2")))
+    assert groups(text, [ev(1, 0, User="bob")]) == []
+    assert groups(text, [ev(1, 0, User="bob"), ev(2, 1, User="bob")]) == [("bob",)]
+
+
+def test_s95_value_sum_counts_an_event_once():
+    text = docs(base(), base(R2, "failed2"), corr("""\
+        type: value_sum
+        rules: [failed, failed2]
+        group-by: [Host]
+        timespan: 5m
+        condition:
+            field: Bytes
+            gte: 20
+        """))
+    assert groups(text, [ev(1, 0, Host="h", Bytes=10)]) == []
+
+
+def test_s76_same_rule_twice_is_an_error():
+    with pytest.raises(RuleError, match="twice"):
+        compile_collection(docs(base(), corr(COUNT3.replace("[failed]", f"[failed, {R1}]"))))
+
+
+def test_s96_upper_bound_holds_on_the_way_up():
+    text = docs(base(), corr(COUNT3.replace("gte: 3", "lt: 3")))
+    assert groups(text, [ev(i, i, User="bob") for i in range(5)]) == [("bob",)]
+
+
+def test_s97_alias_falls_back_to_the_field_for_unlisted_rules():
+    text = docs(base(R1, "conn_in"), base(R2, "conn_out", 4624), corr("""\
+        type: temporal
+        rules: [conn_in, conn_out]
+        aliases:
+            ip:
+                conn_in: DestinationIp
+        group-by: [ip]
+        timespan: 5m
+        """))
+    events = [ev(1, 0, DestinationIp="10.0.0.1"), ev(2, 1, eid=4624, ip="10.0.0.1")]
+    assert groups(text, events) == [("10.0.0.1",)]
+    assert "S97" in compile_collection(text).clauses
+
+
+def test_timestamps_keep_nanoseconds():
+    text = docs(base(), base(R2, "success", 4624), corr(ORDERED))
+    events = [{**ev(1, 0, User="bob"), "@timestamp": "2026-01-01T00:00:00.000000100Z"},
+              {**ev(2, 0, eid=4624, User="bob"), "@timestamp": "2026-01-01T00:00:00.000000900Z"}]
+    assert groups(text, events) == [("bob",)]
+
+
+def test_dropped_events_are_reported():
+    text = docs(base(), corr(COUNT3))
+    out = run(text, [ev(1, 0, User="bob"), {**ev(2, 1, User="bob"), "@timestamp": "yesterday"}])
+    assert any("1 match(es)" in w for w in out.warnings)
+
+
+def test_s77_generate_must_be_boolean_and_top_level_wins():
+    with pytest.raises(RuleError, match="boolean"):
+        compile_collection(docs(base(), corr(COUNT3 + "generate: 'false'\n")))
+    top = docs(base(), corr(COUNT3).replace("level: high", "") + "generate: true\n")
+    assert R1 in run(top, []).emitted

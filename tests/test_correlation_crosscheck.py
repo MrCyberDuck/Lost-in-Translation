@@ -16,5 +16,5 @@ def test_evaluator_results_match_the_recorded_run():
 
 def test_case_ids_are_unique_and_every_case_names_a_clause():
     ids = [c.id for c in CASES]
-    assert len(ids) == len(set(ids)) == 31
+    assert len(ids) == len(set(ids)) == 45
     assert all(c.clauses for c in CASES)
