@@ -89,8 +89,11 @@ def test_probes_still_hold_on_installed_chainsaw(tmp_path):
     from harness import native
     evtx = pathlib.Path("rules/sigma/regression_data/rules/windows/process_creation/"
                         "proc_creation_win_bitsadmin_download")
-    if not native.CHAINSAW.exists() or not native.CHAINSAW_MAPPING.exists() or not evtx.exists():
-        pytest.skip("Chainsaw binary, its mapping file (LIT_CHAINSAW_MAPPING) or the SigmaHQ submodule not installed")
+    missing = [f"{what} ({path})" for what, path in (("Chainsaw binary", native.CHAINSAW),
+                                                     ("Chainsaw mapping", native.CHAINSAW_MAPPING),
+                                                     ("SigmaHQ regression sample", evtx)) if not path.exists()]
+    if missing:
+        pytest.skip("not found: " + ", ".join(missing))
     mapping = native.neutral_mapping(tmp_path / "neutral.yml")
     for n, (cond, expected) in enumerate(CHAINSAW_PROBES):
         rule = tmp_path / f"probe{n}.yml"

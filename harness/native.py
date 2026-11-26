@@ -11,8 +11,10 @@ Build (no prebuilt binaries are needed; see docs/phase2.md):
     git clone https://github.com/Yamato-Security/sigma-to-hayabusa-converter
     python sigma-to-hayabusa-converter.py -r rules/sigma -o <converted>    # production rules
 
-Paths come from environment variables (defaults are the cloud container's):
-LIT_CHAINSAW, LIT_CHAINSAW_MAPPING, LIT_HAYABUSA, LIT_HAYABUSA_CONFIG, LIT_HAYABUSA_CONVERTED.
+Paths come from environment variables (LIT_CHAINSAW, LIT_CHAINSAW_MAPPING, LIT_HAYABUSA,
+LIT_HAYABUSA_CONFIG, LIT_HAYABUSA_CONVERTED). Without them, the engines are looked up in the
+repo's git-excluded .tools folder (the release zips, as on the Windows laptop), and then in the
+cloud container's build folder /home/user/native.
 
 Two configurations, matching the evaluator's (S36, S37):
 
@@ -34,7 +36,23 @@ import tempfile
 import yaml
 
 NATIVE = pathlib.Path(os.environ.get("LIT_NATIVE", "/home/user/native"))
-CHAINSAW = pathlib.Path(os.environ.get("LIT_CHAINSAW", NATIVE / "chainsaw/target/release/chainsaw"))
+TOOLS = pathlib.Path(__file__).resolve().parent.parent / ".tools"  # repo-local tools (the laptop layout, git-excluded)
+
+
+def _find(env: str, patterns: list[str], default: pathlib.Path, tools: pathlib.Path = TOOLS) -> pathlib.Path:
+    """The environment variable if set, else the first file under .tools matching a pattern, else the default."""
+    if os.environ.get(env):
+        return pathlib.Path(os.environ[env])
+    for pattern in patterns:
+        hits = sorted(p for p in tools.glob(pattern) if p.is_file())
+        if hits:
+            return hits[0]
+    return default
+
+
+CHAINSAW = _find("LIT_CHAINSAW", ["chainsaw/chainsaw/chainsaw.exe", "chainsaw/chainsaw.exe",
+                                  "chainsaw/chainsaw/chainsaw", "chainsaw/chainsaw"],
+                 NATIVE / "chainsaw/target/release/chainsaw")
 
 
 def _default_chainsaw_mapping() -> pathlib.Path:
@@ -47,9 +65,20 @@ def _default_chainsaw_mapping() -> pathlib.Path:
 
 
 CHAINSAW_MAPPING = pathlib.Path(os.environ.get("LIT_CHAINSAW_MAPPING") or _default_chainsaw_mapping())
-HAYABUSA = pathlib.Path(os.environ.get("LIT_HAYABUSA", NATIVE / "hayabusa/target/release/hayabusa"))
-HAYABUSA_CONFIG = pathlib.Path(os.environ.get("LIT_HAYABUSA_CONFIG", NATIVE / "hayabusa-rules/config"))
-HAYABUSA_CONVERTED = pathlib.Path(os.environ.get("LIT_HAYABUSA_CONVERTED", NATIVE / "hayabusa-converted"))
+HAYABUSA = _find("LIT_HAYABUSA", ["hayabusa/hayabusa*.exe", "hayabusa/hayabusa-*-lin-*", "hayabusa/hayabusa"],
+                 NATIVE / "hayabusa/target/release/hayabusa")
+
+
+def _default_hayabusa_config() -> pathlib.Path:
+    """rules/config next to the binary (release zip layout), else the hayabusa-rules clone."""
+    beside = HAYABUSA.parent / "rules" / "config"
+    return beside if beside.is_dir() else NATIVE / "hayabusa-rules/config"
+
+
+HAYABUSA_CONFIG = pathlib.Path(os.environ.get("LIT_HAYABUSA_CONFIG") or _default_hayabusa_config())
+HAYABUSA_CONVERTED = pathlib.Path(os.environ.get("LIT_HAYABUSA_CONVERTED")
+                                  or (TOOLS / "hayabusa-converted" if (TOOLS / "hayabusa-converted").is_dir()
+                                      else NATIVE / "hayabusa-converted"))
 
 
 def versions() -> dict:
