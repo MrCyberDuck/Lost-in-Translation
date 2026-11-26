@@ -39,7 +39,7 @@ def _containers() -> list[dict]:
 def packages() -> dict[str, str]:
     names = ["pySigma", "sigma-cli", "pySigma-backend-splunk", "pySigma-backend-elasticsearch",
              "pySigma-backend-opensearch", "pySigma-backend-kusto", "pySigma-backend-loki",
-             "pySigma-backend-sqlite"]
+             "pySigma-backend-sqlite", "pySigma-pipeline-windows", "pySigma-pipeline-sysmon"]
     out = {}
     for n in names:
         try:

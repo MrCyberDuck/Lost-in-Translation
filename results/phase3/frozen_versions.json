@@ -1,0 +1,79 @@
+{
+ "frozen_on": "2026-11-26",
+ "applies_to": "Phases 3 and 4. One optional refresh before Phase 4, only after asking Nik (Phase 3 plan, Versions).",
+ "pysigma_1x": {
+  "lock": "requirements.lock",
+  "targets": [
+   "lucene",
+   "esql",
+   "eql",
+   "opensearch_lucene",
+   "kusto"
+  ],
+  "control": [
+   "splunk 2.1.0",
+   "loki 0.15.1",
+   "sqlite 2.0.0"
+  ],
+  "packages": {
+   "pySigma": "1.5.1",
+   "pySigma-backend-elasticsearch": "2.1.1",
+   "pySigma-backend-kusto": "1.0.1",
+   "pySigma-backend-loki": "0.15.1",
+   "pySigma-backend-opensearch": "2.0.3",
+   "pysigma-backend-splunk": "2.1.0",
+   "pySigma-backend-sqlite": "2.0.0",
+   "sigma-cli": "3.1.0"
+  }
+ },
+ "pysigma_2x": {
+  "lock": "requirements-2x.lock",
+  "targets": [
+   "splunk",
+   "loki",
+   "sqlite",
+   "zircolite"
+  ],
+  "packages": {
+   "pySigma": "2.1.2",
+   "pySigma-backend-loki": "0.17.0",
+   "pysigma-backend-splunk": "3.0.1",
+   "pySigma-backend-sqlite": "2.2.0",
+   "pysigma-pipeline-sysmon": "3.0.0",
+   "pysigma-pipeline-windows": "3.0.0"
+  }
+ },
+ "native": {
+  "chainsaw": {
+   "version": "2.18.0",
+   "commit": "76a4d6f2e4d7fd3614686abf2db6817f50776467"
+  },
+  "hayabusa": {
+   "version": "4.4.0",
+   "commit": "7a14fd6320263ab2cc93993601c118bc04ecd371"
+  },
+  "hayabusa-rules (config)": {
+   "commit": "57743fd6a2fc46bdf330dac69619e68347e033b6"
+  },
+  "sigma-to-hayabusa-converter": {
+   "commit": "e33d20e4f8b893fecbbfa451c3d7bcd4edfeeb5b"
+  },
+  "zircolite": {
+   "version": "4.8.0",
+   "commit": "c996960b0517e96e63d91817f815d0500a6f8bba",
+   "env": "pysigma_2x"
+  }
+ },
+ "engines": {
+  "elasticsearch": "elasticsearch:9.5.5",
+  "opensearch": "opensearchproject/opensearch:3.10.0",
+  "loki": "grafana/loki:3.6.22",
+  "splunk": "splunk/splunk:10.6.2",
+  "kusto": "mcr.microsoft.com/azuredataexplorer/kustainer-linux@sha256:feb9b3bb8033b042f342b3b8e4f6a645c7b38e7d4b452aabae69d73a390e8db5"
+ },
+ "rules": {
+  "sigmahq": "r2026-07-01 (552f3fee420ef232a8e5790c4fae591847e32347)",
+  "sigma-specification": "ba9251aa834b11a70dbf80836b453dba99c5159e"
+ },
+ "checked": "PyPI on 2026-11-26: elasticsearch 2.1.1, opensearch 2.0.3 and kusto 1.0.1 still require pySigma <2. New since 23 Nov: pySigma 2.1.2 (24 Nov) and pySigma-backend-loki 0.17.0 (26 Nov). The three taxonomy probe scripts give identical output on the frozen versions."
+}

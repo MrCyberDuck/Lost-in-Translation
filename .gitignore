@@ -1,6 +1,7 @@
 __pycache__/
 *.pyc
 .venv/
+.venv-2x/
 venv/
 results/sqlite/
 .env

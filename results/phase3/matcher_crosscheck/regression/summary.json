@@ -1,0 +1,13 @@
+{
+ "dataset": "regression",
+ "events": 233,
+ "rules": 2295,
+ "evaluator_rule_errors": 0,
+ "matcher_rule_errors": 0,
+ "rules_compared": 2295,
+ "rules_agree": 2291,
+ "rules_differ": 4,
+ "pairs_only_evaluator": 1,
+ "pairs_only_matcher": 241,
+ "seconds": 14.3
+}

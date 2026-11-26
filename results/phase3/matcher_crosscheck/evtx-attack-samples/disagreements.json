@@ -1,0 +1,184 @@
+[
+ {
+  "rule_id": "214e8f95-100a-4e04-bb31-ef6cba8ce07e",
+  "path": "rules/sigma/rules/windows/builtin/security/win_security_dce_rpc_smb_spoolss_named_pipe.yml",
+  "only_evaluator_count": 1,
+  "only_evaluator": [
+   "Lateral Movement/spoolsample_5145.evtx#160445"
+  ],
+  "only_matcher_count": 0,
+  "only_matcher": []
+ },
+ {
+  "rule_id": "52d8b0c6-53d6-439a-9e41-52ad442ad9ad",
+  "path": "rules/sigma/rules/windows/builtin/security/win_security_lm_namedpipe.yml",
+  "only_evaluator_count": 6,
+  "only_evaluator": [
+   "Lateral Movement/ImpersonateUser-via local Pass The Hash Sysmon and Security.evtx#321447",
+   "Lateral Movement/LM_renamed_psexecsvc_5145.evtx#84047",
+   "Lateral Movement/LM_renamed_psexecsvc_5145.evtx#84050",
+   "Lateral Movement/LM_renamed_psexecsvc_5145.evtx#84051",
+   "Lateral Movement/LM_renamed_psexecsvc_5145.evtx#84052",
+   "Privilege Escalation/PrivEsc_NetSvc_SessionToken_Retrival_via_localSMB_Auth_5145.evtx#87753"
+  ],
+  "only_matcher_count": 0,
+  "only_matcher": []
+ },
+ {
+  "rule_id": "5bed80b6-b3e8-428e-a3ae-d3c757589e41",
+  "path": "rules/sigma/rules/windows/builtin/security/win_security_rdp_reverse_tunnel.yml",
+  "only_evaluator_count": 4,
+  "only_evaluator": [
+   "Command and Control/DE_RDP_Tunnel_5156.evtx#227727",
+   "Command and Control/DE_RDP_Tunnel_5156.evtx#227728",
+   "Command and Control/DE_RDP_Tunnel_5156.evtx#227741",
+   "Command and Control/DE_RDP_Tunnel_5156.evtx#227742"
+  ],
+  "only_matcher_count": 0,
+  "only_matcher": []
+ },
+ {
+  "rule_id": "64e8e417-c19a-475a-8d19-98ea705394cc",
+  "path": "rules/sigma/rules/windows/powershell/powershell_module/posh_pm_alternate_powershell_hosts.yml",
+  "only_evaluator_count": 0,
+  "only_evaluator": [],
+  "only_matcher_count": 37364,
+  "only_matcher": [
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6575",
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6576",
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6577",
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6578",
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6579",
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6580",
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6581",
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6582",
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6583",
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6584",
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6585",
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6586",
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6587",
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6588",
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6589",
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6590",
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6591",
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6592",
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6593",
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6594"
+  ]
+ },
+ {
+  "rule_id": "9637e8a5-7131-4f7f-bdc7-2b05d8670c43",
+  "path": "rules/sigma/rules/windows/process_creation/proc_creation_win_susp_file_characteristics.yml",
+  "only_evaluator_count": 7,
+  "only_evaluator": [
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6577",
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6585",
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6586",
+   "Defense Evasion/DE_ProcessHerpaderping_Sysmon_11_10_1_7.evtx#2246493",
+   "Persistence/persist_firefox_comhijack_sysmon_11_13_7_1.evtx#370",
+   "Privilege Escalation/privesc_sysmon_cve_20201030_spooler.evtx#343364",
+   "Privilege Escalation/sysmon_11_7_1_uacbypass_windirectory_mocking.evtx#4723"
+  ],
+  "only_matcher_count": 0,
+  "only_matcher": []
+ },
+ {
+  "rule_id": "c462f537-a1e3-41a6-b5fc-b2c2cef9bf82",
+  "path": "rules/sigma/rules/windows/builtin/security/win_security_susp_psexec.yml",
+  "only_evaluator_count": 3,
+  "only_evaluator": [
+   "Lateral Movement/LM_renamed_psexecsvc_5145.evtx#84050",
+   "Lateral Movement/LM_renamed_psexecsvc_5145.evtx#84051",
+   "Lateral Movement/LM_renamed_psexecsvc_5145.evtx#84052"
+  ],
+  "only_matcher_count": 0,
+  "only_matcher": []
+ },
+ {
+  "rule_id": "c7c8aa1c-5aff-408e-828b-998e3620b341",
+  "path": "rules/sigma/rules/windows/builtin/application/msiinstaller/win_msi_install_from_susp_locations.yml",
+  "only_evaluator_count": 0,
+  "only_evaluator": [],
+  "only_matcher_count": 298,
+  "only_matcher": [
+   "Execution/rogue_msi_url_1040_1042.evtx#2513",
+   "Execution/rogue_msi_url_1040_1042.evtx#2516",
+   "Execution/rogue_msi_url_1040_1042.evtx#2517",
+   "Execution/rogue_msi_url_1040_1042.evtx#2521",
+   "Execution/rogue_msi_url_1040_1042.evtx#2584",
+   "Execution/rogue_msi_url_1040_1042.evtx#2640",
+   "Execution/rogue_msi_url_1040_1042.evtx#2645",
+   "Execution/rogue_msi_url_1040_1042.evtx#2648",
+   "Execution/rogue_msi_url_1040_1042.evtx#2649",
+   "Execution/rogue_msi_url_1040_1042.evtx#2652",
+   "Execution/rogue_msi_url_1040_1042.evtx#2692",
+   "Execution/rogue_msi_url_1040_1042.evtx#2696",
+   "Execution/rogue_msi_url_1040_1042.evtx#2697",
+   "Execution/rogue_msi_url_1040_1042.evtx#2705",
+   "Execution/rogue_msi_url_1040_1042.evtx#2782",
+   "Execution/rogue_msi_url_1040_1042.evtx#2786",
+   "Execution/rogue_msi_url_1040_1042.evtx#2886",
+   "Execution/rogue_msi_url_1040_1042.evtx#2889",
+   "Execution/rogue_msi_url_1040_1042.evtx#2890",
+   "Execution/rogue_msi_url_1040_1042.evtx#2893"
+  ]
+ },
+ {
+  "rule_id": "f01d1f70-cd41-42ec-9c0b-26dd9c22bf29",
+  "path": "rules/sigma/rules/windows/file/file_delete/file_delete_win_delete_own_image.yml",
+  "only_evaluator_count": 0,
+  "only_evaluator": [],
+  "only_matcher_count": 34410,
+  "only_matcher": [
+   "AutomatedTestingTools/Malware/DE_timestomp_and_dll_sideloading_and_RunPersist.evtx#6595",
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424080",
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424116",
+   "AutomatedTestingTools/Malware/rundll32_cmd_schtask.evtx#424176",
+   "AutomatedTestingTools/Malware/rundll32_hollowing_wermgr_masquerading.evtx#422696",
+   "AutomatedTestingTools/Malware/sideloading_injection_persistence_run_key.evtx#416058",
+   "AutomatedTestingTools/Malware/sideloading_injection_persistence_run_key.evtx#416059",
+   "AutomatedTestingTools/Malware/sideloading_injection_persistence_run_key.evtx#416060",
+   "AutomatedTestingTools/Malware/sideloading_uacbypass_rundll32_injection_c2.evtx#417080",
+   "AutomatedTestingTools/Malware/sideloading_uacbypass_rundll32_injection_c2.evtx#417082",
+   "AutomatedTestingTools/Malware/sideloading_uacbypass_rundll32_injection_c2.evtx#417084",
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#4055",
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#4056",
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#4057",
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#4058",
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#4059",
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#4060",
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#4112",
+   "AutomatedTestingTools/WinDefender_Events_1117_1116_AtomicRedTeam.evtx#101",
+   "AutomatedTestingTools/WinDefender_Events_1117_1116_AtomicRedTeam.evtx#102"
+  ]
+ },
+ {
+  "rule_id": "f239b326-2f41-4d6b-9dfa-c846a60ef505",
+  "path": "rules/sigma/rules/windows/create_remote_thread/create_remote_thread_win_susp_password_dumper_lsass.yml",
+  "only_evaluator_count": 0,
+  "only_evaluator": [],
+  "only_matcher_count": 28,
+  "only_matcher": [
+   "AutomatedTestingTools/PanacheSysmon_vs_AtomicRedTeam01.evtx#4112",
+   "Credential Access/CA_sysmon_hashdump_cmd_meterpreter.evtx#9065",
+   "Credential Access/babyshark_mimikatz_powershell.evtx#22",
+   "Credential Access/babyshark_mimikatz_powershell.evtx#30",
+   "Credential Access/ppl_bypass_ppldump_knowdll_hijack_sysmon_security.evtx#564590",
+   "Credential Access/ppl_bypass_ppldump_knowdll_hijack_sysmon_security.evtx#564591",
+   "Credential Access/ppl_bypass_ppldump_knowdll_hijack_sysmon_security.evtx#564597",
+   "Credential Access/ppl_bypass_ppldump_knowdll_hijack_sysmon_security.evtx#564598",
+   "Credential Access/sysmon_10_11_lsass_memdump.evtx#4434",
+   "Credential Access/sysmon_10_11_lsass_memdump.evtx#4442",
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238374",
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238376",
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238379",
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238381",
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238382",
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238384",
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238386",
+   "Credential Access/sysmon_10_11_outlfank_dumpert_and_andrewspecial_memdump.evtx#238388",
+   "Credential Access/sysmon_10_lsass_mimikatz_sekurlsa_logonpasswords.evtx#4807",
+   "Credential Access/sysmon_2x10_lsass_with_different_pid_RtlCreateProcessReflection.evtx#2125126"
+  ]
+ }
+]
