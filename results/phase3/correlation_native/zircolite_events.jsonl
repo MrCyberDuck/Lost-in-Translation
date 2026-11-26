@@ -1,0 +1,5 @@
+{"EventID": 4625, "TargetUserName": "bob", "SystemTime": "2026-11-26T10:00:00.000Z", "Channel": "Security"}
+{"EventID": 4625, "TargetUserName": "bob", "SystemTime": "2026-11-26T10:00:01.000Z", "Channel": "Security"}
+{"EventID": 4625, "TargetUserName": "bob", "SystemTime": "2026-11-26T10:00:02.000Z", "Channel": "Security"}
+{"EventID": 4625, "TargetUserName": "eve", "SystemTime": "2026-11-26T10:00:00.000Z", "Channel": "Security"}
+{"EventID": 4625, "TargetUserName": "eve", "SystemTime": "2026-11-26T10:00:01.000Z", "Channel": "Security"}

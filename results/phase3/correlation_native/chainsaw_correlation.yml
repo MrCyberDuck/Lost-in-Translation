@@ -1,0 +1,19 @@
+title: brute force
+id: 11111111-1111-1111-1111-222222222222
+status: test
+correlation:
+  type: event_count
+  rules:
+  - failed_logon
+  group-by:
+  - TargetUserName
+  timespan: 5m
+  condition:
+    gte: 1
+level: high
+description: probe
+author: lit
+date: '2026-11-26'
+logsource:
+  product: windows
+  service: security

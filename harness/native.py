@@ -9,10 +9,11 @@ Build (no prebuilt binaries are needed; see docs/phase2.md):
     git clone -b v4.4.0 https://github.com/Yamato-Security/hayabusa && cargo +1.99 build --release
     git clone https://github.com/Yamato-Security/hayabusa-rules            # config folder
     git clone https://github.com/Yamato-Security/sigma-to-hayabusa-converter
+    git clone -b v4.8.0 https://github.com/wagga40/Zircolite                 # runs in the 2.x env
     python sigma-to-hayabusa-converter.py -r rules/sigma -o <converted>    # production rules
 
 Paths come from environment variables (LIT_CHAINSAW, LIT_CHAINSAW_MAPPING, LIT_HAYABUSA,
-LIT_HAYABUSA_CONFIG, LIT_HAYABUSA_CONVERTED). Without them, the engines are looked up in the
+LIT_HAYABUSA_CONFIG, LIT_HAYABUSA_CONVERTED, LIT_ZIRCOLITE). Without them, the engines are looked up in the
 repo's git-excluded .tools folder (the release zips, as on the Windows laptop), and then in the
 cloud container's build folder /home/user/native.
 
@@ -76,6 +77,8 @@ def _default_hayabusa_config() -> pathlib.Path:
 
 
 HAYABUSA_CONFIG = pathlib.Path(os.environ.get("LIT_HAYABUSA_CONFIG") or _default_hayabusa_config())
+ZIRCOLITE = _find("LIT_ZIRCOLITE", ["Zircolite/zircolite.py", "zircolite/zircolite.py"],
+                  NATIVE / "zircolite/zircolite.py")  # runs with the pySigma 2.x environment (requirements-2x.lock)
 HAYABUSA_CONVERTED = pathlib.Path(os.environ.get("LIT_HAYABUSA_CONVERTED")
                                   or (TOOLS / "hayabusa-converted" if (TOOLS / "hayabusa-converted").is_dir()
                                       else NATIVE / "hayabusa-converted"))

@@ -1,0 +1,67 @@
+[
+ {
+  "rule_id": "64e8e417-c19a-475a-8d19-98ea705394cc",
+  "path": "rules/sigma/rules/windows/powershell/powershell_module/posh_pm_alternate_powershell_hosts.yml",
+  "only_evaluator_count": 0,
+  "only_evaluator": [],
+  "only_matcher_count": 233,
+  "only_matcher": [
+   "regression_data/rules-emerging-threats/2025/Exploits/CVE-2025-55182/proc_creation_win_exploit_cve_2025_55182_susp_nodejs_server_child_process/271de298-cc0e-4842-acd8-079a0a99ea65.evtx#67583",
+   "regression_data/rules-emerging-threats/2025/Malware/Grixba/proc_creation_win_malware_grixba_recon/af688c76-4ce4-4309-bfdd-e896f01acf27.evtx#142649",
+   "regression_data/rules-emerging-threats/2025/Malware/Shai-Hulud/proc_creation_win_mal_shai_hulud_indicator/540703fb-a874-4385-a9d6-7cd1bfab268c.evtx#2584270",
+   "regression_data/rules-emerging-threats/2025/Malware/Shai-Hulud/proc_creation_win_mal_shai_hulud_malicious_node_bun_execution/5299fadf-f228-4526-8274-251db1960be9.evtx#2455038",
+   "regression_data/rules-emerging-threats/2025/Malware/Shai-Hulud/proc_creation_win_mal_shai_hulud_malicious_node_bun_execution/5299fadf-f228-4526-8274-251db1960be9.evtx#2455115",
+   "regression_data/rules-emerging-threats/2025/Malware/Shai-Hulud/proc_creation_win_mal_shai_hulud_malicious_node_bun_execution/5299fadf-f228-4526-8274-251db1960be9.evtx#2455186",
+   "regression_data/rules-emerging-threats/2025/Malware/Shai-Hulud/proc_creation_win_mal_shai_hulud_malicious_node_bun_execution/5299fadf-f228-4526-8274-251db1960be9.evtx#2459203",
+   "regression_data/rules-emerging-threats/2025/Malware/Shai-Hulud/proc_creation_win_mal_shai_hulud_malicious_node_bun_execution/5299fadf-f228-4526-8274-251db1960be9.evtx#2459486",
+   "regression_data/rules-emerging-threats/2025/Malware/Shai-Hulud/proc_creation_win_mal_shai_hulud_malicious_node_bun_execution/5299fadf-f228-4526-8274-251db1960be9.evtx#2459542",
+   "regression_data/rules-emerging-threats/2025/Malware/Shai-Hulud/proc_creation_win_mal_shai_hulud_malicious_npm_package_installation/bae7c70b-8569-44e9-accf-b30073da8a5d.evtx#2161838",
+   "regression_data/rules-emerging-threats/2026/Exploits/CVE-2026-33829/proc_creation_win_exploit_cve_2026_33829/7c3a5b1d-9e2f-4a8c-b5d7-1e0f3c6a9b2d.evtx#86918",
+   "regression_data/rules-emerging-threats/2026/Exploits/CVE-2026-33829/proc_creation_win_exploit_cve_2026_33829/7c3a5b1d-9e2f-4a8c-b5d7-1e0f3c6a9b2d.evtx#86921",
+   "regression_data/rules-emerging-threats/2026/Exploits/RedSun/file_event_win_exploit_redsun_indicators/f2e4b7d9-5c3a-4f8b-9e1d-7a6c2b3f4e5d.evtx#83239",
+   "regression_data/rules-emerging-threats/2026/Exploits/RedSun/pipe_created_win_exploit_redsun_named_pipe/9b4e7c2a-3f6d-4a8b-b5e9-1c7d3f2e6a4b.evtx#83237",
+   "regression_data/rules-emerging-threats/2026/Exploits/RedSun/win_defender_exploit_redsun_tiering_engine_detected_as_eicar/a7c3e5f2-8b1d-4e9a-b6c2-3d7f5e8a9b4c.evtx#542",
+   "regression_data/rules-threat-hunting/windows/image_load/image_load_win_werfaultsecure_dbgcore_dbghelp_load/8a2f4b1c-3d5e-4f7a-9b2c-1e4f6d8a9c2b.evtx#571146",
+   "regression_data/rules/windows/builtin/security/win_security_susp_scheduled_task_delete_or_disable/7595ba94-cf3b-4471-aa03-4f6baa9e5fad.evtx#27732",
+   "regression_data/rules/windows/builtin/taskscheduler/win_taskscheduler_susp_schtasks_delete_or_disable/9e3cb244-bdb8-4632-8c90-6079c8f4f16d.evtx#14",
+   "regression_data/rules/windows/builtin/wmi/win_wmi_activity_nteventlogfile_cleareventlog/d4f1a2b3-7c8e-4d5f-b6a9-1e0c2d3f4e5b.evtx#5314",
+   "regression_data/rules/windows/file/file_event/file_event_win_advanced_ip_scanner/fed85bf9-e075-4280-9159-fbe8a023d6fa.evtx#18267"
+  ]
+ },
+ {
+  "rule_id": "a7c3e5f2-8b1d-4e9a-b6c2-3d7f5e8a9b4c",
+  "path": "rules/sigma/rules-emerging-threats/2026/Exploits/RedSun/win_defender_exploit_redsun_tiering_engine_detected_as_eicar.yml",
+  "only_evaluator_count": 1,
+  "only_evaluator": [
+   "regression_data/rules-emerging-threats/2026/Exploits/RedSun/win_defender_exploit_redsun_tiering_engine_detected_as_eicar/a7c3e5f2-8b1d-4e9a-b6c2-3d7f5e8a9b4c.evtx#542"
+  ],
+  "only_matcher_count": 0,
+  "only_matcher": []
+ },
+ {
+  "rule_id": "f01d1f70-cd41-42ec-9c0b-26dd9c22bf29",
+  "path": "rules/sigma/rules/windows/file/file_delete/file_delete_win_delete_own_image.yml",
+  "only_evaluator_count": 0,
+  "only_evaluator": [],
+  "only_matcher_count": 7,
+  "only_matcher": [
+   "regression_data/rules-emerging-threats/2026/Exploits/RedSun/win_defender_exploit_redsun_tiering_engine_detected_as_eicar/a7c3e5f2-8b1d-4e9a-b6c2-3d7f5e8a9b4c.evtx#542",
+   "regression_data/rules/windows/builtin/security/win_security_susp_scheduled_task_delete_or_disable/7595ba94-cf3b-4471-aa03-4f6baa9e5fad.evtx#27732",
+   "regression_data/rules/windows/builtin/taskscheduler/win_taskscheduler_susp_schtasks_delete_or_disable/9e3cb244-bdb8-4632-8c90-6079c8f4f16d.evtx#14",
+   "regression_data/rules/windows/builtin/wmi/win_wmi_activity_nteventlogfile_cleareventlog/d4f1a2b3-7c8e-4d5f-b6a9-1e0c2d3f4e5b.evtx#5314",
+   "regression_data/rules/windows/process_access/proc_access_win_susp_dbgcore_dbghelp_load/9f5c1d59-33be-4e60-bcab-85d2f566effd.evtx#676404",
+   "regression_data/rules/windows/process_access/proc_access_win_werfaultsecure_msmpeng_access/387df17d-3b04-448f-8669-9e7fd5e5fd8c.evtx#445923",
+   "regression_data/rules/windows/sysmon/sysmon_config_modification/8ac03a65-6c84-4116-acad-dc1558ff7a77.evtx#11738"
+  ]
+ },
+ {
+  "rule_id": "f239b326-2f41-4d6b-9dfa-c846a60ef505",
+  "path": "rules/sigma/rules/windows/create_remote_thread/create_remote_thread_win_susp_password_dumper_lsass.yml",
+  "only_evaluator_count": 0,
+  "only_evaluator": [],
+  "only_matcher_count": 1,
+  "only_matcher": [
+   "regression_data/rules/windows/process_access/proc_access_win_susp_dbgcore_dbghelp_load/9f5c1d59-33be-4e60-bcab-85d2f566effd.evtx#676404"
+  ]
+ }
+]

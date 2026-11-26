@@ -1,0 +1,26 @@
+title: failed logons base
+id: 11111111-1111-1111-1111-111111111111
+name: failed_logon
+status: test
+logsource:
+    product: windows
+    service: security
+detection:
+    sel:
+        EventID: 4625
+    condition: sel
+level: low
+---
+title: brute force
+id: 11111111-1111-1111-1111-222222222222
+status: test
+correlation:
+    type: event_count
+    rules:
+        - failed_logon
+    group-by:
+        - TargetUserName
+    timespan: 5m
+    condition:
+        gte: 3
+level: high

@@ -1,0 +1,13 @@
+{
+ "dataset": "evtx-attack-samples",
+ "events": 37364,
+ "rules": 2295,
+ "evaluator_rule_errors": 0,
+ "matcher_rule_errors": 0,
+ "rules_compared": 2295,
+ "rules_agree": 2286,
+ "rules_differ": 9,
+ "pairs_only_evaluator": 21,
+ "pairs_only_matcher": 72100,
+ "seconds": 899.1
+}
