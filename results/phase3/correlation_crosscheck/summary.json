@@ -456,8 +456,10 @@
    "hayabusa": {
     "verdict": "differ",
     "label": {
-     "verdict": "backend-bug",
-     "cause": "engine"
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S34"
+     ]
     },
     "result": {
      "c1": {

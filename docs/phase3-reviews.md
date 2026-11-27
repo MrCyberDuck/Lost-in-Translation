@@ -48,8 +48,13 @@ Both reviewers re-ran the targets on copies of the repository. Sonnet found the 
 | Hayabusa `lte` may fire on partial windows (V13) | Sonnet 12 | Not reproduced as a mechanism here; it falls under S96 and goes to the step 4 cases |
 | Tie-free variants of C08 and C09 | Opus 6 | C39 covers an upper bound on the way up; C08 keeps its ties so it tests the range alone |
 
+### Decided by Nik
+
+| Point | Decision | Change |
+| --- | --- | --- |
+| S34 was `clear`, but the spec says "a map of exactly one condition criterion" and then shows a range with two operators; both reviewers read this as contradictory | `contradictory` (27 Nov 2026) | S34 row; H7 is now `spec-gap`; proposed clarification SC1 in [spec-clarifications.md](spec-clarifications.md) |
+
 ### Open with Nik
 
-1. S34 is `clear`, but the spec says "a map of exactly one condition criterion" and then shows a range with two operators. Both reviewers read this as contradictory. If it becomes `contradictory`, H7 becomes `spec-gap`.
-2. The reading of "depends on" in triage-labels.md: a clause is a dependency only when one of its readings changes the expected verdict. M7, M10, H7, H12 and H13 are `backend-bug` candidates only under this reading.
-3. The working interpretations of S89 to S97, and the changed interpretations of S32, S33, S70, S72, S74, S76, S77 and S92. S74 in particular: the evaluator reads `value_percentile` as a value's share of the events, as the spec's example title suggests; pySigma reads it as a numeric percentile, as the hint "median is a percentile 50" suggests.
+1. The reading of "depends on" in triage-labels.md: a clause is a dependency only when one of its readings changes the expected verdict. M7, M10, H7, H12 and H13 are `backend-bug` candidates only under this reading.
+2. The working interpretations of S89 to S97, and the changed interpretations of S32, S33, S70, S72, S74, S76, S77 and S92. S74 in particular: the evaluator reads `value_percentile` as a value's share of the events, as the spec's example title suggests; pySigma reads it as a numeric percentile, as the hint "median is a percentile 50" suggests.

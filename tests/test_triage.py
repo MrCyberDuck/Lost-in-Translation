@@ -12,6 +12,7 @@ def test_all_97_clauses_parsed():
     assert status["S70"] == "contradictory"
     assert status["S88"] == "clear"
     assert status["S92"] == "contradictory"
+    assert status["S34"] == "contradictory"
     assert status["S93"] == "ambiguous"
 
 

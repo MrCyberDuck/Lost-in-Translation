@@ -8,7 +8,7 @@ Every disagreement between a target and the reference evaluator gets exactly one
 | --- | --- | --- | --- |
 | 1 | `oracle-bug` | The reference evaluator is wrong (found by review or by the native engines all agreeing against it) | Fixed in the evaluator; not a finding |
 | 2 | `rule-out-of-spec` | The rule itself uses something the spec forbids (for example `\d` in a regex, clause S60) | Separate table: SigmaHQ rules that are outside the spec |
-| 3 | `spec-gap` | The expected verdict depends on **any** clause whose status is `ambiguous` or `contradictory` | Proposed clarifications to the Sigma specification. **Never** filed against a backend, whatever the backend does |
+| 3 | `spec-gap` | The expected verdict depends on **any** clause whose status is `ambiguous` or `contradictory` | Proposed clarifications to the Sigma specification, collected in [spec-clarifications.md](spec-clarifications.md). **Never** filed against a backend, whatever the backend does |
 | 4 | `config` | Only the production configuration differs: a processing pipeline, field mapping or ingestion choice | Configuration findings, separate from language findings |
 | 5 | `backend-bug` | Every clause the verdict depends on is `clear`, and the target still disagrees | Converter or engine bugs, candidates for upstream reports |
 

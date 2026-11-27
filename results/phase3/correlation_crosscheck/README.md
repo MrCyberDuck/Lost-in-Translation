@@ -108,7 +108,7 @@ IDs continue the existing series: P for pySigma's rule parser and collection han
 
 | ID | Target | What it does | Cases | Label |
 | --- | --- | --- | --- | --- |
-| P1 | pySigma 2.1.2 | Rejects a condition with two operators: "Sigma correlation condition must have exactly one condition item". The spec says "a map of exactly one condition criterion" and then shows a range with two | C08 | refusal |
+| P1 | pySigma 2.1.2 | Rejects a condition with two operators in its rule parser (`SigmaCorrelationCondition.from_dict`): "Sigma correlation condition must have exactly one condition item". Every pySigma backend therefore refuses the rule with an error before converting it; pySigma 1.5.1 has the same check. It follows the spec's "a map of exactly one condition criterion", against the range example a few lines later (S34 is contradictory) | C08 | refusal |
 | P2 | pySigma 2.1.2 | Accepts the timespan units `w`, `M` and `y` on purpose (`SigmaCorrelationTimespan`, `[smhdwMy]`); `5M` is 5 months, so events 59 minutes apart correlate | C26 | `backend-bug` candidate (S80) |
 | P3 | pySigma 2.1.2 | ANDs the filter's condition into the rule, so the filter keeps the events it should suppress (T23.1) | C24, C29 | `spec-gap` (S81, S89) |
 | P4 | pySigma 2.1.2 | Applies a filter whose logsource is a subset of the rule's (T23.2) | C42 | `spec-gap` (S82) |
@@ -127,7 +127,7 @@ IDs continue the existing series: P for pySigma's rule parser and collection han
 | M17 | matcher | Counts an event once per referenced rule that matches it | C37, C38 | `spec-gap` (S95) |
 | H5 | Hayabusa | Group-by values and counted values are case-sensitive | C06, C10 | `spec-gap` (S90, S72) |
 | H6 | Hayabusa | Events without a group-by field form a `null` group | C30 | `spec-gap` (S32) |
-| H7 | Hayabusa | A range uses only its first operator (`process_condition_pairs`), silently | C08 | `backend-bug` candidate (S34) |
+| H7 | Hayabusa | A range uses only its first operator (`process_condition_pairs`), silently | C08 | `spec-gap` (S34) |
 | H8 | Hayabusa | `value_count` counts a missing field as a value (`unwrap_or_default` gives the empty string) | C11 | `spec-gap` (S72) |
 | H9 | Hayabusa | `temporal_ordered` accepts equal timestamps in either order (`time >= order_floor`) | C15, C32 | `spec-gap` (S35) |
 | H10 | Hayabusa | `temporal` requires every rule and never reads the condition | C17 | `spec-gap` (S92) |
@@ -140,4 +140,4 @@ IDs continue the existing series: P for pySigma's rule parser and collection han
 
 Refusals: P1 (C08) and P6 (C23); Hayabusa does not parse correlations without `group-by` (C07, S71 is contradictory), `neq` (C09), an `event_count` or `value_sum` over a correlation or over two rules (C19, C35, C38), `value_sum`, `value_avg` and `value_percentile` (C21 to C23, C40, S70 is contradictory) or `timespan: 5M` (C26, where it agrees with the evaluator). After refusing a correlation Hayabusa still emits the matches of its base rules as alerts in C07, C21 to C23, C38 and C40; whether that breaks S77 depends on whether a refused correlation still counts as referencing them.
 
-H7 is a candidate only while S34 is `clear`; the spec's two sentences on ranges disagree (P1), which is open with Nik. None of these findings is reported yet. Like every finding, they first have to meet the reporting bar in Phase 3 step 7.
+H7 is a `spec-gap` because S34 is contradictory. It is wrong under both readings of S34, though: under one the rule must be refused, under the other both bounds must hold, and neither keeps only the first operator. Whether that makes it a `backend-bug` candidate depends on how "depends on" is read in [triage-labels.md](../../../docs/triage-labels.md), which is open with Nik. None of these findings is reported yet. Like every finding, they first have to meet the reporting bar in Phase 3 step 7.
