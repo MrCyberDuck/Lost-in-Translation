@@ -77,3 +77,31 @@ python results/phase3/spec_clarifications/SC2_schema_check.py <sigma-specificati
 ```
 
 Expected: all six lines print `valid`. Checked 27 Nov 2026 at specification commit `ba9251a`.
+
+## SC3. What a tool that cannot apply a global filter must do (S98)
+
+**Status:** ambiguous (not covered). Working interpretation written 27 Nov 2026, waiting for Nik. Draft, not sent.
+
+**What the spec says.** Nothing. The filters specification says that filters exist "to suppress matches of multiple rules" (line 35), but it has no compatibility rule. The correlation specification has one (S78: a backend must raise an error rather than convert a "must" feature it cannot support; S79: it should warn when it approximates a "should" feature), and the filters specification has no counterpart.
+
+**What the implementations do.** Hayabusa 4.4.0 does not parse filter documents. It counts each one as a rule it could not parse ("Rule parsing errors: 1"), exits 0, and runs the rules the filter names without it (H15 in the [correlation cross-check](../results/phase3/correlation_crosscheck/README.md), cases C24, C25, C29, C42 and C43). The rules then match the events the filter should suppress: in C24, Hayabusa reports `adm_bob`, whom the filter excludes. pySigma and its backends do parse filters (with their own way of combining them, P3 and P4).
+
+**Impact.** A team that tunes false positives with global filters and runs them on a tool without filter support gets the false positives back. The only sign is a parsing-error count among the start-up messages.
+
+**Proposed clarification.** Add a compatibility rule to the filters specification, in line with S78: "A tool that cannot apply a filter must not apply the rules it names without it, or must at least warn that it did not apply the filter, naming the filter and the rules."
+
+**Reproduce.** `python -m harness.correlation_crosscheck hayabusa`, then `compare`, and read cases C24 and C25 in `results/phase3/correlation_crosscheck/summary.json` (outcome `degraded`).
+
+## SC4. The resolution at which timestamps are compared (S99)
+
+**Status:** ambiguous (not covered). Working interpretation written 27 Nov 2026, waiting for Nik. Draft, not sent.
+
+**What the spec says.** Nothing. The correlation specification defines `timespan` (number plus `s`, `m`, `h` or `d`) and the order of events in `temporal_ordered`, but not the resolution at which event times are compared. Windows and order both depend on it.
+
+**What the implementations do.** Case C45 has a failure and a success 800 ns apart, in that order, for `temporal_ordered`. The evaluator compares nanoseconds and fires. sigma.matching and Hayabusa fire too. Zircolite 4.8.0 rounds timestamps to milliseconds in its SQL, so the two events tie, and under S35's working interpretation (equal timestamps are not in order) it does not fire (Z1).
+
+**Impact.** Small for most data: Windows event times are 100 ns ticks, and sub-millisecond gaps matter mainly for events written by one process in quick succession, such as a process creation and its first network connection. It decides `temporal_ordered` results and window edges whenever two events fall in the same millisecond or second.
+
+**Proposed clarification.** Add to Time Selection: "Event times are compared at the full resolution of the event's timestamp. A tool that compares at a coarser resolution should warn, as for other approximations." Alternatively, the spec could fix a resolution, such as milliseconds, which is what many SIEMs store.
+
+**Reproduce.** `python -m harness.correlation_crosscheck zircolite`, then `compare`, and read case C45 in `results/phase3/correlation_crosscheck/summary.json`.

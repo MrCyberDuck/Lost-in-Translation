@@ -46,6 +46,9 @@ class Mechanism:
     sem: dict = field(default_factory=dict)         # Semantics flags
     view: Callable[[Event], Event] | None = None    # event transformation
     production_only: bool = False
+    # readings of each open clause under which the engine's result is wrong (docs/spec-clauses.md,
+    # "Readings of the open clauses"); an open clause excuses the result unless all are listed
+    wrong_under: dict[str, list[str]] = field(default_factory=dict)
 
 
 # ---------------------------------------------------------------- Chainsaw
@@ -128,7 +131,11 @@ def chainsaw_mechanisms() -> list[Mechanism]:
                   ["S11"], "semantics", sem={"strict_number": True}),
         Mechanism("C7", "chainsaw", "logsource preconditions by Provider/EventID (process_creation also 4688; "
                   "unlisted categories and services run on every event)", ["S37"], "config",
-                  production_only=True),
+                  production_only=True,
+                  # All 24 measured pairs are 1102 events that its `service: security` precondition
+                  # (provider Security-Auditing) drops; neither reading of S37 involves the provider. The
+                  # 4688 part of C7 would be right under S37.b, but it produced no pair.
+                  wrong_under={"S37": ["S37.a", "S37.b"]}),
         Mechanism("C9", "chainsaw", "rules listed by title under `exclusions` in the mapping file never run",
                   [], "config", production_only=True),
     ]
@@ -168,7 +175,9 @@ def hayabusa_mechanisms() -> list[Mechanism]:
         Mechanism("H3", "hayabusa", "raw SigmaHQ rules: field names with spaces are not stripped "
                   "(the converter adds the renames)", ["S85"], "config"),
         Mechanism("H4", "hayabusa", "PowerShell classic (400/600/800) `Data` text is split into fields "
-                  "such as CommandLine and HostApplication", ["S87"], "config", view=_ps_classic_fields),
+                  "such as CommandLine and HostApplication", ["S87"], "config", view=_ps_classic_fields,
+                  # Under every reading of S87 the event has no CommandLine field, so the rule cannot match.
+                  wrong_under={"S87": ["S87.a", "S87.b", "S87.c"]}),
     ]
 
 
@@ -223,7 +232,7 @@ def explain(dataset: str) -> dict:
     for engine, mechs in (("chainsaw", chainsaw_mechanisms()), ("hayabusa", hayabusa_mechanisms())):
         for m in mechs:
             result["mechanisms"][m.key] = {"engine": engine, "description": m.description, "clauses": m.clauses,
-                                           "kind": m.kind}
+                                           "kind": m.kind, "wrong_under": m.wrong_under}
         eng_res = {}
         for config in ("neutral", "production"):
             ev_sets = collections.defaultdict(set)
@@ -293,17 +302,20 @@ def label(row: dict, mechanisms: dict, config: str) -> str:
     """Triage label for one explained pair.
 
     `mechanisms` lists alternatives: each entry alone (or `A&B` together) reproduces the
-    engine's answer. Conservative rule (decision of 23 Nov 2026): if any explaining mechanism
-    touches an ambiguous or contradictory clause, the pair is a `spec-gap`. Otherwise, if every
-    mechanism involved is the engine's configuration (mapping, field list, logsource), it is
-    `config`; otherwise it is a `backend-bug` with cause `engine`.
+    engine's answer. Rule (decisions of 23 and 27 Nov 2026): if any explaining mechanism touches an
+    ambiguous or contradictory clause under one of whose readings the engine is right, the pair is
+    a `spec-gap`. Otherwise, if every mechanism involved is the engine's configuration (mapping,
+    field list, logsource), it is `config`; otherwise it is a `backend-bug` with cause `engine`.
     """
     keys = [k for entry in row["mechanisms"] for k in entry.split("&")]
     if not keys:
         return "unexplained"
     clauses = sorted({c for k in keys for c in mechanisms[k]["clauses"]})
-    if open_clauses(clauses):
-        return "spec-gap"
+    for k in keys:
+        excused = classify(mechanisms[k]["clauses"] or ["S36"], cause="engine",
+                           wrong_under=mechanisms[k].get("wrong_under") or {})
+        if excused["verdict"] == "spec-gap":
+            return "spec-gap"
     needed = [set(entry.split("&")) for entry in row["mechanisms"]]
     if any(all(mechanisms[k]["kind"] == "config" for k in alt) for alt in needed):
         return "config"

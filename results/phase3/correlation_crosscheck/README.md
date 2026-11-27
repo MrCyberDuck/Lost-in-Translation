@@ -1,6 +1,6 @@
 # Evaluator correlations and filters vs three implementations (Phase 3 step 2, 26 Nov 2026)
 
-The evaluator gained global filters and correlation rules in step 2 (`harness/evaluator/collection.py`, clauses S31 to S35, S70 to S83 and S89 to S97 in [spec-clauses.md](../../../docs/spec-clauses.md)). SigmaHQ r2026-07-01 has no correlation rules or filters in scope, so there is no real data to cross-check them on, as Phase 2 did for detection rules. This run checks them instead on 45 small synthetic cases against three implementations written independently of the evaluator:
+The evaluator gained global filters and correlation rules in step 2 (`harness/evaluator/collection.py`, clauses S31 to S35, S70 to S83 and S89 to S99 in [spec-clauses.md](../../../docs/spec-clauses.md)). SigmaHQ r2026-07-01 has no correlation rules or filters in scope, so there is no real data to cross-check them on, as Phase 2 did for detection rules. This run checks them instead on 45 small synthetic cases against three implementations written independently of the evaluator:
 
 | Target | Version | How it runs |
 | --- | --- | --- |
@@ -32,7 +32,7 @@ Each run has one outcome:
 - `crash`: the target fails while matching;
 - `n/a`: the case does not apply (sigma.matching is a library and always returns base-rule matches, so `generate` cannot be checked on it).
 
-Each case lists the clauses its expected verdict depends on: the clauses with a reading under which the verdict would change. A clause the case touches but whose readings all give the same verdict is not a dependency; for example, three events within two minutes fire under a sliding and a fixed window alike, so C01 does not depend on S33. This reading of "depends on" in [triage-labels.md](../../../docs/triage-labels.md) is proposed on 26 Nov 2026 and waits for Nik's decision. The label of every difference, crash and degraded run is computed by `harness.triage.classify` from that list and written to summary.json.
+Each case lists the clauses its expected verdict depends on, open ones included. An open clause excuses a target's result if the result is right under at least one of the clause's readings, which are fixed in [spec-clauses.md](../../../docs/spec-clauses.md#readings-of-the-open-clauses) (decision of 27 Nov 2026, [triage-labels.md](../../../docs/triage-labels.md)). Where a target's result is wrong under every reading, the case records those readings for that target (`wrong_under`, with the reason next to it in `harness/correlation_crosscheck.py`); a crash is wrong under every reading. The label of every difference, crash and degraded run is computed by `harness.triage.classify` from these and written to summary.json, with the recorded readings for each `backend-bug` candidate.
 
 ## Result
 
@@ -57,36 +57,36 @@ Groups each correlation fires for (bold: differs from the evaluator, crashes, or
 | C01 | S31 | event_count: 3 failures for bob, 2 for eve, within 5 minutes | (bob) | (bob) | (bob) | (bob) |
 | C02 | S33 | event_count: a burst at 04:00, 05:00, 06:00 straddles a 5-minute boundary | (bob) | (bob) | (bob) | (bob) |
 | C03 | S91 | event_count: first and last event exactly 5 minutes apart | (bob) | (bob) | (bob) | (bob) |
-| C04 | S31 | event_count: first and last event 5 minutes and 1 second apart | none | none | none | none |
-| C05 | S31 | event_count: the third event has no User field | none | none | none | none |
+| C04 | S31, S33 | event_count: first and last event 5 minutes and 1 second apart | none | none | none | none |
+| C05 | S31, S32 | event_count: the third event has no User field | none | none | none | none |
 | C06 | S90 | event_count: User is Bob, BOB and bob | (bob) | **none** | (bob) | **none** |
 | C07 | S71 | event_count without group-by: 3 events of 3 users | (all) | (all) | (all) | refused |
-| C08 | S34 | event_count range gt 1, lte 2: bob has 2 events, eve 3 at the same second | (bob) | refused | refused | **(bob), (eve)** |
+| C08 | S34, S33, S96 | event_count range gt 1, lte 2: bob has 2 events, eve 3 at the same second | (bob) | refused | refused | **(bob), (eve)** |
 | C09 | S34 | event_count neq 1: bob has 2 events at one second, eve 1 | (bob) | (bob) | (bob) | refused |
-| C10 | S72 | value_count of User per Host, gte 3: Admin, admin, root | none | **(h)** | none | **(h)** |
+| C10 | S72, S90 | value_count of User per Host, gte 3: Admin, admin, root | none | **(h)** | none | **(h)** |
 | C11 | S72 | value_count of User per Host, gte 2: one event has no User | none | none | none | **(h)** |
-| C12 | S73 | value_count of [User, Src], gte 3: 2 users, 2 sources, 3 pairs | (h) | **crash** | (h) | (h) |
+| C12 | S73, S33 | value_count of [User, Src], gte 3: 2 users, 2 sources, 3 pairs | (h) | **crash** | (h) | (h) |
 | C13 | S31 | temporal: bob has a failure and a success, eve only failures | (bob) | (bob) | (bob) | (bob) |
 | C14 | S35 | temporal_ordered failed then success: eve in order, bob reversed | (eve) | (eve) | (eve) | (eve) |
 | C15 | S35 | temporal_ordered failed then success at the same second, failed first in the file | none | **(bob)** | none | **(bob)** |
 | C16 | S92 | temporal over 3 rules without a condition: bob has 2 of them, eve all 3 | (eve) | (eve) | (eve) | (eve) |
 | C17 | S92 | temporal over 3 rules with gte 2: bob has 2 kinds, eve 2 events of one kind | (bob) | **none** | (bob) | **none** |
-| C18 | S76 | event_count referencing the base rule by id | (bob) | **none** | (bob) | (bob) |
-| C19 | S76 | chain: inner gte 2 in 5m per User, outer gte 2 inner matches in 1h; bob has 2 bursts of 2, eve 1 | (bob) | **none** | (bob) | refused |
-| C20 | S75 | temporal with aliases: ip is DestIp in conn_in and SrcIp in conn_out | (10.0.0.1) | **(\<missing\>)** | (10.0.0.1) | **(null)** |
+| C18 | S76, S33 | event_count referencing the base rule by id | (bob) | **none** | (bob) | (bob) |
+| C19 | S76, S94, S33 | chain: inner gte 2 in 5m per User, outer gte 2 inner matches in 1h; bob has 2 bursts of 2, eve 1 | (bob) | **none** | (bob) | refused |
+| C20 | S75, S92, S33, S32 | temporal with aliases: ip is DestIp in conn_in and SrcIp in conn_out | (10.0.0.1) | **(\<missing\>)** | (10.0.0.1) | **(null)** |
 | C21 | S70 | value_sum of Bytes per Host, gte 25: 10 + 10 + 10 | (h) | (h) | (h) | refused |
 | C22 | S70 | value_avg of Bytes per Host: gte 9 fires for h (avg 10), not for g (avg 5) | (h) | (h) | (h) | refused |
 | C23 | S74 | value_percentile of Image per Host, lte 10, as in the spec example: one rare image among 11 events | (h) | **none** | refused | refused |
-| C24 | S81 | filter `User\|startswith: adm_`, `condition: selection`; events adm_bob (e1), alice (e2) | e2 | **e1** | **e1** | **degraded: e1, e2** |
-| C25 | S89 | filter on the base rule of an event_count per Host, gte 3: one of 3 events is filtered | none | none | none | **degraded: (h)** |
+| C24 | S81, S98 | filter `User\|startswith: adm_`, `condition: selection`; events adm_bob (e1), alice (e2) | e2 | **e1** | **e1** | **degraded: e1, e2** |
+| C25 | S89, S98 | filter on the base rule of an event_count per Host, gte 3: one of 3 events is filtered | none | none | none | **degraded: (h)** |
 | C26 | S80 | timespan 5M (upper-case unit), events at 00:00, 30:00 and 59:00 | refused | **(bob)** | **(bob)** | refused |
-| C27 | S31 | event_count gte 3: 6 events in 6 seconds, then 3 more 20 minutes later | (bob) | (bob) | (bob) | (bob) |
+| C27 | S31, S93 | event_count gte 3: 6 events in 6 seconds, then 3 more 20 minutes later | (bob) | (bob) | (bob) | (bob) |
 | C28 | S77 | base rule referenced without generate: are its matches emitted | not emitted | n/a | not emitted | not emitted |
-| C29 | S81, S89 | as C25 with gte 2: 2 events are left after the filter, 1 if the filter is ANDed in | (h) | **none** | **none** | **degraded: (h)** |
+| C29 | S81, S89, S98 | as C25 with gte 2: 2 events are left after the filter, 1 if the filter is ANDed in | (h) | **none** | **none** | **degraded: (h)** |
 | C30 | S32 | event_count gte 3: three events, none with the User field | none | **(\<missing\>)** | none | **(null)** |
-| C31 | S31 | temporal over 3 rules, 5m: success at 00:00, failed at 05:00, other at 10:00 | none | none | none | **(bob)** |
+| C31 | S31, S33, S91, S92 | temporal over 3 rules, 5m: success at 00:00, failed at 05:00, other at 10:00 | none | none | none | **(bob)** |
 | C32 | S35 | as C15 with success first in the file | none | none | none | **(bob)** |
-| C33 | S31 | value_count of [User, Src], gte 3: 3 events with the same pair | none | **crash** | none | **(h)** |
+| C33 | S31, S73, S33 | value_count of [User, Src], gte 3: 3 events with the same pair | none | **crash** | none | **(h)** |
 | C34 | S94 | chain of the spec's shape: inner event_count per Host gte 2, outer temporal_ordered [inner, success] per User | (bob) | **none** | (bob) | **none** |
 | C35 | S94 | chain: inner gte 2 per User, outer gte 2 inner matches; eve has one burst of 3 | (eve) | **none** | (eve) | refused |
 | C36 | S94 | brute force then success: failures every 2 minutes 00:00 to 14:00, success at 15:00, outer timespan 2m | (bob) | **none** | (bob) | **none** |
@@ -95,10 +95,10 @@ Groups each correlation fires for (bold: differs from the evaluator, crashes, or
 | C39 | S96 | event_count eq 2: bob has 3 events at 00:00, 01:00, 02:00 | (bob) | (bob) | (bob) | (bob) |
 | C40 | S96 | value_avg lt 100: Bytes 1000 at 00:00, 10 at 04:00 (a window with only the 10 exists) | none | none | none | refused |
 | C41 | S97 | aliases list only conn_in; conn_out events have a field named ip | (10.0.0.1) | **none** | (10.0.0.1) | **none** |
-| C42 | S82 | filter with logsource product: windows only, on a product: windows, service: security rule | e1, e2 | **e1** | **e1** | **degraded: e1, e2** |
-| C43 | S83 | filter referencing a rule that does not exist | e1, e2 | e1, e2 | e1, e2 | degraded: e1, e2 |
+| C42 | S82, S98 | filter with logsource product: windows only, on a product: windows, service: security rule | e1, e2 | **e1** | **e1** | **degraded: e1, e2** |
+| C43 | S83, S98 | filter referencing a rule that does not exist | e1, e2 | e1, e2 | e1, e2 | degraded: e1, e2 |
 | C44 | S77 | generate: true at the top level of the correlation rule, as the JSON schema has it | emitted | n/a | **not emitted** | **not emitted** |
-| C45 | S35 | temporal_ordered failed then success 800 nanoseconds apart | (bob) | (bob) | **none** | (bob) |
+| C45 | S35, S99 | temporal_ordered failed then success 800 nanoseconds apart | (bob) | (bob) | **none** | (bob) |
 
 C27 cannot fail on groups; it records alert granularity: the evaluator raises 2 alerts (one per burst), sigma.matching and Zircolite 5 (one per event once the count is reached), Hayabusa 2. C39 and C40 record S96: all targets that run them test windows that end at events, as the evaluator does, while pySigma's fixed-bucket conversions (SPL, ES|QL) will not. C43 is `degraded` with the evaluator's result, so it is not a difference.
 
@@ -110,34 +110,34 @@ IDs continue the existing series: P for pySigma's rule parser and collection han
 | --- | --- | --- | --- | --- |
 | P1 | pySigma 2.1.2 | Rejects a condition with two operators in its rule parser (`SigmaCorrelationCondition.from_dict`): "Sigma correlation condition must have exactly one condition item". Every pySigma backend therefore refuses the rule with an error before converting it; pySigma 1.5.1 has the same check. It follows the spec's "a map of exactly one condition criterion", against the range example a few lines later (S34 is contradictory) | C08 | refusal |
 | P2 | pySigma 2.1.2 | Accepts the timespan units `w`, `M` and `y` on purpose (`SigmaCorrelationTimespan`, `[smhdwMy]`); `5M` is 5 months, so events 59 minutes apart correlate | C26 | `backend-bug` candidate (S80) |
-| P3 | pySigma 2.1.2 | ANDs the filter's condition into the rule, so the filter keeps the events it should suppress (T23.1) | C24, C29 | `spec-gap` (S81, S89) |
-| P4 | pySigma 2.1.2 | Applies a filter whose logsource is a subset of the rule's (T23.2) | C42 | `spec-gap` (S82) |
+| P3 | pySigma 2.1.2 | ANDs the filter's condition into the rule, so the filter keeps the events it should suppress (T23.1) | C24, C29 | `spec-gap` (S81, S89): right under S81.b |
+| P4 | pySigma 2.1.2 | Applies a filter whose logsource is a subset of the rule's (T23.2) | C42 | `spec-gap` (S82): right under S82.b |
 | P5 | pySigma 2.1.2 | Reads `generate` only inside the `correlation` map, so a top-level `generate: true`, as in the JSON schema, is ignored | C44 | `backend-bug` candidate (S77) |
 | P6 | pySigma 2.1.2 and pySigma-backend-sqlite 2.2.0 | `value_percentile` needs a `percentile` key in the condition, which the spec does not have; the backend refuses the spec's form: "needs a percentile between 0 and 100" | C23 | refusal |
-| Z1 | Zircolite | Rounds timestamps to milliseconds in its SQL, so two events 800 ns apart tie | C45 | `spec-gap` (S35) |
-| M8 | matcher | Group-by values and counted values are case-sensitive | C06, C10 | `spec-gap` (S90, S72) |
-| M9 | matcher | Events without a group-by field form a group of their own | C30 | `spec-gap` (S32) |
-| M10 | matcher | `value_count` over two fields raises `TypeError: unhashable type: 'list'` (`e.data.get` with a list) | C12, C33 | crash, `backend-bug` candidate |
-| M11 | matcher | `temporal_ordered` breaks ties by arrival order: failed then success at one second fires, success then failed does not | C15, C32 | `spec-gap` (S35) |
-| M12 | matcher | `temporal` checks that every rule fired and never reads the condition (`_eval_temporal`) | C17 | `spec-gap` (S92) |
-| M13 | matcher | Routes a match to correlations by rule `name` only, so a reference by `id` never fires | C18 | `backend-bug` candidate (S76) |
-| M14 | matcher | Never routes correlation matches onward, so a correlation over a correlation never fires, silently | C19, C34 to C36 | C19 `backend-bug` candidate (S76); C34 to C36 `spec-gap` (S94) |
-| M15 | matcher | Never resolves the rule references in `aliases` (`SigmaCorrelationRule.resolve_rule_references` resolves `rules` only), so the group key is empty | C20, C41 | C20 `backend-bug` candidate (S75); C41 `spec-gap` (S97) |
-| M16 | matcher | `value_percentile` computes the Nth percentile (default 95) of the values that convert to float and skips the rest, so a text field never fires | C23 | `spec-gap` (S74) |
-| M17 | matcher | Counts an event once per referenced rule that matches it | C37, C38 | `spec-gap` (S95) |
-| H5 | Hayabusa | Group-by values and counted values are case-sensitive | C06, C10 | `spec-gap` (S90, S72) |
-| H6 | Hayabusa | Events without a group-by field form a `null` group | C30 | `spec-gap` (S32) |
-| H7 | Hayabusa | A range uses only its first operator (`process_condition_pairs`), silently | C08 | `spec-gap` (S34) |
-| H8 | Hayabusa | `value_count` counts a missing field as a value (`unwrap_or_default` gives the empty string) | C11 | `spec-gap` (S72) |
-| H9 | Hayabusa | `temporal_ordered` accepts equal timestamps in either order (`time >= order_floor`) | C15, C32 | `spec-gap` (S35) |
-| H10 | Hayabusa | `temporal` requires every rule and never reads the condition | C17 | `spec-gap` (S92) |
-| H11 | Hayabusa | `aliases` are not applied: the group is `null`, so unrelated events correlate | C20, C41 | C20 `backend-bug` candidate (S75); C41 `spec-gap` (S97) |
-| H12 | Hayabusa | `temporal` accepts events up to `timespan` before and after the first rule's event (`base.start_datetime ± timeframe`), so they can span twice the timespan | C31 | `backend-bug` candidate (S31) |
-| H13 | Hayabusa | A list in `field` is read as no field (`value.as_str()` is `None`), so `value_count` counts events instead of values; C12 agrees only by accident | C33 | `backend-bug` candidate (S31) |
-| H14 | Hayabusa | A temporal correlation over a correlation does not fire when the inner rule groups by another field (C34) or when the inner condition last held minutes before (C36). Guess, not traced: `detect_within_timeframe` compares group keys across rules and uses the start of each inner window, and inner windows do not overlap | C34, C36 | `spec-gap` (S94) |
-| H15 | Hayabusa | Does not parse global filters and runs the rules without them | C24, C25, C29, C42, C43 | degraded; `spec-gap` where the result differs |
+| Z1 | Zircolite | Rounds timestamps to milliseconds in its SQL, so two events 800 ns apart tie | C45 | `spec-gap` (S35, S99): right if timestamps are compared in milliseconds (S99.b) |
+| M8 | matcher | Group-by values and counted values are case-sensitive | C06, C10 | `spec-gap` (S90, S72): right under S90.b and S72.b |
+| M9 | matcher | Events without a group-by field form a group of their own | C30 | `spec-gap` (S32): right under S32.b |
+| M10 | matcher | `value_count` over two fields raises `TypeError: unhashable type: 'list'` (`e.data.get` with a list) | C12, C33 | crash, `backend-bug` candidate: a crash is wrong under every reading of S73 |
+| M11 | matcher | `temporal_ordered` breaks ties by arrival order: failed then success at one second fires, success then failed does not | C15, C32 | `spec-gap` (S35): right under S35.c |
+| M12 | matcher | `temporal` checks that every rule fired and never reads the condition (`_eval_temporal`) | C17 | `spec-gap` (S92): right under S92.b |
+| M13 | matcher | Routes a match to correlations by rule `name` only, so a reference by `id` never fires | C18 | `backend-bug` candidate (S76; wrong under every reading of S33) |
+| M14 | matcher | Never routes correlation matches onward, so a correlation over a correlation never fires, silently | C19, C34 to C36 | C19 `backend-bug` candidate (S76; wrong under every reading of S94 and S33); C34 to C36 `spec-gap`: right under S94.b |
+| M15 | matcher | Never resolves the rule references in `aliases` (`SigmaCorrelationRule.resolve_rule_references` resolves `rules` only), so the group key is empty | C20, C41 | C20 `backend-bug` candidate (S75; wrong under every reading of S32, S33 and S92); C41 `spec-gap`: right under S97.b |
+| M16 | matcher | `value_percentile` computes the Nth percentile (default 95) of the values that convert to float and skips the rest, so a text field never fires | C23 | `spec-gap` (S74): right under S74.b |
+| M17 | matcher | Counts an event once per referenced rule that matches it | C37, C38 | `spec-gap` (S95): right under S95.b |
+| H5 | Hayabusa | Group-by values and counted values are case-sensitive | C06, C10 | `spec-gap` (S90, S72): right under S90.b and S72.b |
+| H6 | Hayabusa | Events without a group-by field form a `null` group | C30 | `spec-gap` (S32): right under S32.b |
+| H7 | Hayabusa | A range uses only its first operator (`process_condition_pairs`), silently | C08 | `backend-bug` candidate: wrong under S34.a and S34.b (and every reading of S33, S96) |
+| H8 | Hayabusa | `value_count` counts a missing field as a value (`unwrap_or_default` gives the empty string) | C11 | `spec-gap` (S72): right under S72.c |
+| H9 | Hayabusa | `temporal_ordered` accepts equal timestamps in either order (`time >= order_floor`) | C15, C32 | `spec-gap` (S35): right under S35.b |
+| H10 | Hayabusa | `temporal` requires every rule and never reads the condition | C17 | `spec-gap` (S92): right under S92.b |
+| H11 | Hayabusa | `aliases` are not applied: the group is `null`, so unrelated events correlate | C20, C41 | C20 `backend-bug` candidate (S75; wrong under every reading of S32, S33 and S92); C41 `spec-gap`: right under S97.b |
+| H12 | Hayabusa | `temporal` accepts events up to `timespan` before and after the first rule's event (`base.start_datetime ± timeframe`), so they can span twice the timespan | C31 | `backend-bug` candidate (S31; wrong under every reading of S33, S91 and S92) |
+| H13 | Hayabusa | A list in `field` is read as no field (`value.as_str()` is `None`), so `value_count` counts events instead of values; C12 agrees only by accident | C33 | `backend-bug` candidate (S31; wrong under S73.a to S73.c and every reading of S33) |
+| H14 | Hayabusa | A temporal correlation over a correlation does not fire when the inner rule groups by another field (C34) or when the inner condition last held minutes before (C36). Guess, not traced: `detect_within_timeframe` compares group keys across rules and uses the start of each inner window, and inner windows do not overlap | C34, C36 | `spec-gap` (S94): right under S94.b |
+| H15 | Hayabusa | Does not parse global filters and runs the rules without them | C24, C25, C29, C42, C43 | degraded; `spec-gap` where the result differs, since it reports the skipped filter and the spec does not say whether a tool may run the rules without it (S98.b) |
 | H16 | Hayabusa | Reads `generate` only inside the `correlation` map (`rule.yaml["correlation"]["generate"]`), like P5 | C44 | `backend-bug` candidate (S77) |
 
 Refusals: P1 (C08) and P6 (C23); Hayabusa does not parse correlations without `group-by` (C07, S71 is contradictory), `neq` (C09), an `event_count` or `value_sum` over a correlation or over two rules (C19, C35, C38), `value_sum`, `value_avg` and `value_percentile` (C21 to C23, C40, S70 is contradictory) or `timespan: 5M` (C26, where it agrees with the evaluator). After refusing a correlation Hayabusa still emits the matches of its base rules as alerts in C07, C21 to C23, C38 and C40; whether that breaks S77 depends on whether a refused correlation still counts as referencing them.
 
-H7 is a `spec-gap` because S34 is contradictory. It is wrong under both readings of S34, though: under one the rule must be refused, under the other both bounds must hold, and neither keeps only the first operator. Whether that makes it a `backend-bug` candidate depends on how "depends on" is read in [triage-labels.md](../../../docs/triage-labels.md), which is open with Nik. None of these findings is reported yet. Like every finding, they first have to meet the reporting bar in Phase 3 step 7.
+Under the rule of 27 Nov 2026, a `backend-bug` candidate must be wrong under every reading of every open clause its case depends on, and the readings are recorded. H7 is the case that rule was made for: S34 is contradictory, but under one reading Hayabusa should refuse the range and under the other it should apply both bounds, and it does neither. M10, H12 and H13 touch open clauses (S73, S33, S91, S92) in the same way. None of these findings is reported yet. Like every finding, they first have to meet the reporting bar in Phase 3 step 7.

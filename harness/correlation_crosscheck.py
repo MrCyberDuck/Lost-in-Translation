@@ -101,9 +101,10 @@ def count(group="[User]", cond="gte: 3", span="5m", rules="[failed]", ctype="eve
 
 @dataclass
 class Case:
-    """`clauses`: what the case tests. `depends`: the clauses whose reading changes the expected verdict,
-    the input to triage.classify; a clause the case touches but whose readings all give the same
-    verdict is not a dependency."""
+    """`clauses`: what the case tests. `depends`: every clause the expected verdict relies on, open ones
+    included, the input to triage.classify. `wrong_under`: per target, the readings of each open
+    clause under which that target's result is wrong (docs/spec-clauses.md, "Readings of the open
+    clauses"); a target is a `backend-bug` candidate only if it is wrong under all of them."""
     id: str
     clauses: list[str]
     depends: list[str]
@@ -112,9 +113,15 @@ class Case:
     events: list[tuple]                 # (mm:ss[.fraction], rule name of the EventID, {fields})
     kind: str = "corr"                  # corr: correlation groups; rule: base-rule matches; emitted: S77
     compare: list[str] = field(default_factory=lambda: ["c1"])
+    wrong_under: dict[str, dict[str, list[str]]] = field(default_factory=dict)
 
     def text(self) -> str:
         return "\n---\n".join(d.rstrip("\n") for d in self.docs) + "\n"
+
+
+def rd(clause: str, letters: str) -> list[str]:
+    """Readings of an open clause, by letter: rd("S33", "abc") is S33.a, S33.b and S33.c."""
+    return [f"{clause}.{x}" for x in letters]
 
 
 def E(t, name="failed", **fields):
@@ -144,25 +151,28 @@ CASES = [
          [base("failed"), corr(count())], burst("bob", "04:00", "05:00", "06:00")),
     Case("C03", ["S91"], ["S91"], "event_count: first and last event exactly 5 minutes apart",
          [base("failed"), corr(count())], burst("bob", "00:00", "03:00", "05:00")),
-    Case("C04", ["S33"], ["S31"], "event_count: first and last event 5 minutes and 1 second apart",
+    Case("C04", ["S33"], ["S31", "S33"], "event_count: first and last event 5 minutes and 1 second apart",
          [base("failed"), corr(count())], burst("bob", "00:00", "03:00", "05:01")),
-    Case("C05", ["S32"], ["S31"], "event_count: the third event has no User field",
+    Case("C05", ["S32"], ["S31", "S32"], "event_count: the third event has no User field",
          [base("failed"), corr(count())], burst("bob", "00:00", "01:00") + [E("02:00")]),
     Case("C06", ["S90"], ["S90"], "event_count: User is Bob, BOB and bob",
          [base("failed"), corr(count())], [E("00:00", User="Bob"), E("01:00", User="BOB"), E("02:00", User="bob")]),
     Case("C07", ["S71"], ["S71"], "event_count without group-by: 3 events of 3 users",
          [base("failed"), corr(count(group=None))], [E("00:00", User="a"), E("01:00", User="b"), E("02:00", User="c")]),
-    Case("C08", ["S34"], ["S34"], "event_count range gt 1, lte 2: bob has 2 events, eve 3 at the same second",
-         [base("failed"), corr(count(cond="gt: 1\nlte: 2"))], burst("bob", "00:00", "01:00") + burst("eve", "02:00", "02:00", "02:00")),
+    Case("C08", ["S34"], ["S34", "S33", "S96"], "event_count range gt 1, lte 2: bob has 2 events, eve 3 at the same second",
+         [base("failed"), corr(count(cond="gt: 1\nlte: 2"))], burst("bob", "00:00", "01:00") + burst("eve", "02:00", "02:00", "02:00"),
+         # Hayabusa fires for eve's 3 events: a range (S34.a) excludes 3, one criterion (S34.b) means refusing,
+         # and every window holds all three simultaneous events or none of them.
+         wrong_under={"hayabusa": {"S34": rd("S34", "ab"), "S33": rd("S33", "abc"), "S96": rd("S96", "abc")}}),
     Case("C09", ["S34"], ["S34"], "event_count neq 1: bob has 2 events at one second, eve 1",
          [base("failed"), corr(count(cond="neq: 1"))], burst("bob", "00:00", "00:00") + burst("eve", "00:00")),
-    Case("C10", ["S72", "S90"], ["S72"], "value_count of User per Host, gte 3: Admin, admin, root",
+    Case("C10", ["S72", "S90"], ["S72", "S90"], "value_count of User per Host, gte 3: Admin, admin, root",
          [base("failed"), corr(count(group="[Host]", ctype="value_count", cond="field: User\ngte: 3"))],
          [E("00:00", Host="h", User="Admin"), E("01:00", Host="h", User="admin"), E("02:00", Host="h", User="root")]),
     Case("C11", ["S72"], ["S72"], "value_count of User per Host, gte 2: one event has no User",
          [base("failed"), corr(count(group="[Host]", ctype="value_count", cond="field: User\ngte: 2"))],
          [E("00:00", Host="h", User="a"), E("01:00", Host="h")]),
-    Case("C12", ["S73"], ["S73"], "value_count of [User, Src], gte 3: 2 users, 2 sources, 3 pairs",
+    Case("C12", ["S73"], ["S73", "S33"], "value_count of [User, Src], gte 3: 2 users, 2 sources, 3 pairs",
          [base("failed"), corr(count(group="[Host]", ctype="value_count", cond="field: [User, Src]\ngte: 3"))],
          [E("00:00", Host="h", User="a", Src="x"), E("01:00", Host="h", User="a", Src="y"),
           E("02:00", Host="h", User="b", Src="x")]),
@@ -181,17 +191,26 @@ CASES = [
     Case("C17", ["S31", "S92"], ["S92"], "temporal over 3 rules with gte 2: bob has 2 kinds, eve 2 events of one kind",
          T3 + [corr(count(rules="[failed, success, other]", ctype="temporal", cond="gte: 2"))],
          [E("00:00", User="bob"), E("01:00", "success", User="bob"), E("00:00", User="eve"), E("01:00", User="eve")]),
-    Case("C18", ["S76"], ["S76"], "event_count referencing the base rule by id",
-         [base("failed"), corr(count(rules=f"[{R['failed']}]"))], burst("bob", "00:00", "01:00", "02:00")),
-    Case("C19", ["S76"], ["S76"], "chain: inner gte 2 in 5m per User, outer gte 2 inner matches in 1h; bob has 2 bursts of 2, eve 1",
+    Case("C18", ["S76"], ["S76", "S33"], "event_count referencing the base rule by id",
+         [base("failed"), corr(count(rules=f"[{R['failed']}]"))], burst("bob", "00:00", "01:00", "02:00"),
+         # 3 events within 2 minutes fire under any window reading; the matcher never fires.
+         wrong_under={"matcher": {"S33": rd("S33", "abc")}}),
+    Case("C19", ["S76"], ["S76", "S94", "S33"], "chain: inner gte 2 in 5m per User, outer gte 2 inner matches in 1h; bob has 2 bursts of 2, eve 1",
          [base("failed"), corr(count(cond="gte: 2"), "c1", "burst"),
           corr(count(rules="[burst]", cond="gte: 2", span="1h"), "c2", "bursts")],
-         burst("bob", "00:00", "01:00", "20:00", "21:00") + burst("eve", "00:00", "01:00"), compare=["c2"]),
-    Case("C20", ["S75"], ["S75"], "temporal with aliases: ip is DestIp in conn_in and SrcIp in conn_out",
+         burst("bob", "00:00", "01:00", "20:00", "21:00") + burst("eve", "00:00", "01:00"), compare=["c2"],
+         # bob fires under every chain reading (2 inner windows, 2 rising edges, 4 base events) and every
+         # window reading; the matcher never fires.
+         wrong_under={"matcher": {"S94": rd("S94", "abc"), "S33": rd("S33", "abc")}}),
+    Case("C20", ["S75"], ["S75", "S92", "S33", "S32"], "temporal with aliases: ip is DestIp in conn_in and SrcIp in conn_out",
          [base("conn_in"), base("conn_out"),
           corr("type: temporal\nrules: [conn_in, conn_out]\naliases:\n    ip:\n        conn_in: DestIp\n"
                "        conn_out: SrcIp\ngroup-by: [ip]\ntimespan: 5m\n")],
-         [E("00:00", "conn_in", DestIp="10.0.0.1"), E("01:00", "conn_out", SrcIp="10.0.0.1")]),
+         [E("00:00", "conn_in", DestIp="10.0.0.1"), E("01:00", "conn_out", SrcIp="10.0.0.1")],
+         # Both fire for an unresolved group: the alias resolves ip for every event under any S32 reading,
+         # both events fit any window, and S92.c would refuse the rule.
+         wrong_under={t: {"S92": rd("S92", "abc"), "S33": rd("S33", "abc"), "S32": rd("S32", "abc")}
+                      for t in ("matcher", "hayabusa")}),
     Case("C21", ["S70"], ["S70"], "value_sum of Bytes per Host, gte 25: 10 + 10 + 10",
          [base("failed"), corr(count(group="[Host]", ctype="value_sum", cond="field: Bytes\ngte: 25"))],
          [E(f"0{i}:00", Host="h", Bytes=10) for i in range(3)]),
@@ -201,31 +220,37 @@ CASES = [
     Case("C23", ["S74"], ["S74"], "value_percentile of Image per Host, lte 10, as in the spec example: one rare image among 11 events",
          [base("failed"), corr(count(group="[Host]", ctype="value_percentile", span="1h", cond="field: Image\nlte: 10"))],
          [E(f"{i:02d}:00", Host="h", Image="svchost.exe") for i in range(10)] + [E("10:00", Host="h", Image="evil.exe")]),
-    Case("C24", ["S81"], ["S81"], "filter `User|startswith: adm_`, `condition: selection`; events adm_bob (e1), alice (e2)",
+    Case("C24", ["S81"], ["S81", "S98"], "filter `User|startswith: adm_`, `condition: selection`; events adm_bob (e1), alice (e2)",
          [base("failed"), FILTER], [E("00:00", User="adm_bob"), E("01:00", User="alice")], kind="rule"),
-    Case("C25", ["S89"], ["S89"], "filter on the base rule of an event_count per Host, gte 3: one of 3 events is filtered",
+    Case("C25", ["S89"], ["S89", "S98"], "filter on the base rule of an event_count per Host, gte 3: one of 3 events is filtered",
          [base("failed"), FILTER, corr(count(group="[Host]"))],
          [E("00:00", User="adm_a", **H), E("01:00", User="b", **H), E("02:00", User="c", **H)]),
     Case("C26", ["S80"], ["S80"], "timespan 5M (upper-case unit), events at 00:00, 30:00 and 59:00",
          [base("failed"), corr(count(span="5M"))], burst("bob", "00:00", "30:00", "59:00")),
-    Case("C27", ["S93"], ["S31"], "event_count gte 3: 6 events in 6 seconds, then 3 more 20 minutes later",
+    Case("C27", ["S93"], ["S31", "S93"], "event_count gte 3: 6 events in 6 seconds, then 3 more 20 minutes later",
          [base("failed"), corr(count())],
          burst("bob", *[f"00:0{i}" for i in range(6)]) + burst("bob", "20:00", "20:01", "20:02")),
     Case("C28", ["S77"], ["S77"], "base rule referenced without generate: are its matches emitted",
          [base("failed"), corr(count())], burst("bob", "00:00", "01:00", "02:00"), kind="emitted"),
-    Case("C29", ["S81", "S89"], ["S81", "S89"], "as C25 with gte 2: 2 events are left after the filter, 1 if the filter is ANDed in",
+    Case("C29", ["S81", "S89"], ["S81", "S89", "S98"], "as C25 with gte 2: 2 events are left after the filter, 1 if the filter is ANDed in",
          [base("failed"), FILTER, corr(count(group="[Host]", cond="gte: 2"))],
          [E("00:00", User="adm_a", **H), E("01:00", User="b", **H), E("02:00", User="c", **H)]),
     Case("C30", ["S32"], ["S32"], "event_count gte 3: three events, none with the User field",
          [base("failed"), corr(count())], [E("00:00"), E("01:00"), E("02:00")]),
-    Case("C31", ["S33"], ["S31"], "temporal over 3 rules, 5m: success at 00:00, failed at 05:00, other at 10:00",
+    Case("C31", ["S33"], ["S31", "S33", "S91", "S92"], "temporal over 3 rules, 5m: success at 00:00, failed at 05:00, other at 10:00",
          T3 + [corr(count(rules="[failed, success, other]", ctype="temporal", cond=None))],
-         [E("00:00", "success", User="bob"), E("05:00", User="bob"), E("10:00", "other", User="bob")]),
+         [E("00:00", "success", User="bob"), E("05:00", User="bob"), E("10:00", "other", User="bob")],
+         # The three events span 10 minutes, so no 5-minute window of any kind holds them all, with either
+         # bound; S92.c would refuse the rule. Hayabusa fires.
+         wrong_under={"hayabusa": {"S33": rd("S33", "abc"), "S91": rd("S91", "ab"), "S92": rd("S92", "abc")}}),
     Case("C32", ["S35"], ["S35"], "as C15 with success first in the file",
          [base("failed"), base("success"), corr(ORD)], [E("01:00", "success", User="bob"), E("01:00", User="bob")]),
-    Case("C33", ["S73"], ["S31"], "value_count of [User, Src], gte 3: 3 events with the same pair",
+    Case("C33", ["S73"], ["S31", "S73", "S33"], "value_count of [User, Src], gte 3: 3 events with the same pair",
          [base("failed"), corr(count(group="[Host]", ctype="value_count", cond="field: [User, Src]\ngte: 3"))],
-         [E(f"0{i}:00", Host="h", User="a", Src="x") for i in range(3)]),
+         [E(f"0{i}:00", Host="h", User="a", Src="x") for i in range(3)],
+         # One distinct pair: 1 tuple (S73.a), 1 per field (S73.b), 2 pooled values (S73.c), all below 3,
+         # in any window. Hayabusa counts the 3 events and fires.
+         wrong_under={"hayabusa": {"S73": rd("S73", "abc"), "S33": rd("S33", "abc")}}),
     Case("C34", ["S94"], ["S94"], "chain of the spec's shape: inner event_count per Host gte 2, outer temporal_ordered [inner, success] per User",
          [base("failed"), base("success"), corr(count(group="[Host]", cond="gte: 2"), "c1", "burst"),
           corr("type: temporal_ordered\nrules: [burst, success]\ngroup-by: [User]\ntimespan: 10m\n", "c2", "outer")],
@@ -255,13 +280,13 @@ CASES = [
           corr("type: temporal\nrules: [conn_in, conn_out]\naliases:\n    ip:\n        conn_in: DestIp\n"
                "group-by: [ip]\ntimespan: 5m\n")],
          [E("00:00", "conn_in", DestIp="10.0.0.1"), E("01:00", "conn_out", ip="10.0.0.1")]),
-    Case("C42", ["S82"], ["S82"], "filter with logsource product: windows only, on a product: windows, service: security rule",
+    Case("C42", ["S82"], ["S82", "S98"], "filter with logsource product: windows only, on a product: windows, service: security rule",
          [base("failed"), FILTER_SUBSET], [E("00:00", User="adm_bob"), E("01:00", User="alice")], kind="rule"),
-    Case("C43", ["S83"], ["S83"], "filter referencing a rule that does not exist",
+    Case("C43", ["S83"], ["S83", "S98"], "filter referencing a rule that does not exist",
          [base("failed"), FILTER_UNKNOWN], [E("00:00", User="adm_bob"), E("01:00", User="alice")], kind="rule"),
     Case("C44", ["S77"], ["S77"], "generate: true at the top level of the correlation rule, as the JSON schema has it",
          [base("failed"), corr(count()) + "generate: true\n"], burst("bob", "00:00", "01:00", "02:00"), kind="emitted"),
-    Case("C45", ["S35"], ["S35"], "temporal_ordered failed then success 800 nanoseconds apart",
+    Case("C45", ["S35"], ["S35", "S99"], "temporal_ordered failed then success 800 nanoseconds apart",
          [base("failed"), base("success"), corr(ORD)],
          [E("01:00.000000100", User="bob"), E("01:00.000000900", "success", User="bob")]),
 ]
@@ -528,12 +553,12 @@ CAUSE = {"matcher": "engine", "zircolite": "converter", "hayabusa": "engine"}
 def label(case: Case, target: str, v: str, expected: dict, got: dict) -> dict | None:
     """triage.classify on the case's dependencies, for a difference, a crash or a degraded run whose
     result differs."""
-    from harness.triage import classify
+    from harness.triage import classify, every_reading
     if v in ("agree", "refused", "n/a") or (v == "degraded" and _same(expected, got, case)):
         return None
-    if v == "crash":  # wrong under every reading of the clauses the case tests
-        return classify(["S31"], cause=CAUSE[target])
-    return classify(case.depends, cause=CAUSE[target])
+    if v == "crash":  # a crash is no reading's result
+        return classify(case.depends, cause=CAUSE[target], wrong_under=every_reading(case.depends))
+    return classify(case.depends, cause=CAUSE[target], wrong_under=case.wrong_under.get(target, {}))
 
 
 def compare() -> dict:

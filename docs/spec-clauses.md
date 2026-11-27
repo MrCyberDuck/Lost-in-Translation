@@ -12,9 +12,9 @@ Source: [SigmaHQ/sigma-specification](https://github.com/SigmaHQ/sigma-specifica
 - `ambiguous`: the spec is silent, leaves it to the target SIEM, or can be read two ways.
 - `contradictory`: two parts of the spec disagree with each other.
 
-For every `ambiguous` or `contradictory` clause the evaluator follows the **working interpretation** given. The working interpretations of S1 to S88 were accepted by Nik on 23 and 24 Nov 2026, including the four questions that were open (see the end of this file). Those of S89 to S97, and the changes to the interpretations of S32, S33, S70, S72, S74, S76, S77 and S92, were written on 26 Nov 2026, when the evaluator gained correlations and filters in Phase 3 step 2, and wait for Nik's acceptance. S34 was listed as `clear` until Nik marked it `contradictory` on 27 Nov 2026; its interpretation did not change. Accepting an interpretation does not make a clause clear: its status stays `ambiguous`, so any disagreement that depends on it is triaged as `spec-gap`, never `backend-bug`.
+For every `ambiguous` or `contradictory` clause the evaluator follows the **working interpretation** given. The working interpretations of S1 to S88 were accepted by Nik on 23 and 24 Nov 2026, including the four questions that were open (see the end of this file). Those of S89 to S99, and the changes to the interpretations of S32, S33, S70, S72, S74, S76, S77 and S92, were written on 26 and 27 Nov 2026, when the evaluator gained correlations and filters in Phase 3 step 2, and wait for Nik's acceptance. S34 was listed as `clear` until Nik marked it `contradictory` on 27 Nov 2026; its interpretation did not change. Accepting an interpretation does not make a clause clear: its status stays `ambiguous`, and the clause keeps all its readings (see [Readings of the open clauses](#readings-of-the-open-clauses)).
 
-**Spec-gap rule (decision of 23 Nov 2026).** Any disagreement whose expected verdict depends on an `ambiguous` or `contradictory` clause is labelled `spec-gap`, never `backend-bug`, whatever the backend does. It is reported as a proposed clarification to the Sigma specification, not filed against a backend. The full label set is in [triage-labels.md](triage-labels.md) and is enforced in `harness/triage.py`.
+**Spec-gap rule (decisions of 23 and 27 Nov 2026).** A disagreement is labelled `spec-gap`, never `backend-bug`, when the target's result is right under at least one reading of an `ambiguous` or `contradictory` clause the case depends on. Only a result that is wrong under every reading of every such clause can be a `backend-bug` candidate, and the case records those readings. A `spec-gap` is reported as a proposed clarification to the Sigma specification ([spec-clarifications.md](spec-clarifications.md)), not filed against a backend. The full label set is in [triage-labels.md](triage-labels.md) and is enforced in `harness/triage.py`.
 
 **Rules** is how many of the 2,247 in-scope rules use the construct, from `results/phase0/construct_census.json` (`python -m harness.construct_census`). A dash means it is not counted automatically.
 
@@ -182,6 +182,7 @@ SigmaHQ r2026-07-01 contains **no** correlation rules in its rule folders, so ev
 | S95 | An event matched by several rules of one correlation | not covered; event_count "counts events" | ambiguous | One event: `event_count` and the value types count it once. `temporal` counts each rule it matches. |
 | S96 | Which windows a condition is tested on when it is not monotone (`lt`, `lte`, `eq`, `neq`, `value_avg`, `value_percentile`) | not covered | ambiguous | Every window that ends at an event (S33), so `eq: 2` fires on the way to 3 events, and a window that starts after an event is never tested. |
 | S97 | A group-by alias that lists only some of the referenced rules | Correlation spec, Field Name Aliases | ambiguous | For a rule the alias does not list, the group-by name is read as a field name. |
+| S99 | The resolution at which timestamps are compared for windows and order | not covered | ambiguous | The full resolution of the event's timestamp, down to nanoseconds, so two events 800 ns apart are in order. Many SIEMs store milliseconds. |
 
 ## New: global filters (meta-filters)
 
@@ -193,6 +194,7 @@ No global filters are shipped in the in-scope folder, so these are conformance c
 | S82 | The filter's logsource versus the rule's logsource | Filters spec, Log source | ambiguous | The filter applies only when the logsources are equal. The spec's own example is a `process_creation` filter that also lists a rule titled "Login on jump host", which suggests filters may be meant to reach other logsources too. |
 | S83 | A filter that references a rule id that does not exist | not covered | ambiguous | Ignored with a warning. |
 | S89 | Whether a filter applies to a rule's matches before a correlation that references the rule counts them | not covered | ambiguous | Yes: a correlation counts only the matches left after the filters. |
+| S98 | A tool that cannot apply a global filter: whether it must refuse the rules the filter names or may run them without it | not covered; the correlation spec's Compatibility section (S78, S79) has no counterpart for filters | ambiguous | Not evaluated by the evaluator, which applies every filter. A target may run the rules without the filter if it reports that the filter was not applied, as Hayabusa does ("Rule parsing errors"). |
 
 ## New: field value formats
 
@@ -216,9 +218,148 @@ Added by Nik's decision of 24 Nov 2026 while reviewing [taxonomy.md](taxonomy.md
 | --- | --- | --- | --- | --- | --- |
 | S88 | `all` on a single value is not allowed: "Single item values are not allowed to have an `all` modifier as some back-ends cannot support it" | Modifiers > Generic, `all` | clear | 0 of the 2,729 Windows rule files | The rule is outside the spec: label `rule-out-of-spec`, as for S60. The evaluator flags it and still matches it as the single value. pySigma 1.5.1 and 2.1.1 accept it silently on all 8 targets. |
 
+## Readings of the open clauses
+
+Every `ambiguous` or `contradictory` clause lists the readings that a careful implementer could take, fixed here before any result is labelled. **Working** marks the reading the evaluator follows. A disagreement is a `backend-bug` candidate only if the target's result is wrong under **every** reading of every open clause it depends on, and the case then records those readings ([triage-labels.md](triage-labels.md)). A reading is added here, never removed, and only with a note in the Phase 3 review log; adding one can turn a candidate back into a `spec-gap`, never the reverse. `harness/triage.py` reads this table.
+
+| Reading | What it says | Working |
+| --- | --- | --- |
+| S1.a | Non-ASCII letters are compared after Unicode full case folding (`ß` equals `ss`) | yes |
+| S1.b | Non-ASCII letters are compared after simple per-character lower-casing (`ß` does not equal `ss`) | |
+| S1.c | Only ASCII letters are folded; non-ASCII letters are compared exactly | |
+| S4.a | `?` matches one Unicode code point | yes |
+| S4.b | `?` matches one UTF-16 code unit, so a character outside the Basic Multilingual Plane needs `??` | |
+| S4.c | `?` matches one byte of the UTF-8 encoding | |
+| S10.a | A keyword matches as a substring of any string field value of the event, case-insensitively, wildcards honoured | yes |
+| S10.b | A keyword matches as a substring of the whole raw event text | |
+| S10.c | A keyword matches whole tokens of an indexed message (full-text search) | |
+| S11.a | Integers are compared as strings: `4688` matches the integer and the string, `0x10` does not match `16` | yes |
+| S11.b | Integers are compared as numbers: a numeric string in the event is parsed first | |
+| S11.c | An integer matches only an integer-typed field value | |
+| S15.a | `re` searches anywhere in the value (unanchored) | yes |
+| S15.b | `re` must match the whole value (anchored) | |
+| S16.a | The field value is parsed as a number; if it does not parse, the comparison is false | yes |
+| S16.b | Only numerically typed field values are compared; string-typed values never match | |
+| S16.c | A string-typed value is compared as a string (lexicographically) | |
+| S17.a | An IPv4-mapped IPv6 address does not match an IPv4 network | yes |
+| S17.b | An IPv4-mapped IPv6 address matches the IPv4 network of its embedded address | |
+| S19.a | A missing field does not satisfy `neq` | yes |
+| S19.b | A missing field satisfies `neq`, since it is different from the value | |
+| S20.a | `fieldref` compares case-insensitively unless `cased` is chained | yes |
+| S20.b | `fieldref` compares case-sensitively | |
+| S22.a | Time modifiers read the timestamp in UTC | |
+| S22.b | Time modifiers read the timestamp in the offset written in the event | |
+| S22.c | Time modifiers read the timestamp in the time zone configured in the SIEM | |
+| S24.a | `null` matches a missing field and a field holding JSON null, not `''` | yes |
+| S24.b | `null` matches only a field present with JSON null | |
+| S24.c | `null` matches only a missing field | |
+| S24.d | `null` matches a missing field, JSON null and `''` | |
+| S32.a | An event whose group-by field is missing, a list or a map is not grouped | yes |
+| S32.b | Such an event forms a group of its own (a null group) | |
+| S32.c | A missing group-by field is read as the empty string, so such events group together with events that have `''` | |
+| S33.a | Sliding windows: the spans of `timespan` that end at an event of the group | yes |
+| S33.b | Fixed (tumbling) windows aligned to clock boundaries | |
+| S33.c | Windows that start at the first event of the group and restart after they expire | |
+| S34.a | A range: every criterion given must hold | yes |
+| S34.b | Exactly one criterion: a condition with more than one is a rule error and must be refused | |
+| S35.a | Events with equal timestamps are not in order | yes |
+| S35.b | Events with equal timestamps are in order, whichever arrived first | |
+| S35.c | Events with equal timestamps are in order only in their arrival order | |
+| S37.a | `process_creation` and the other Windows categories are only the sources in the appendix table | yes |
+| S37.b | A category also covers other sources that provide it (Security 4688 for `process_creation`) | |
+| S39.a | Values are typed by the YAML loader; a boolean `true` matches the strings `true` and `True` | yes |
+| S39.b | All values are strings, whether quoted or not | |
+| S39.c | Typed values match only values of the same type in the event | |
+| S42.a | Field names are case-sensitive | yes |
+| S42.b | Field names are case-insensitive | |
+| S43.a | A dotted name is one flat key | yes |
+| S43.b | A dotted name is a path into nested objects | |
+| S43.c | A dotted name matches a flat key or a nested path | |
+| S44.a | A multi-valued field matches if any element matches | yes |
+| S44.b | A multi-valued field matches only if every element matches | |
+| S44.c | A multi-valued field is matched as one string, its elements joined | |
+| S46.a | `*` and `?` match a newline | yes |
+| S46.b | `*` and `?` do not match a newline | |
+| S47.a | No Unicode normalisation: code points are compared as written | yes |
+| S47.b | Both sides are normalised to NFC first | |
+| S47.c | Both sides are normalised to NFKC first | |
+| S50.a | Keywords with `all` may each appear in a different field | yes |
+| S50.b | Keywords with `all` must all appear in the same field | |
+| S51.a | An empty list of values or an empty selection is a rule error | yes |
+| S51.b | It matches nothing | |
+| S51.c | It tests that the field is missing or empty | |
+| S55.a | Condition keywords are lower case only (`AND` is a rule error), as pySigma accepts | yes |
+| S55.b | Condition keywords are case-insensitive | |
+| S56.a | An explicit pattern such as `1 of _filter*` includes identifiers that start with `_` | yes |
+| S56.b | Identifiers that start with `_` are excluded from every pattern, as from `them` | |
+| S58.a | `neq` with a list: the value is different from all listed values | yes |
+| S58.b | `neq` with a list: the value is different from at least one listed value (OR, as for other lists) | |
+| S59.a | Zone IDs and leading-zero IPv4 values do not parse, so they do not match | yes |
+| S59.b | A zone ID is dropped and leading zeros are read as decimal before matching | |
+| S59.c | Leading zeros are read as octal, as `inet_aton` does | |
+| S68.a | An unknown or misspelled modifier is a rule error | yes |
+| S68.b | An unknown modifier is ignored and the value is matched without it | |
+| S69.a | Both sides are parsed as numbers; floats, negatives and quoted numbers are accepted | yes |
+| S69.b | Only unquoted integers are allowed; other values are rule errors | |
+| S70.a | All seven correlation types are allowed | yes |
+| S70.b | Only the four listed types are allowed; the other three are rule errors | |
+| S71.a | `group-by` is optional; without it all events form one group | yes |
+| S71.b | `group-by` is mandatory; a correlation without it is a rule error | |
+| S72.a | Distinct values are counted after case folding; an event without the field adds no value | yes |
+| S72.b | Distinct values are case-sensitive; an event without the field adds no value | |
+| S72.c | An event without the field adds one value (empty or null) | |
+| S73.a | Several fields are counted as distinct tuples | yes |
+| S73.b | Each field is counted on its own, and the condition must hold for every field | |
+| S73.c | The values of all fields are pooled and counted together | |
+| S74.a | The condition is tested on the share, in percent, of the window's events with the field that hold one value | yes |
+| S74.b | The condition is tested on a numeric percentile of the field's values | |
+| S81.a | A filter suppresses matches: `rule condition and not filter condition` | yes |
+| S81.b | The filter's condition says what to keep: `rule condition and filter condition` (the spec's examples write `not selection`) | |
+| S82.a | A filter applies only to a rule with the same logsource | yes |
+| S82.b | A filter applies to a rule whose logsource includes the filter's | |
+| S82.c | A filter applies to every listed rule, whatever the logsources | |
+| S83.a | A reference to a rule that does not exist is ignored, with a warning | yes |
+| S83.b | It is ignored without a warning | |
+| S83.c | It makes the filter a rule error | |
+| S86.a | The children of the `<UserData>` wrapper are fields under their own names | yes |
+| S86.b | `<UserData>` content is not a field | |
+| S86.c | The children are fields under names that include the wrapper element | |
+| S87.a | Unnamed `<Data>` elements form one multi-valued field `Data` | yes |
+| S87.b | They are fields named by position (`Data_1`, `Data_2`, ...) | |
+| S87.c | They form one string field `Data`, the elements joined | |
+| S89.a | A correlation counts a rule's matches after the filters | yes |
+| S89.b | A correlation counts a rule's matches before the filters; filters apply only to the rule's own alerts | |
+| S90.a | Group-by values that differ only in case form one group | yes |
+| S90.b | They form separate groups | |
+| S91.a | Both ends of the window are inside: `[t - timespan, t]` | yes |
+| S91.b | An event exactly `timespan` earlier is outside: `(t - timespan, t]` | |
+| S92.a | Without a condition every referenced rule must match in the window; with one, `temporal` counts the referenced rules that matched and `temporal_ordered` the longest prefix seen in order | yes |
+| S92.b | Every referenced rule must match in the window, and a condition is ignored | |
+| S92.c | A condition is mandatory; a `temporal` correlation without one is a rule error | |
+| S93.a | One alert per group each time the condition becomes true | yes |
+| S93.b | One alert for every event that ends a window where the condition holds | |
+| S93.c | One alert per fixed window where the condition holds | |
+| S94.a | An outer correlation counts every window where the inner condition holds, with the fields of the event that ends it | yes |
+| S94.b | It counts only the rising edges of the inner correlation (S93), with the inner group-by values | |
+| S94.c | It counts the base events that made the inner correlation match | |
+| S95.a | An event matched by several referenced rules counts once in `event_count` and the value types; `temporal` counts each rule it matches | yes |
+| S95.b | The event counts once for each referenced rule that matches it | |
+| S96.a | A condition that is not monotone is tested on every window that ends at an event | yes |
+| S96.b | It is tested on every window at any point in time, including windows that end between events | |
+| S96.c | It is tested only on fixed windows (as S33.b) | |
+| S97.a | For a referenced rule the alias does not list, the group-by name is read as a field name | yes |
+| S97.b | Events of an unlisted rule are not grouped | |
+| S97.c | An alias that does not list every referenced rule is a rule error | |
+| S98.a | A tool that cannot apply a filter must refuse the rules the filter names | |
+| S98.b | It may run them without the filter if it reports that the filter was not applied | yes |
+| S98.c | It may run them without the filter, silently | |
+| S99.a | Timestamps are compared at their full resolution | yes |
+| S99.b | Timestamps are compared at millisecond resolution | |
+| S99.c | Timestamps are compared at second resolution | |
+
 ## Questions closed on 23 Nov 2026
 
-These four were open for the co-author. Nik decided on 23 Nov 2026 to keep the working interpretation for each. The clauses stay `ambiguous`, so every finding that depends on them is a `spec-gap`.
+These four were open for the co-author. Nik decided on 23 Nov 2026 to keep the working interpretation for each. The clauses stay `ambiguous` and keep all their readings, so a finding that is right under any of those readings is a `spec-gap`.
 
 1. S10 keywords: substring in any string field (kept), not a full-text match on the raw message.
 2. S11 integers: string comparison (kept), not numeric comparison.

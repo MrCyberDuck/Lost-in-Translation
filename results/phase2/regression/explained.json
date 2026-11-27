@@ -5,7 +5,8 @@
    "engine": "chainsaw",
    "description": "only fields listed in the mapping file are reachable",
    "clauses": [],
-   "kind": "config"
+   "kind": "config",
+   "wrong_under": {}
   },
   "C2": {
    "engine": "chainsaw",
@@ -13,7 +14,8 @@
    "clauses": [
     "S85"
    ],
-   "kind": "config"
+   "kind": "config",
+   "wrong_under": {}
   },
   "C3": {
    "engine": "chainsaw",
@@ -21,7 +23,8 @@
    "clauses": [
     "S86"
    ],
-   "kind": "config"
+   "kind": "config",
+   "wrong_under": {}
   },
   "C4": {
    "engine": "chainsaw",
@@ -29,7 +32,8 @@
    "clauses": [
     "S25"
    ],
-   "kind": "semantics"
+   "kind": "semantics",
+   "wrong_under": {}
   },
   "C5": {
    "engine": "chainsaw",
@@ -37,7 +41,8 @@
    "clauses": [
     "S24"
    ],
-   "kind": "semantics"
+   "kind": "semantics",
+   "wrong_under": {}
   },
   "C6": {
    "engine": "chainsaw",
@@ -46,7 +51,8 @@
     "S11",
     "S39"
    ],
-   "kind": "semantics"
+   "kind": "semantics",
+   "wrong_under": {}
   },
   "C8": {
    "engine": "chainsaw",
@@ -54,7 +60,8 @@
    "clauses": [
     "S11"
    ],
-   "kind": "semantics"
+   "kind": "semantics",
+   "wrong_under": {}
   },
   "C7": {
    "engine": "chainsaw",
@@ -62,13 +69,20 @@
    "clauses": [
     "S37"
    ],
-   "kind": "config"
+   "kind": "config",
+   "wrong_under": {
+    "S37": [
+     "S37.a",
+     "S37.b"
+    ]
+   }
   },
   "C9": {
    "engine": "chainsaw",
    "description": "rules listed by title under `exclusions` in the mapping file never run",
    "clauses": [],
-   "kind": "config"
+   "kind": "config",
+   "wrong_under": {}
   },
   "H1": {
    "engine": "hayabusa",
@@ -77,7 +91,8 @@
     "S3",
     "S45"
    ],
-   "kind": "semantics"
+   "kind": "semantics",
+   "wrong_under": {}
   },
   "H2": {
    "engine": "hayabusa",
@@ -85,7 +100,8 @@
    "clauses": [
     "S36"
    ],
-   "kind": "config"
+   "kind": "config",
+   "wrong_under": {}
   },
   "H3": {
    "engine": "hayabusa",
@@ -93,7 +109,8 @@
    "clauses": [
     "S85"
    ],
-   "kind": "config"
+   "kind": "config",
+   "wrong_under": {}
   },
   "H4": {
    "engine": "hayabusa",
@@ -101,7 +118,14 @@
    "clauses": [
     "S87"
    ],
-   "kind": "config"
+   "kind": "config",
+   "wrong_under": {
+    "S87": [
+     "S87.a",
+     "S87.b",
+     "S87.c"
+    ]
+   }
   }
  },
  "engines": {

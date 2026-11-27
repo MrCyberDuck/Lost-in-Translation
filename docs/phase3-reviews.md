@@ -52,9 +52,9 @@ Both reviewers re-ran the targets on copies of the repository. Sonnet found the 
 
 | Point | Decision | Change |
 | --- | --- | --- |
-| S34 was `clear`, but the spec says "a map of exactly one condition criterion" and then shows a range with two operators; both reviewers read this as contradictory | `contradictory` (27 Nov 2026) | S34 row; H7 is now `spec-gap`; proposed clarification SC1 in [spec-clarifications.md](spec-clarifications.md) |
+| S34 was `clear`, but the spec says "a map of exactly one condition criterion" and then shows a range with two operators; both reviewers read this as contradictory | `contradictory` (27 Nov 2026) | S34 row; proposed clarifications SC1 and SC2 (the JSON schema checks no condition) in [spec-clarifications.md](spec-clarifications.md) |
+| The reading of "depends on" in triage-labels.md | A clause excuses a result only if the result is right under one of its readings; three safeguards (27 Nov 2026) | Readings of all 51 open clauses in spec-clauses.md; `classify` takes `wrong_under` and checks it; cases list every open clause they touch; M3, M7, M10, H7, H12, H13 and the clear-clause candidates C18 to C20 record their readings; H7 is a `backend-bug` candidate again. In Phase 2, C7 and H4 are wrong under every reading of S37 and S87 and become `config`. Two clauses the audit found missing: S98 (a tool that cannot apply a filter, SC3) and S99 (timestamp resolution, SC4) |
 
 ### Open with Nik
 
-1. The reading of "depends on" in triage-labels.md: a clause is a dependency only when one of its readings changes the expected verdict. M7, M10, H7, H12 and H13 are `backend-bug` candidates only under this reading.
-2. The working interpretations of S89 to S97, and the changed interpretations of S32, S33, S70, S72, S74, S76, S77 and S92. S74 in particular: the evaluator reads `value_percentile` as a value's share of the events, as the spec's example title suggests; pySigma reads it as a numeric percentile, as the hint "median is a percentile 50" suggests.
+1. The working interpretations of S89 to S99, and the changed interpretations of S32, S33, S70, S72, S74, S76, S77 and S92. S74 in particular: the evaluator reads `value_percentile` as a value's share of the events, as the spec's example title suggests; pySigma reads it as a numeric percentile, as the hint "median is a percentile 50" suggests. The reading lists of the open clauses, written on 27 Nov 2026, are checked by the step 6 review.

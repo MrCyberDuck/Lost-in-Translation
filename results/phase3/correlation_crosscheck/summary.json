@@ -218,7 +218,8 @@
     "S33"
    ],
    "depends": [
-    "S31"
+    "S31",
+    "S33"
    ],
    "what": "event_count: first and last event 5 minutes and 1 second apart",
    "evaluator": {
@@ -264,7 +265,8 @@
     "S32"
    ],
    "depends": [
-    "S31"
+    "S31",
+    "S32"
    ],
    "what": "event_count: the third event has no User field",
    "evaluator": {
@@ -426,7 +428,9 @@
     "S34"
    ],
    "depends": [
-    "S34"
+    "S34",
+    "S33",
+    "S96"
    ],
    "what": "event_count range gt 1, lte 2: bob has 2 events, eve 3 at the same second",
    "evaluator": {
@@ -456,10 +460,24 @@
    "hayabusa": {
     "verdict": "differ",
     "label": {
-     "verdict": "spec-gap",
-     "open_clauses": [
-      "S34"
-     ]
+     "verdict": "backend-bug",
+     "cause": "engine",
+     "wrong_under": {
+      "S34": [
+       "S34.a",
+       "S34.b"
+      ],
+      "S33": [
+       "S33.a",
+       "S33.b",
+       "S33.c"
+      ],
+      "S96": [
+       "S96.a",
+       "S96.b",
+       "S96.c"
+      ]
+     }
     },
     "result": {
      "c1": {
@@ -539,7 +557,8 @@
     "S90"
    ],
    "depends": [
-    "S72"
+    "S72",
+    "S90"
    ],
    "what": "value_count of User per Host, gte 3: Admin, admin, root",
    "evaluator": {
@@ -553,7 +572,8 @@
     "label": {
      "verdict": "spec-gap",
      "open_clauses": [
-      "S72"
+      "S72",
+      "S90"
      ]
     },
     "result": {
@@ -582,7 +602,8 @@
     "label": {
      "verdict": "spec-gap",
      "open_clauses": [
-      "S72"
+      "S72",
+      "S90"
      ]
     },
     "result": {
@@ -658,7 +679,8 @@
     "S73"
    ],
    "depends": [
-    "S73"
+    "S73",
+    "S33"
    ],
    "what": "value_count of [User, Src], gte 3: 2 users, 2 sources, 3 pairs",
    "evaluator": {
@@ -675,7 +697,19 @@
     "verdict": "crash",
     "label": {
      "verdict": "backend-bug",
-     "cause": "engine"
+     "cause": "engine",
+     "wrong_under": {
+      "S73": [
+       "S73.a",
+       "S73.b",
+       "S73.c"
+      ],
+      "S33": [
+       "S33.a",
+       "S33.b",
+       "S33.c"
+      ]
+     }
     },
     "result": {
      "crash": "TypeError: unhashable type: 'list'"
@@ -1031,7 +1065,8 @@
     "S76"
    ],
    "depends": [
-    "S76"
+    "S76",
+    "S33"
    ],
    "what": "event_count referencing the base rule by id",
    "evaluator": {
@@ -1048,7 +1083,14 @@
     "verdict": "differ",
     "label": {
      "verdict": "backend-bug",
-     "cause": "engine"
+     "cause": "engine",
+     "wrong_under": {
+      "S33": [
+       "S33.a",
+       "S33.b",
+       "S33.c"
+      ]
+     }
     },
     "result": {
      "c1": {
@@ -1092,7 +1134,9 @@
     "S76"
    ],
    "depends": [
-    "S76"
+    "S76",
+    "S94",
+    "S33"
    ],
    "what": "chain: inner gte 2 in 5m per User, outer gte 2 inner matches in 1h; bob has 2 bursts of 2, eve 1",
    "evaluator": {
@@ -1109,7 +1153,19 @@
     "verdict": "differ",
     "label": {
      "verdict": "backend-bug",
-     "cause": "engine"
+     "cause": "engine",
+     "wrong_under": {
+      "S94": [
+       "S94.a",
+       "S94.b",
+       "S94.c"
+      ],
+      "S33": [
+       "S33.a",
+       "S33.b",
+       "S33.c"
+      ]
+     }
     },
     "result": {
      "c2": {
@@ -1147,7 +1203,10 @@
     "S75"
    ],
    "depends": [
-    "S75"
+    "S75",
+    "S92",
+    "S33",
+    "S32"
    ],
    "what": "temporal with aliases: ip is DestIp in conn_in and SrcIp in conn_out",
    "evaluator": {
@@ -1164,7 +1223,24 @@
     "verdict": "differ",
     "label": {
      "verdict": "backend-bug",
-     "cause": "engine"
+     "cause": "engine",
+     "wrong_under": {
+      "S92": [
+       "S92.a",
+       "S92.b",
+       "S92.c"
+      ],
+      "S33": [
+       "S33.a",
+       "S33.b",
+       "S33.c"
+      ],
+      "S32": [
+       "S32.a",
+       "S32.b",
+       "S32.c"
+      ]
+     }
     },
     "result": {
      "c1": {
@@ -1195,7 +1271,24 @@
     "verdict": "differ",
     "label": {
      "verdict": "backend-bug",
-     "cause": "engine"
+     "cause": "engine",
+     "wrong_under": {
+      "S92": [
+       "S92.a",
+       "S92.b",
+       "S92.c"
+      ],
+      "S33": [
+       "S33.a",
+       "S33.b",
+       "S33.c"
+      ],
+      "S32": [
+       "S32.a",
+       "S32.b",
+       "S32.c"
+      ]
+     }
     },
     "result": {
      "c1": {
@@ -1383,7 +1476,8 @@
     "S81"
    ],
    "depends": [
-    "S81"
+    "S81",
+    "S98"
    ],
    "what": "filter `User|startswith: adm_`, `condition: selection`; events adm_bob (e1), alice (e2)",
    "evaluator": {
@@ -1396,7 +1490,8 @@
     "label": {
      "verdict": "spec-gap",
      "open_clauses": [
-      "S81"
+      "S81",
+      "S98"
      ]
     },
     "result": {
@@ -1410,7 +1505,8 @@
     "label": {
      "verdict": "spec-gap",
      "open_clauses": [
-      "S81"
+      "S81",
+      "S98"
      ]
     },
     "result": {
@@ -1424,7 +1520,8 @@
     "label": {
      "verdict": "spec-gap",
      "open_clauses": [
-      "S81"
+      "S81",
+      "S98"
      ]
     },
     "result": {
@@ -1442,7 +1539,8 @@
     "S89"
    ],
    "depends": [
-    "S89"
+    "S89",
+    "S98"
    ],
    "what": "filter on the base rule of an event_count per Host, gte 3: one of 3 events is filtered",
    "evaluator": {
@@ -1476,7 +1574,8 @@
     "label": {
      "verdict": "spec-gap",
      "open_clauses": [
-      "S89"
+      "S89",
+      "S98"
      ]
     },
     "result": {
@@ -1553,7 +1652,8 @@
     "S93"
    ],
    "depends": [
-    "S31"
+    "S31",
+    "S93"
    ],
    "what": "event_count gte 3: 6 events in 6 seconds, then 3 more 20 minutes later",
    "evaluator": {
@@ -1652,7 +1752,8 @@
    ],
    "depends": [
     "S81",
-    "S89"
+    "S89",
+    "S98"
    ],
    "what": "as C25 with gte 2: 2 events are left after the filter, 1 if the filter is ANDed in",
    "evaluator": {
@@ -1671,7 +1772,8 @@
      "verdict": "spec-gap",
      "open_clauses": [
       "S81",
-      "S89"
+      "S89",
+      "S98"
      ]
     },
     "result": {
@@ -1687,7 +1789,8 @@
      "verdict": "spec-gap",
      "open_clauses": [
       "S81",
-      "S89"
+      "S89",
+      "S98"
      ]
     },
     "result": {
@@ -1783,7 +1886,10 @@
     "S33"
    ],
    "depends": [
-    "S31"
+    "S31",
+    "S33",
+    "S91",
+    "S92"
    ],
    "what": "temporal over 3 rules, 5m: success at 00:00, failed at 05:00, other at 10:00",
    "evaluator": {
@@ -1816,7 +1922,23 @@
     "verdict": "differ",
     "label": {
      "verdict": "backend-bug",
-     "cause": "engine"
+     "cause": "engine",
+     "wrong_under": {
+      "S33": [
+       "S33.a",
+       "S33.b",
+       "S33.c"
+      ],
+      "S91": [
+       "S91.a",
+       "S91.b"
+      ],
+      "S92": [
+       "S92.a",
+       "S92.b",
+       "S92.c"
+      ]
+     }
     },
     "result": {
      "c1": {
@@ -1891,7 +2013,9 @@
     "S73"
    ],
    "depends": [
-    "S31"
+    "S31",
+    "S73",
+    "S33"
    ],
    "what": "value_count of [User, Src], gte 3: 3 events with the same pair",
    "evaluator": {
@@ -1904,7 +2028,19 @@
     "verdict": "crash",
     "label": {
      "verdict": "backend-bug",
-     "cause": "engine"
+     "cause": "engine",
+     "wrong_under": {
+      "S73": [
+       "S73.a",
+       "S73.b",
+       "S73.c"
+      ],
+      "S33": [
+       "S33.a",
+       "S33.b",
+       "S33.c"
+      ]
+     }
     },
     "result": {
      "crash": "TypeError: unhashable type: 'list'"
@@ -1924,7 +2060,19 @@
     "verdict": "differ",
     "label": {
      "verdict": "backend-bug",
-     "cause": "engine"
+     "cause": "engine",
+     "wrong_under": {
+      "S73": [
+       "S73.a",
+       "S73.b",
+       "S73.c"
+      ],
+      "S33": [
+       "S33.a",
+       "S33.b",
+       "S33.c"
+      ]
+     }
     },
     "result": {
      "c1": {
@@ -2412,7 +2560,8 @@
     "S82"
    ],
    "depends": [
-    "S82"
+    "S82",
+    "S98"
    ],
    "what": "filter with logsource product: windows only, on a product: windows, service: security rule",
    "evaluator": {
@@ -2426,7 +2575,8 @@
     "label": {
      "verdict": "spec-gap",
      "open_clauses": [
-      "S82"
+      "S82",
+      "S98"
      ]
     },
     "result": {
@@ -2440,7 +2590,8 @@
     "label": {
      "verdict": "spec-gap",
      "open_clauses": [
-      "S82"
+      "S82",
+      "S98"
      ]
     },
     "result": {
@@ -2467,7 +2618,8 @@
     "S83"
    ],
    "depends": [
-    "S83"
+    "S83",
+    "S98"
    ],
    "what": "filter referencing a rule that does not exist",
    "evaluator": {
@@ -2555,7 +2707,8 @@
     "S35"
    ],
    "depends": [
-    "S35"
+    "S35",
+    "S99"
    ],
    "what": "temporal_ordered failed then success 800 nanoseconds apart",
    "evaluator": {
@@ -2587,7 +2740,8 @@
     "label": {
      "verdict": "spec-gap",
      "open_clauses": [
-      "S35"
+      "S35",
+      "S99"
      ]
     },
     "result": {
