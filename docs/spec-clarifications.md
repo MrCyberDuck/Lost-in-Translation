@@ -13,7 +13,7 @@ Spec text is quoted from [SigmaHQ/sigma-specification](https://github.com/SigmaH
 - Line 327: "It is a map of exactly one condition criterion:", followed by the six operators `gt`, `gte`, `lt`, `lte`, `eq` and `neq`.
 - Lines 343 to 351: "To define a range, you can use the conjunction 'AND' in the mapping.", with the example "101 to 200": `gt: 100` and `lte: 200`, a map with two criteria.
 
-The JSON schema (`sigma-correlation-rules-schema.json`) does not settle it. It gives `condition` the keywords `minItems: 1` and `maxItems: 3`, but JSON Schema applies these only to arrays, and its `anyOf` entries name the operators without `properties`, so they constrain nothing. Validated with `jsonschema` 4.23.0 (draft 2020-12), the schema accepts `{gt: 1, lte: 2}`, all six operators at once, `{foo: bar}`, `{gt: "x"}` and `{}`.
+The JSON schema (`sigma-correlation-rules-schema.json`) does not settle it. Its `maxItems: 3` on the condition suggests that two operators plus `field` were meant, but the keyword has no effect, and the schema accepts any condition at all (SC2).
 
 **What the implementations do.** Case C08 in the [correlation cross-check](../results/phase3/correlation_crosscheck/README.md) uses `event_count` with `gt: 1` and `lte: 2`. In it, bob has 2 events and eve has 3.
 
@@ -37,7 +37,7 @@ Two details matter for the proposal.
 - Replace "It is a map of exactly one condition criterion:" with "It is a map of one or more condition criteria. All of them must hold:".
 - Keep the "101 to 200" example.
 - Add: "A tool that cannot apply every criterion must raise an error rather than apply only some of them", in line with the Compatibility section.
-- In the JSON schema, replace `minItems` and `maxItems` with `minProperties` and `maxProperties`, and list the operators under `properties` with integer types and `additionalProperties: false`, keeping `field` for `value_count`.
+- Fix the JSON schema's `condition` so that it enforces this (SC2).
 
 The other way to resolve it is to forbid ranges: delete the range paragraph and its example, and set `maxProperties` to 1, or 2 for `value_count` with `field`. That matches pySigma today, but it removes a feature the spec documents.
 
@@ -51,3 +51,29 @@ The other way to resolve it is to forbid ranges: delete the range paragraph and 
 
   Expected: `sigma.exceptions.SigmaCorrelationConditionError: Sigma correlation condition must have exactly one condition item`. Checked on pySigma 1.5.1 and 2.1.2, 27 Nov 2026.
 - All targets: `python -m harness.correlation_crosscheck <target>` for `evaluator`, `matcher`, `zircolite` and `hayabusa`, then `python -m harness.correlation_crosscheck compare`, and read case C08 in `results/phase3/correlation_crosscheck/summary.json`.
+
+## SC2. The correlation JSON schema does not check `condition` or `aliases`
+
+**Status:** schema defect, not an open clause: the prose of the spec decides these points (except S34, see SC1), but the schema meant to check them accepts anything. Draft, not sent.
+
+**What the schema says.** `json-schema/sigma-correlation-rules-schema.json` (draft 2020-12) has three faults. Each uses JSON Schema keywords in a place where they have no effect, so a validator ignores them without any warning.
+
+1. **`condition`** is declared `type: object` with `minItems: 1`, `maxItems: 3` and `uniqueItems: true`. These three keywords apply only to arrays. Its `anyOf` lists entries such as `{"gt": {"type": "integer"}}`, but `gt` is not a JSON Schema keyword, so each entry is an empty schema that accepts everything. Operator names belong under `properties`.
+2. **The `field` requirement** for `value_count`, `value_sum`, `value_avg` and `value_percentile` is written as `then: {condition: {...}, required: [...]}`. `condition` is not a keyword there either, so only `required` takes effect and `field` is never required. That block also types `field` as a string, while the main `field` definition and the spec (S73) allow a list.
+3. **`aliases`** values are declared `type: object` with `items: {type: string}`. `items` applies only to arrays, so alias values are not checked.
+
+**Effect.** Validated with `jsonschema` 4.23.0, the schema accepts each of these correlations: condition `{}`, `{foo: bar}`, `{gt: "x"}`, all six operators at once, a `value_count` without `field`, and an alias whose value is the number 123. A rule author or tool that relies on the schema gets no error for any of them. SigmaHQ's own CI (`.github/workflows/sigma-validation.yml`) validates rules only against the detection rule schema, so this schema is not enforced on SigmaHQ rules today; the rule repository has no correlation rules yet.
+
+**Proposed fix.**
+
+- `condition`: `properties` for `gt`, `gte`, `lt`, `lte`, `eq` and `neq` (integers) and `field` (a string or a list of strings), `additionalProperties: false` and `minProperties: 1`. A limit on the number of operators follows from the decision in SC1.
+- The four `then` blocks: `then: {properties: {condition: {required: ["field"]}}, required: [...]}`, with no separate type for `field`.
+- `aliases`: values as `type: object` with `additionalProperties: {type: string}`.
+
+**Reproduce.** With `jsonschema` 4.23.0 installed:
+
+```
+python results/phase3/spec_clarifications/SC2_schema_check.py <sigma-specification>/json-schema/sigma-correlation-rules-schema.json
+```
+
+Expected: all six lines print `valid`. Checked 27 Nov 2026 at specification commit `ba9251a`.
