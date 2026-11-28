@@ -19,7 +19,7 @@ VERDICTS = ("oracle-bug", "rule-out-of-spec", "spec-gap", "config", "backend-bug
 CAUSES = ("converter", "engine", "ingest")
 
 _ROW = re.compile(r"^\|\s*(S\d+)\s*\|(.*)$")
-_READING = re.compile(r"^\|\s*(S\d+)\.([a-z])\s*\|([^|]*)\|\s*(yes)?\s*\|\s*$")
+_READING = re.compile(r"^\|\s*(S\d+)\.([a-z])\s*\|([^|]*)\|([^|]*)\|\s*(yes)?\s*\|\s*$")
 
 
 @functools.lru_cache(maxsize=1)
@@ -68,7 +68,7 @@ def working_reading(clause: str, path: str | None = None) -> str | None:
     text = pathlib.Path(path or SPEC_CLAUSES).read_text(encoding="utf-8")
     for line in text.splitlines():
         m = _READING.match(line)
-        if m and m.group(1) == clause and m.group(4):
+        if m and m.group(1) == clause and m.group(5):
             return f"{m.group(1)}.{m.group(2)}"
     return None
 
