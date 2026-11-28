@@ -1,7 +1,6 @@
 """One or more tests per spec clause (docs/spec-clauses.md) for the reference evaluator.
 
-Correlation (S31 to S35, S70 to S80) and global filters (S81 to S83) are not implemented in
-Phase 2; see docs/phase2.md.
+Correlation and global filters are tested in tests/test_collection.py.
 """
 import textwrap
 
@@ -275,6 +274,15 @@ def test_s37_unmapped_category_is_reported():
 def test_s39_boolean_value():
     assert one("Enabled: true", {"Enabled": "True"})
     assert one("Enabled: true", {"Enabled": True})
+
+
+def test_s39_yaml_12_scalars_become_the_string_of_their_value():
+    # Rule files are YAML 1.2.2 (line 94); the evaluator follows S39.b, the string of the YAML value.
+    assert one("F: 0x10", {"F": "16"}) and not one("F: 0x10", {"F": "0x10"})
+    assert one("F: 010", {"F": "10"}) and not one("F: 010", {"F": "8"})  # YAML 1.1 would read 8
+    assert one("F: 0o10", {"F": "8"})
+    assert one("F: yes", {"F": "yes"}) and not one("F: yes", {"F": "True"})  # YAML 1.1 would read true
+    assert one("F: 1:30", {"F": "1:30"})  # no sexagesimal numbers in YAML 1.2
 
 
 def test_s41_double_backslash_is_one():

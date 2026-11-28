@@ -46,6 +46,9 @@ class Mechanism:
     sem: dict = field(default_factory=dict)         # Semantics flags
     view: Callable[[Event], Event] | None = None    # event transformation
     production_only: bool = False
+    # what the mechanism breaks: a clear clause ("clear") or an open clause with the readings under
+    # which the engine's result is wrong (triage.classify, docs/triage-labels.md)
+    breaks: dict[str, object] = field(default_factory=dict)
 
 
 # ---------------------------------------------------------------- Chainsaw
@@ -123,12 +126,17 @@ def chainsaw_mechanisms() -> list[Mechanism]:
         Mechanism("C5", "chainsaw", "`field: null` matches only a present JSON null, not a missing field", ["S24"],
                   "semantics", sem={"null_explicit_only": True}),
         Mechanism("C6", "chainsaw", "a string in the rule ('true') does not match a boolean event value", ["S11", "S39"],
-                  "semantics", sem={"strict_bool": True}),
+                  "semantics", sem={"strict_bool": True},
+                  # The rule's value is quoted, so S39 does not arise; every value is matched as a string (S11).
+                  breaks={"S11": "clear"}),
         Mechanism("C8", "chainsaw", "a number in the rule (3389) does not match a string event value ('3389')",
                   ["S11"], "semantics", sem={"strict_number": True}),
         Mechanism("C7", "chainsaw", "logsource preconditions by Provider/EventID (process_creation also 4688; "
                   "unlisted categories and services run on every event)", ["S37"], "config",
-                  production_only=True),
+                  production_only=True,
+                  # All 24 measured pairs are 1102 events that its `service: security` precondition
+                  # (provider Security-Auditing) drops; the appendix table (S37) does not involve the provider.
+                  breaks={"S37": "clear"}),
         Mechanism("C9", "chainsaw", "rules listed by title under `exclusions` in the mapping file never run",
                   [], "config", production_only=True),
     ]
@@ -223,7 +231,7 @@ def explain(dataset: str) -> dict:
     for engine, mechs in (("chainsaw", chainsaw_mechanisms()), ("hayabusa", hayabusa_mechanisms())):
         for m in mechs:
             result["mechanisms"][m.key] = {"engine": engine, "description": m.description, "clauses": m.clauses,
-                                           "kind": m.kind}
+                                           "kind": m.kind, "breaks": m.breaks}
         eng_res = {}
         for config in ("neutral", "production"):
             ev_sets = collections.defaultdict(set)
@@ -293,21 +301,25 @@ def label(row: dict, mechanisms: dict, config: str) -> str:
     """Triage label for one explained pair.
 
     `mechanisms` lists alternatives: each entry alone (or `A&B` together) reproduces the
-    engine's answer. Conservative rule (decision of 23 Nov 2026): if any explaining mechanism
-    touches an ambiguous or contradictory clause, the pair is a `spec-gap`. Otherwise, if every
-    mechanism involved is the engine's configuration (mapping, field list, logsource), it is
-    `config`; otherwise it is a `backend-bug` with cause `engine`.
+    engine's answer. Rule (decisions of 23 Nov and 28 Nov 2026): if any explaining mechanism depends on
+    an open clause and breaks neither a clear clause nor an open clause under all of its readings, the
+    pair is a `spec-gap`. Otherwise, if every mechanism involved is the engine's configuration (mapping,
+    field list, logsource), it is `config`; otherwise it is a `backend-bug` with cause `engine`.
     """
     keys = [k for entry in row["mechanisms"] for k in entry.split("&")]
     if not keys:
         return "unexplained"
     clauses = sorted({c for k in keys for c in mechanisms[k]["clauses"]})
-    if open_clauses(clauses):
-        return "spec-gap"
+    for k in keys:
+        excused = classify(mechanisms[k]["clauses"] or ["S36"], cause="engine",
+                           breaks=mechanisms[k].get("breaks") or {})
+        if excused["verdict"] == "spec-gap":
+            return "spec-gap"
     needed = [set(entry.split("&")) for entry in row["mechanisms"]]
     if any(all(mechanisms[k]["kind"] == "config" for k in alt) for alt in needed):
         return "config"
-    return classify(clauses, cause="engine")["verdict"]
+    breaks = {c: v for k in keys for c, v in (mechanisms[k].get("breaks") or {}).items()}
+    return classify(clauses, cause="engine", breaks=breaks)["verdict"]
 
 
 def main(argv: list[str]) -> None:

@@ -5,7 +5,8 @@
    "engine": "chainsaw",
    "description": "only fields listed in the mapping file are reachable",
    "clauses": [],
-   "kind": "config"
+   "kind": "config",
+   "breaks": {}
   },
   "C2": {
    "engine": "chainsaw",
@@ -13,7 +14,8 @@
    "clauses": [
     "S85"
    ],
-   "kind": "config"
+   "kind": "config",
+   "breaks": {}
   },
   "C3": {
    "engine": "chainsaw",
@@ -21,7 +23,8 @@
    "clauses": [
     "S86"
    ],
-   "kind": "config"
+   "kind": "config",
+   "breaks": {}
   },
   "C4": {
    "engine": "chainsaw",
@@ -29,7 +32,8 @@
    "clauses": [
     "S25"
    ],
-   "kind": "semantics"
+   "kind": "semantics",
+   "breaks": {}
   },
   "C5": {
    "engine": "chainsaw",
@@ -37,7 +41,8 @@
    "clauses": [
     "S24"
    ],
-   "kind": "semantics"
+   "kind": "semantics",
+   "breaks": {}
   },
   "C6": {
    "engine": "chainsaw",
@@ -46,7 +51,10 @@
     "S11",
     "S39"
    ],
-   "kind": "semantics"
+   "kind": "semantics",
+   "breaks": {
+    "S11": "clear"
+   }
   },
   "C8": {
    "engine": "chainsaw",
@@ -54,7 +62,8 @@
    "clauses": [
     "S11"
    ],
-   "kind": "semantics"
+   "kind": "semantics",
+   "breaks": {}
   },
   "C7": {
    "engine": "chainsaw",
@@ -62,13 +71,17 @@
    "clauses": [
     "S37"
    ],
-   "kind": "config"
+   "kind": "config",
+   "breaks": {
+    "S37": "clear"
+   }
   },
   "C9": {
    "engine": "chainsaw",
    "description": "rules listed by title under `exclusions` in the mapping file never run",
    "clauses": [],
-   "kind": "config"
+   "kind": "config",
+   "breaks": {}
   },
   "H1": {
    "engine": "hayabusa",
@@ -77,7 +90,8 @@
     "S3",
     "S45"
    ],
-   "kind": "semantics"
+   "kind": "semantics",
+   "breaks": {}
   },
   "H2": {
    "engine": "hayabusa",
@@ -85,7 +99,8 @@
    "clauses": [
     "S36"
    ],
-   "kind": "config"
+   "kind": "config",
+   "breaks": {}
   },
   "H3": {
    "engine": "hayabusa",
@@ -93,7 +108,8 @@
    "clauses": [
     "S85"
    ],
-   "kind": "config"
+   "kind": "config",
+   "breaks": {}
   },
   "H4": {
    "engine": "hayabusa",
@@ -101,7 +117,8 @@
    "clauses": [
     "S87"
    ],
-   "kind": "config"
+   "kind": "config",
+   "breaks": {}
   }
  },
  "engines": {
@@ -277,7 +294,7 @@
        "C8"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "5bed80b6-b3e8-428e-a3ae-d3c757589e41",
@@ -289,7 +306,7 @@
        "C8"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "5bed80b6-b3e8-428e-a3ae-d3c757589e41",
@@ -301,7 +318,7 @@
        "C8"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "5bed80b6-b3e8-428e-a3ae-d3c757589e41",
@@ -313,7 +330,7 @@
        "C8"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "614cf376-6651-47c4-9dcc-6b9527f749f4",
@@ -1705,7 +1722,7 @@
        "C6"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "0dba975d-a193-4ed1-a067-424df57570d1",
@@ -1717,7 +1734,7 @@
        "C6"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "e81528db-fc02-45e8-8e98-4e84aba1f10b",
@@ -1957,7 +1974,7 @@
        "C6"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "ed74fe75-7594-4b4b-ae38-e38e3fd2eb23",
@@ -1969,7 +1986,7 @@
        "C6"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "ed74fe75-7594-4b4b-ae38-e38e3fd2eb23",
@@ -1981,7 +1998,7 @@
        "C6"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "ed74fe75-7594-4b4b-ae38-e38e3fd2eb23",
@@ -1993,7 +2010,7 @@
        "C6"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "c7e91a02-d771-4a6d-a700-42587e0b1095",
@@ -2005,7 +2022,7 @@
        "C6"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "c7e91a02-d771-4a6d-a700-42587e0b1095",
@@ -2017,7 +2034,7 @@
        "C6"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "c7e91a02-d771-4a6d-a700-42587e0b1095",
@@ -2029,7 +2046,7 @@
        "C6"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "c7e91a02-d771-4a6d-a700-42587e0b1095",
@@ -2041,7 +2058,7 @@
        "C6"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "5ef9853e-4d0e-4a70-846f-a9ca37d876da",
@@ -2930,8 +2947,8 @@
     },
     "by_label": {
      "config": 13,
-     "backend-bug": 89,
-     "spec-gap": 132
+     "backend-bug": 103,
+     "spec-gap": 118
     }
    },
    "production": {
@@ -3105,7 +3122,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3117,7 +3134,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3129,7 +3146,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3141,7 +3158,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3153,7 +3170,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3165,7 +3182,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3177,7 +3194,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3189,7 +3206,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3201,7 +3218,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3213,7 +3230,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3225,7 +3242,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3237,7 +3254,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3249,7 +3266,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3261,7 +3278,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3273,7 +3290,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3285,7 +3302,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3297,7 +3314,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3309,7 +3326,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3321,7 +3338,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3333,7 +3350,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3345,7 +3362,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3357,7 +3374,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3369,7 +3386,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "d99b79d2-0a6f-4f46-ad8b-260b6e17f982",
@@ -3381,7 +3398,7 @@
        "C7"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "config"
      },
      {
       "rule_id": "5bed80b6-b3e8-428e-a3ae-d3c757589e41",
@@ -3393,7 +3410,7 @@
        "C8"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "5bed80b6-b3e8-428e-a3ae-d3c757589e41",
@@ -3405,7 +3422,7 @@
        "C8"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "5bed80b6-b3e8-428e-a3ae-d3c757589e41",
@@ -3417,7 +3434,7 @@
        "C8"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "5bed80b6-b3e8-428e-a3ae-d3c757589e41",
@@ -3429,7 +3446,7 @@
        "C8"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "614cf376-6651-47c4-9dcc-6b9527f749f4",
@@ -3453,7 +3470,7 @@
        "C6"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "0dba975d-a193-4ed1-a067-424df57570d1",
@@ -3465,7 +3482,7 @@
        "C6"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "ed74fe75-7594-4b4b-ae38-e38e3fd2eb23",
@@ -3477,7 +3494,7 @@
        "C6"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "ed74fe75-7594-4b4b-ae38-e38e3fd2eb23",
@@ -3489,7 +3506,7 @@
        "C6"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "ed74fe75-7594-4b4b-ae38-e38e3fd2eb23",
@@ -3501,7 +3518,7 @@
        "C6"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "ed74fe75-7594-4b4b-ae38-e38e3fd2eb23",
@@ -3513,7 +3530,7 @@
        "C6"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "c7e91a02-d771-4a6d-a700-42587e0b1095",
@@ -3525,7 +3542,7 @@
        "C6"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "c7e91a02-d771-4a6d-a700-42587e0b1095",
@@ -3537,7 +3554,7 @@
        "C6"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "c7e91a02-d771-4a6d-a700-42587e0b1095",
@@ -3549,7 +3566,7 @@
        "C6"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "c7e91a02-d771-4a6d-a700-42587e0b1095",
@@ -3561,7 +3578,7 @@
        "C6"
       ],
       "explained_by_all": true,
-      "label": "spec-gap"
+      "label": "backend-bug"
      },
      {
       "rule_id": "5ef9853e-4d0e-4a70-846f-a9ca37d876da",
@@ -3934,9 +3951,8 @@
      "C9": 14
     },
     "by_label": {
-     "config": 27,
-     "backend-bug": 17,
-     "spec-gap": 38
+     "config": 51,
+     "backend-bug": 31
     }
    }
   },

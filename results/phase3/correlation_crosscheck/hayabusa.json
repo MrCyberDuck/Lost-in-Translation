@@ -1,0 +1,361 @@
+{
+ "target": "hayabusa",
+ "versions": {
+  "hayabusa": "Hayabusa v4.4.0 - CODE BLUE Release"
+ },
+ "cases": {
+  "C01": {
+   "c1": {
+    "groups": [
+     [
+      "bob"
+     ]
+    ],
+    "alerts": 1
+   }
+  },
+  "C02": {
+   "c1": {
+    "groups": [
+     [
+      "bob"
+     ]
+    ],
+    "alerts": 1
+   }
+  },
+  "C03": {
+   "c1": {
+    "groups": [
+     [
+      "bob"
+     ]
+    ],
+    "alerts": 1
+   }
+  },
+  "C04": {
+   "c1": {
+    "groups": [],
+    "alerts": 0
+   }
+  },
+  "C05": {
+   "c1": {
+    "groups": [],
+    "alerts": 0
+   }
+  },
+  "C06": {
+   "c1": {
+    "groups": [],
+    "alerts": 0
+   }
+  },
+  "C07": {
+   "error": "Hayabusa: 1 correlation rule(s) not parsed, 2 rules loaded",
+   "leaked_base_alerts": [
+    "failed"
+   ]
+  },
+  "C08": {
+   "c1": {
+    "groups": [
+     [
+      "bob"
+     ],
+     [
+      "eve"
+     ]
+    ],
+    "alerts": 2
+   }
+  },
+  "C09": {
+   "error": "Hayabusa: 1 correlation rule(s) not parsed, 2 rules loaded",
+   "leaked_base_alerts": []
+  },
+  "C10": {
+   "c1": {
+    "groups": [
+     [
+      "h"
+     ]
+    ],
+    "alerts": 1
+   }
+  },
+  "C11": {
+   "c1": {
+    "groups": [
+     [
+      "h"
+     ]
+    ],
+    "alerts": 1
+   }
+  },
+  "C12": {
+   "c1": {
+    "groups": [
+     [
+      "h"
+     ]
+    ],
+    "alerts": 1
+   }
+  },
+  "C13": {
+   "c1": {
+    "groups": [
+     [
+      "bob"
+     ]
+    ],
+    "alerts": 1
+   }
+  },
+  "C14": {
+   "c1": {
+    "groups": [
+     [
+      "eve"
+     ]
+    ],
+    "alerts": 1
+   }
+  },
+  "C15": {
+   "c1": {
+    "groups": [
+     [
+      "bob"
+     ]
+    ],
+    "alerts": 1
+   }
+  },
+  "C16": {
+   "c1": {
+    "groups": [
+     [
+      "eve"
+     ]
+    ],
+    "alerts": 1
+   }
+  },
+  "C17": {
+   "c1": {
+    "groups": [],
+    "alerts": 0
+   }
+  },
+  "C18": {
+   "c1": {
+    "groups": [
+     [
+      "bob"
+     ]
+    ],
+    "alerts": 1
+   }
+  },
+  "C19": {
+   "error": "Hayabusa: 1 correlation rule(s) not parsed, 3 rules loaded",
+   "leaked_base_alerts": []
+  },
+  "C20": {
+   "c1": {
+    "groups": [
+     [
+      "null"
+     ]
+    ],
+    "alerts": 1
+   }
+  },
+  "C21": {
+   "error": "Hayabusa: 1 correlation rule(s) not parsed, 2 rules loaded",
+   "leaked_base_alerts": [
+    "failed"
+   ]
+  },
+  "C22": {
+   "error": "Hayabusa: 1 correlation rule(s) not parsed, 2 rules loaded",
+   "leaked_base_alerts": [
+    "failed"
+   ]
+  },
+  "C23": {
+   "error": "Hayabusa: 1 correlation rule(s) not parsed, 2 rules loaded",
+   "leaked_base_alerts": [
+    "failed"
+   ]
+  },
+  "C24": {
+   "degraded": "Hayabusa: the filter is not parsed and the rules run without it",
+   "rule_matches": [
+    "C24-e1",
+    "C24-e2"
+   ]
+  },
+  "C25": {
+   "degraded": "Hayabusa: the filter is not parsed and the rules run without it",
+   "c1": {
+    "groups": [
+     [
+      "h"
+     ]
+    ],
+    "alerts": 1
+   }
+  },
+  "C26": {
+   "error": "Hayabusa: 1 correlation rule(s) not parsed, 2 rules loaded",
+   "leaked_base_alerts": []
+  },
+  "C27": {
+   "c1": {
+    "groups": [
+     [
+      "bob"
+     ]
+    ],
+    "alerts": 2
+   }
+  },
+  "C28": {
+   "base_emitted": false
+  },
+  "C29": {
+   "degraded": "Hayabusa: the filter is not parsed and the rules run without it",
+   "c1": {
+    "groups": [
+     [
+      "h"
+     ]
+    ],
+    "alerts": 1
+   }
+  },
+  "C30": {
+   "c1": {
+    "groups": [
+     [
+      "null"
+     ]
+    ],
+    "alerts": 1
+   }
+  },
+  "C31": {
+   "c1": {
+    "groups": [
+     [
+      "bob"
+     ]
+    ],
+    "alerts": 1
+   }
+  },
+  "C32": {
+   "c1": {
+    "groups": [
+     [
+      "bob"
+     ]
+    ],
+    "alerts": 1
+   }
+  },
+  "C33": {
+   "c1": {
+    "groups": [
+     [
+      "h"
+     ]
+    ],
+    "alerts": 1
+   }
+  },
+  "C34": {
+   "c2": {
+    "groups": [],
+    "alerts": 0
+   }
+  },
+  "C35": {
+   "error": "Hayabusa: 1 correlation rule(s) not parsed, 3 rules loaded",
+   "leaked_base_alerts": []
+  },
+  "C36": {
+   "c2": {
+    "groups": [],
+    "alerts": 0
+   }
+  },
+  "C37": {
+   "c1": {
+    "groups": [],
+    "alerts": 0
+   }
+  },
+  "C38": {
+   "error": "Hayabusa: 1 correlation rule(s) not parsed, 3 rules loaded",
+   "leaked_base_alerts": [
+    "failed",
+    "failed2"
+   ]
+  },
+  "C39": {
+   "c1": {
+    "groups": [
+     [
+      "bob"
+     ]
+    ],
+    "alerts": 1
+   }
+  },
+  "C40": {
+   "error": "Hayabusa: 1 correlation rule(s) not parsed, 2 rules loaded",
+   "leaked_base_alerts": [
+    "failed"
+   ]
+  },
+  "C41": {
+   "c1": {
+    "groups": [],
+    "alerts": 0
+   }
+  },
+  "C42": {
+   "degraded": "Hayabusa: the filter is not parsed and the rules run without it",
+   "rule_matches": [
+    "C42-e1",
+    "C42-e2"
+   ]
+  },
+  "C43": {
+   "degraded": "Hayabusa: the filter is not parsed and the rules run without it",
+   "rule_matches": [
+    "C43-e1",
+    "C43-e2"
+   ]
+  },
+  "C44": {
+   "base_emitted": false
+  },
+  "C45": {
+   "c1": {
+    "groups": [
+     [
+      "bob"
+     ]
+    ],
+    "alerts": 1
+   }
+  }
+ }
+}

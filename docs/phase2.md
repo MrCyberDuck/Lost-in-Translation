@@ -145,7 +145,7 @@ Run time on the 4-core cloud machine: evaluator 495 s for 2,295 rules times 37,3
 A disagreement is only explained if we can say *which* behaviour causes it and show that this behaviour reproduces the engine's answer. `harness/explain.py` does this. Each engine's departures from the spec ("mechanisms", below) were found from its documentation, its mapping and config files, its source code and probe rules. Each mechanism is implemented as an option of the evaluator (a `Semantics` flag or an event transformation). Then, for every disagreeing (rule, event) pair:
 
 1. With all of the engine's mechanisms on, the evaluator must give the engine's answer. **It does for all 343 pairs: the residual is zero.**
-2. Each mechanism is tried alone (then in pairs) to find which one flips the spec answer to the engine's answer. The triage label follows from the clauses that mechanism touches (`harness/triage.py`): any ambiguous clause gives `spec-gap`; mapping or config alone gives `config`; otherwise `backend-bug` with cause `engine`.
+2. Each mechanism is tried alone (then in pairs) to find which one flips the spec answer to the engine's answer. The triage label follows from the clauses that mechanism touches (`harness/triage.py`): an ambiguous clause under one of whose readings the engine is right gives `spec-gap`; mapping or config alone gives `config`; otherwise `backend-bug` with cause `engine`.
 
 Every mechanism is explained with a real example in [section 5](#5-mechanism-reference).
 
@@ -168,13 +168,13 @@ Pair counts below are (rule, event) pairs, given as regression neutral / product
 | --- | --- | --- | --- | --- | --- |
 | C4 | A test on a missing field is "unknown", and `not unknown` stays unknown, so `selection and not filter` **fails** when the filter's field is absent. AND returns the first non-true value left to right; OR is true if any branch is true, else false if any is false, else unknown. | S25 | 8 / 0 | 88 / 16 | `backend-bug` (engine); S25 confirmed `clear` (Nik, 2026-11-23) |
 | C5 | `field: null` matches only an explicit JSON null, not a missing field | S24 | 2 / 0 | 118 / 0 | `spec-gap` |
-| C6 | Rule string `'true'` does not match a boolean event value | S11, S39 | 0 / 0 | 10 / 10 | `spec-gap` |
-| C8 | Rule number `3389` does not match string event value `'3389'` | S11 | 0 / 0 | 4 / 4 | `spec-gap` |
+| C6 | Rule string `'true'` does not match a boolean event value | S11, S39 | 0 / 0 | 10 / 10 | `backend-bug` (engine) |
+| C8 | Rule number `3389` does not match string event value `'3389'` | S11 | 0 / 0 | 4 / 4 | `backend-bug` (engine) |
 | C1 | Only fields listed in the mapping file are reachable (`SourceUser`, `IpPort`, `FilterOrigin` and others are missing) | (config) | 0 / 0 | 13 / 13 | `config` |
 | C1&C4 | An unmapped field inside a negated filter (LSASS-dump rule in regression, Kerberos relay over LDAP in attack samples) | S25 | 1 / 1 | 1 / 1 | `backend-bug` |
 | C1+C2 | RedSun rule: field `Source Name` is neither mapped nor space-stripped | S85 | 1 / 1 | 0 / 0 | `config` |
 | C1+C3 | WMI rule on a `<UserData>` field, which is neither mapped nor reachable | S86 | 1 / 1 | 0 / 0 | `spec-gap` |
-| C7 | Production logsource preconditions by Provider and EventID: `service: security` requires provider Security-Auditing, so 1102 "audit log cleared" (written by provider Eventlog) never fires | S37 | 0 / 0 | 0 / 24 | `spec-gap` |
+| C7 | Production logsource preconditions by Provider and EventID: `service: security` requires provider Security-Auditing, so 1102 "audit log cleared" (written by provider Eventlog) never fires | S37 | 0 / 0 | 0 / 24 | `config` |
 | C9 | Production: rules listed by title under `exclusions` in the mapping never run ("WMI Event Subscription") | (config) | 0 / 0 | 0 / 14 | `config` |
 | (load) | Rules with `cidr`, `fieldref` or keyword lists are rejected at load time | S10, S17, S20 | 29 rules | 29 rules | not compared |
 
@@ -198,7 +198,7 @@ Full per-pair tables: `results/phase2/<dataset>/explained.json`; per-rule match 
 1. **The oracle is trustworthy for Phase 3.** Two independent Sigma engines with their own parsers agree with it on 99.4% to 100% of rules on real attack data, and every difference is a known, reproducible engine behaviour. A pySigma parsing bug would have shown up as evaluator-vs-native disagreement; none did.
 2. **The clause list was still incomplete, and the cross-check is how it gets completed.** S85 to S87 came from real data, not from reading the spec. Expect more of these when Phase 3 adds synthetic events.
 3. **Missing-field negation is the biggest real-world gap so far.** Chainsaw drops true positives whenever a filter field is absent: 16 LSASS-dump detections (`proc_access_win_lsass_memdump`) on the attack samples in production config. ES|QL documents the same pattern: `field != "value"` also excludes events where the field is null ([ES|QL WHERE](https://www.elastic.co/docs/reference/query-languages/esql/commands/where)). This makes it a priority area for Phase 3 (taxonomy T4.3, negation over a missing field).
-4. **`null` versus missing (S24) and string-versus-typed values (S11, S39) are the largest spec gaps** in volume (118 and 14 pairs in the neutral config). They are reported as spec clarifications, not bugs, as decided.
+4. **`null` versus missing (S24) is the largest spec gap** in volume (118 pairs in the neutral config). It is reported as a spec clarification, not a bug, as decided. Chainsaw's typed comparisons (C6, C8, 14 pairs) were first counted as spec gaps too, until Nik made S11 clear on 28 Nov 2026: every value is matched as a string.
 5. **A spec-faithful engine can miss what the rule author meant.** The Pass-the-Hash rule expects `NtLmSsp`, but Windows writes `NtLmSsp ` with a trailing space. Hayabusa matches only because it trims values (H1, against the spec); the evaluator and Chainsaw miss it. This is a rule-quality finding for SigmaHQ as well as an engine deviation.
 
 ### Decision: S25 stays `clear` (Nik, 2026-11-23)
@@ -223,15 +223,17 @@ Counting disagreements isn't enough. For a paper and for upstream reports, every
 
 1. **Evidence of the cause.** A mechanism explains a disagreement only if switching it on in the evaluator reproduces the engine's exact answer for that (rule, event) pair. It isn't enough that the cause looks plausible. With all mechanisms on, the evaluator reproduces both engines on every one of the 343 pairs.
 2. **A check on the oracle.** A disagreement that no mechanism can reproduce points to a bug in the evaluator itself. That's how the two `oracle-bug`s in section 3 were found.
-3. **The label.** Each mechanism names the spec clause(s) the engine departs from. The clause's status in [spec-clauses.md](spec-clauses.md) then sets the label, using the rule Nik signed off (decision 5 in `docs/plan.md`):
+3. **The label.** Each mechanism names the spec clause(s) the engine departs from. The clause's status and readings in [spec-clauses.md](spec-clauses.md) then set the label, using the rule Nik signed off (decision 5 in `docs/plan.md`, made precise on 27 and 28 Nov 2026):
 
 | The mechanism departs from... | Label | Meaning |
 | --- | --- | --- |
-| an `ambiguous` or `contradictory` clause | `spec-gap` | The spec allows more than one reading. Reported as a proposed spec clarification, not as an engine bug. |
+| a `silent` clause | `spec-gap` | The spec has no text on the question, so nothing makes the engine wrong. Reported as a proposed spec clarification. |
+| an `ambiguous` or `contradictory` clause, and the engine follows one of its readings | `spec-gap` | The spec's text allows more than one reading. Reported as a proposed spec clarification, not as an engine bug. |
+| an `ambiguous` or `contradictory` clause, but the engine is wrong under every reading | `config` or `backend-bug`, as for a clear clause | The open clause does not excuse the result. The mechanism records what it breaks (`breaks`). |
 | a `clear` clause, through engine logic | `backend-bug` | The engine gets a clearly specified behaviour wrong. |
 | no clause: only the engine's mapping, config or ingest | `config` | The setup that ships with the engine, not the matching logic. It can usually be fixed by configuration. |
 
-The rules are applied in this order, which is the cautious one (`label()` in `harness/explain.py`). If any mechanism that explains the pair touches an open clause, the pair is a `spec-gap`. Otherwise, if one explanation uses only config mechanisms, it is `config`. Otherwise it is a `backend-bug`. `A&B` means both mechanisms are needed together; `A+B` means either one alone explains the pair. For example, `C1&C4` is a `backend-bug` (C4 is engine logic against a clear clause), and `C1+C3` is a `spec-gap` (C3 touches the ambiguous S86).
+The rules are applied in this order, which is the cautious one (`label()` in `harness/explain.py`). If any mechanism that explains the pair depends on an open clause and breaks neither a clear clause nor every reading of an open one, the pair is a `spec-gap`. Otherwise, if one explanation uses only config mechanisms, it is `config`. Otherwise it is a `backend-bug`. `A&B` means both mechanisms are needed together; `A+B` means either one alone explains the pair. For example, `C1&C4` is a `backend-bug` (C4 is engine logic against a clear clause), and `C1+C3` is a `spec-gap` (C3 turns on the silent S86).
 
 The taxonomy area of each mechanism is listed in [taxonomy.md](taxonomy.md), section 7.
 
@@ -241,17 +243,17 @@ The taxonomy area of each mechanism is listed in [taxonomy.md](taxonomy.md), sec
 | --- | --- | --- | --- | --- | --- |
 | C1 | Chainsaw | Only fields listed in the mapping file can be matched | none | | `config` |
 | C2 | Chainsaw | Spaces in event field names are not stripped | S85 | clear | `config` (the mapping can rename) |
-| C3 | Chainsaw | `<UserData>` fields can't be reached | S86 | ambiguous | `spec-gap` |
+| C3 | Chainsaw | `<UserData>` fields can't be reached | S86 | silent | `spec-gap` |
 | C4 | Chainsaw | A missing field makes `not` "unknown", so the rule fails | S25 | clear | `backend-bug` |
-| C5 | Chainsaw | `field: null` matches only an explicit null, not a missing field | S24 | ambiguous | `spec-gap` |
-| C6 | Chainsaw | Rule string `'true'` doesn't match boolean `true` | S11, S39 | ambiguous, contradictory | `spec-gap` |
-| C7 | Chainsaw | Its own logsource-to-event table (production only) | S37 | ambiguous for non-Sysmon sources | `spec-gap` |
-| C8 | Chainsaw | Rule number `3389` doesn't match string `'3389'` | S11 | ambiguous | `spec-gap` |
+| C5 | Chainsaw | `field: null` matches only an explicit null, not a missing field | S24 | ambiguous, left to the SIEM; follows S24.b | `spec-gap` |
+| C6 | Chainsaw | Rule string `'true'` doesn't match boolean `true` | S11, S39 | clear, ambiguous; breaks S11 | `backend-bug` |
+| C7 | Chainsaw | Its own logsource-to-event table (production only) | S37 | clear; breaks it | `config` |
+| C8 | Chainsaw | Rule number `3389` doesn't match string `'3389'` | S11 | clear | `backend-bug` |
 | C9 | Chainsaw | Rules excluded by title in the mapping file (production only) | none | | `config` |
 | H1 | Hayabusa | Trims spaces from event values | S3, S45 | clear | `backend-bug` |
 | H2 | Hayabusa | Skips events without a `Channel` | S36 | (neutral config only) | `config` |
 | H3 | Hayabusa | Raw SigmaHQ rules: spaces in field names not stripped | S85 | clear | `config` (its converter fixes it) |
-| H4 | Hayabusa | Splits PowerShell classic `Data` text into fields | S87 | ambiguous | `spec-gap` |
+| H4 | Hayabusa | Splits PowerShell classic `Data` text into fields | S87 | silent | `spec-gap` |
 
 ### Each mechanism, with a real example
 
@@ -291,22 +293,22 @@ Each example is a (rule, event) pair from our results. "Spec" is the evaluator's
 - **Example:** `registry_set_taskcache_entry` has `filter_main_null: Details: null`, run on a Sysmon 12 `DeleteValue` event under `...\Schedule\TaskCache\Tree\MaliciousTask\Index`, which has no `Details` field. Spec: the null filter matches, so no alert. Chainsaw: the filter doesn't match, so it alerts. Note the direction: here Chainsaw fires and the spec doesn't.
 - **Volume note:** 114 of the 118 attack-sample pairs are `image_load_susp_unsigned_dll` firing on non-image-load events, which have no `Signed` field. They disappear once logsource is applied.
 
-#### C6: string `'true'` vs boolean `true` (`spec-gap`)
+#### C6: string `'true'` vs boolean `true` (`backend-bug`)
 
 - **What Chainsaw does:** compares by type. The rule's string `'true'` doesn't equal the event's boolean `true`.
-- **Spec:** S11 (ambiguous) and S39 (contradictory). YAML types the value, but the spec also says "all values are treated as strings". Our reading compares as strings.
+- **Spec:** S11 (clear). "All values are treated as case-insensitive strings" (rules spec, line 361), so the event's `true` and the rule's `'true'` are the same string. The rule's value is quoted, so S39 (which string an unquoted scalar becomes) does not arise.
 - **Example:** `net_connection_win_certutil_initiated_connection` (`Initiated: 'true'`) on `panache_sysmon_vs_EDRTestingScript.evtx#4981`, where `certutil.exe` connects to port 443 with `Initiated: true` (boolean). Spec: match. Chainsaw: no match.
 
-#### C7: Chainsaw's own logsource table (`spec-gap`, production only)
+#### C7: Chainsaw's own logsource table (`config`, production only)
 
 - **What Chainsaw does:** in production, a rule only runs on events that pass Chainsaw's preconditions for its logsource. `service: security` requires provider `Microsoft-Windows-Security-Auditing`, and categories it doesn't list run on every event.
-- **Spec:** S37 (ambiguous for non-Sysmon sources). The taxonomy appendix maps categories and services to Channel and EventID, not to a Provider.
+- **Spec:** S37 (clear). The taxonomy appendix maps categories and services to Channel and EventID, not to a Provider, so Chainsaw's provider precondition breaks it, and the label is `config`: the precondition is in Chainsaw's mapping file. Its other part, accepting Security 4688 for `process_creation`, goes beyond the appendix table too, but it explains no pair here.
 - **Example:** `win_security_audit_log_cleared` (`EventID: 1102`, `Provider_Name: Microsoft-Windows-Eventlog`) on `DE_RDP_Tunnel_5156.evtx#227693`, a real 1102 "audit log cleared" event in the Security channel. Windows writes 1102 under provider `Microsoft-Windows-Eventlog`, so Chainsaw's precondition (`Security-Auditing`) never lets it through. Spec: match. Chainsaw: no match, on all 24 such events. The rule itself names the right provider, so Chainsaw's table is stricter than the rule.
 
-#### C8: number vs numeric string (`spec-gap`)
+#### C8: number vs numeric string (`backend-bug`)
 
 - **What Chainsaw does:** the rule's integer `3389` doesn't equal the event's string `"3389"`.
-- **Spec:** S11 (ambiguous). Our reading compares as strings.
+- **Spec:** S11 (clear). Line 426 allows a value to be written as "a string or integer value", and line 361 says all values are treated as strings when matched; no line says an integer is compared by type.
 - **Example:** `win_security_rdp_reverse_tunnel` (`DestPort: 3389`, `SourceAddress: '127.*'`) on `DE_RDP_Tunnel_5156.evtx#227727`, where `plink.exe` connects from 127.0.0.1 to 127.0.0.2:3389. Security 5156 writes ports as strings. Spec: match. Chainsaw: no match.
 
 #### C9: rules excluded by title (`config`, production only)
@@ -335,5 +337,5 @@ Each example is a (rule, event) pair from our results. "Spec" is the evaluator's
 #### H4: PowerShell classic `Data` is split into fields (`spec-gap`, neutral only)
 
 - **What Hayabusa does:** for PowerShell classic events 400, 403, 600 and 800, it splits the `Key=Value` lines inside the unnamed `Data` text into fields such as `CommandLine` and `HostApplication`. This is ported from Hayabusa's `src/detections/field_extract.rs`.
-- **Spec:** S87 (ambiguous). The spec doesn't describe unnamed `<Data>`. Our reading makes it one multi-valued field `Data` and doesn't parse its contents.
+- **Spec:** S87 (silent). The spec doesn't describe unnamed `<Data>` at all. Our reference choice makes it one multi-valued field `Data` and doesn't parse its contents; Hayabusa's parsing of the `Key=Value` lines is another answer to the same open question. Nothing in the spec makes either one wrong, so the label is `spec-gap`. It shows only in the neutral config, where a `process_creation` rule also runs on PowerShell events.
 - **Example:** `proc_creation_win_powershell_token_obfuscation` (`CommandLine|re: ...`) on `exec_emotet_ps_800_get-item.evtx#789`, an Emotet PowerShell 800 event with an obfuscated command line inside `Data`. Spec: no `CommandLine` field, so no match. Hayabusa: match, on the extracted `CommandLine`.

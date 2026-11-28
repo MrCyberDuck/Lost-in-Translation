@@ -1,0 +1,2691 @@
+{
+ "summary": {
+  "matcher": {
+   "agree": 21,
+   "differ": 19,
+   "degraded": 0,
+   "refused": 1,
+   "crash": 2,
+   "n/a": 2
+  },
+  "zircolite": {
+   "agree": 37,
+   "differ": 6,
+   "degraded": 0,
+   "refused": 2,
+   "crash": 0,
+   "n/a": 0
+  },
+  "hayabusa": {
+   "agree": 16,
+   "differ": 15,
+   "degraded": 5,
+   "refused": 9,
+   "crash": 0,
+   "n/a": 0
+  }
+ },
+ "cases": [
+  {
+   "case": "C01",
+   "clauses": [
+    "S31"
+   ],
+   "depends": [
+    "S31"
+   ],
+   "what": "event_count: 3 failures for bob, 2 for eve, within 5 minutes",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C02",
+   "clauses": [
+    "S33"
+   ],
+   "depends": [
+    "S33"
+   ],
+   "what": "event_count: a burst at 04:00, 05:00, 06:00 straddles a 5-minute boundary",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C03",
+   "clauses": [
+    "S91"
+   ],
+   "depends": [
+    "S91"
+   ],
+   "what": "event_count: first and last event exactly 5 minutes apart",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C04",
+   "clauses": [
+    "S33"
+   ],
+   "depends": [
+    "S31",
+    "S33"
+   ],
+   "what": "event_count: first and last event 5 minutes and 1 second apart",
+   "evaluator": {
+    "c1": {
+     "groups": [],
+     "alerts": 0
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   }
+  },
+  {
+   "case": "C05",
+   "clauses": [
+    "S32"
+   ],
+   "depends": [
+    "S31",
+    "S32"
+   ],
+   "what": "event_count: the third event has no User field",
+   "evaluator": {
+    "c1": {
+     "groups": [],
+     "alerts": 0
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   }
+  },
+  {
+   "case": "C06",
+   "clauses": [
+    "S90"
+   ],
+   "depends": [
+    "S90"
+   ],
+   "what": "event_count: User is Bob, BOB and bob",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S90"
+     ]
+    },
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S90"
+     ]
+    },
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   }
+  },
+  {
+   "case": "C07",
+   "clauses": [
+    "S71"
+   ],
+   "depends": [
+    "S71"
+   ],
+   "what": "event_count without group-by: 3 events of 3 users",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      []
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       []
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       []
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "refused",
+    "label": null,
+    "result": {
+     "error": "Hayabusa: 1 correlation rule(s) not parsed, 2 rules loaded",
+     "leaked_base_alerts": [
+      "failed"
+     ]
+    }
+   }
+  },
+  {
+   "case": "C08",
+   "clauses": [
+    "S34"
+   ],
+   "depends": [
+    "S34",
+    "S33",
+    "S96"
+   ],
+   "what": "event_count range gt 1, lte 2: bob has 2 events, eve 3 at the same second",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "refused",
+    "label": null,
+    "result": {
+     "error": "SigmaCorrelationConditionError: Sigma correlation condition must have exactly one condition item"
+    }
+   },
+   "zircolite": {
+    "verdict": "refused",
+    "label": null,
+    "result": {
+     "error": "exit 1, no output: [-] Cannot load <work>/rules/C08.yml: Sigma correlation condition must have exactly one condition item in"
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "backend-bug",
+     "cause": "engine",
+     "breaks": {
+      "S34": [
+       "S34.a",
+       "S34.b"
+      ]
+     }
+    },
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ],
+       [
+        "eve"
+       ]
+      ],
+      "alerts": 2
+     }
+    }
+   }
+  },
+  {
+   "case": "C09",
+   "clauses": [
+    "S34"
+   ],
+   "depends": [
+    "S34"
+   ],
+   "what": "event_count neq 1: bob has 2 events at one second, eve 1",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "refused",
+    "label": null,
+    "result": {
+     "error": "Hayabusa: 1 correlation rule(s) not parsed, 2 rules loaded",
+     "leaked_base_alerts": []
+    }
+   }
+  },
+  {
+   "case": "C10",
+   "clauses": [
+    "S72",
+    "S90"
+   ],
+   "depends": [
+    "S72",
+    "S90"
+   ],
+   "what": "value_count of User per Host, gte 3: Admin, admin, root",
+   "evaluator": {
+    "c1": {
+     "groups": [],
+     "alerts": 0
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S72",
+      "S90"
+     ]
+    },
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "h"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S72",
+      "S90"
+     ]
+    },
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "h"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C11",
+   "clauses": [
+    "S72"
+   ],
+   "depends": [
+    "S72"
+   ],
+   "what": "value_count of User per Host, gte 2: one event has no User",
+   "evaluator": {
+    "c1": {
+     "groups": [],
+     "alerts": 0
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S72"
+     ]
+    },
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "h"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C12",
+   "clauses": [
+    "S73"
+   ],
+   "depends": [
+    "S73",
+    "S33"
+   ],
+   "what": "value_count of [User, Src], gte 3: 2 users, 2 sources, 3 pairs",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "h"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "crash",
+    "label": {
+     "verdict": "backend-bug",
+     "cause": "engine",
+     "crashed": true
+    },
+    "result": {
+     "crash": "TypeError: unhashable type: 'list'"
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "h"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "h"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C13",
+   "clauses": [
+    "S31"
+   ],
+   "depends": [
+    "S31"
+   ],
+   "what": "temporal: bob has a failure and a success, eve only failures",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C14",
+   "clauses": [
+    "S35"
+   ],
+   "depends": [
+    "S35"
+   ],
+   "what": "temporal_ordered failed then success: eve in order, bob reversed",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "eve"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "eve"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "eve"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "eve"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C15",
+   "clauses": [
+    "S35"
+   ],
+   "depends": [
+    "S35"
+   ],
+   "what": "temporal_ordered failed then success at the same second, failed first in the file",
+   "evaluator": {
+    "c1": {
+     "groups": [],
+     "alerts": 0
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S35"
+     ]
+    },
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S35"
+     ]
+    },
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C16",
+   "clauses": [
+    "S92"
+   ],
+   "depends": [
+    "S92"
+   ],
+   "what": "temporal over 3 rules without a condition: bob has 2 of them, eve all 3",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "eve"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "eve"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "eve"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "eve"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C17",
+   "clauses": [
+    "S31",
+    "S92"
+   ],
+   "depends": [
+    "S92"
+   ],
+   "what": "temporal over 3 rules with gte 2: bob has 2 kinds, eve 2 events of one kind",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S92"
+     ]
+    },
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S92"
+     ]
+    },
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   }
+  },
+  {
+   "case": "C18",
+   "clauses": [
+    "S76"
+   ],
+   "depends": [
+    "S76",
+    "S33"
+   ],
+   "what": "event_count referencing the base rule by id",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "backend-bug",
+     "cause": "engine",
+     "breaks": {
+      "S76": "clear"
+     }
+    },
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C19",
+   "clauses": [
+    "S76"
+   ],
+   "depends": [
+    "S76",
+    "S94",
+    "S33"
+   ],
+   "what": "chain: inner gte 2 in 5m per User, outer gte 2 inner matches in 1h; bob has 2 bursts of 2, eve 1",
+   "evaluator": {
+    "c2": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "backend-bug",
+     "cause": "engine",
+     "breaks": {
+      "S76": "clear"
+     }
+    },
+    "result": {
+     "c2": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c2": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "refused",
+    "label": null,
+    "result": {
+     "error": "Hayabusa: 1 correlation rule(s) not parsed, 3 rules loaded",
+     "leaked_base_alerts": []
+    }
+   }
+  },
+  {
+   "case": "C20",
+   "clauses": [
+    "S75"
+   ],
+   "depends": [
+    "S75",
+    "S92",
+    "S33",
+    "S32"
+   ],
+   "what": "temporal with aliases: ip is DestIp in conn_in and SrcIp in conn_out",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "10.0.0.1"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "backend-bug",
+     "cause": "engine",
+     "breaks": {
+      "S75": "clear"
+     }
+    },
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "<missing>"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "10.0.0.1"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "backend-bug",
+     "cause": "engine",
+     "breaks": {
+      "S75": "clear"
+     }
+    },
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "null"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C21",
+   "clauses": [
+    "S70"
+   ],
+   "depends": [
+    "S70"
+   ],
+   "what": "value_sum of Bytes per Host, gte 25: 10 + 10 + 10",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "h"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "h"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "h"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "refused",
+    "label": null,
+    "result": {
+     "error": "Hayabusa: 1 correlation rule(s) not parsed, 2 rules loaded",
+     "leaked_base_alerts": [
+      "failed"
+     ]
+    }
+   }
+  },
+  {
+   "case": "C22",
+   "clauses": [
+    "S70"
+   ],
+   "depends": [
+    "S70"
+   ],
+   "what": "value_avg of Bytes per Host: gte 9 fires for h (avg 10), not for g (avg 5)",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "h"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "h"
+       ]
+      ],
+      "alerts": 3
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "h"
+       ]
+      ],
+      "alerts": 3
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "refused",
+    "label": null,
+    "result": {
+     "error": "Hayabusa: 1 correlation rule(s) not parsed, 2 rules loaded",
+     "leaked_base_alerts": [
+      "failed"
+     ]
+    }
+   }
+  },
+  {
+   "case": "C23",
+   "clauses": [
+    "S74"
+   ],
+   "depends": [
+    "S74"
+   ],
+   "what": "value_percentile of Image per Host, lte 10, as in the spec example: one rare image among 11 events",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "h"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S74"
+     ]
+    },
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "refused",
+    "label": null,
+    "result": {
+     "error": "exit 1, no output: [\u2713] Converted 0 rules (1 failed)"
+    }
+   },
+   "hayabusa": {
+    "verdict": "refused",
+    "label": null,
+    "result": {
+     "error": "Hayabusa: 1 correlation rule(s) not parsed, 2 rules loaded",
+     "leaked_base_alerts": [
+      "failed"
+     ]
+    }
+   }
+  },
+  {
+   "case": "C24",
+   "clauses": [
+    "S81"
+   ],
+   "depends": [
+    "S81",
+    "S98"
+   ],
+   "what": "filter `User|startswith: adm_`, `condition: selection`; events adm_bob (e1), alice (e2)",
+   "evaluator": {
+    "rule_matches": [
+     "C24-e2"
+    ]
+   },
+   "matcher": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S81",
+      "S98"
+     ]
+    },
+    "result": {
+     "rule_matches": [
+      "C24-e1"
+     ]
+    }
+   },
+   "zircolite": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S81",
+      "S98"
+     ]
+    },
+    "result": {
+     "rule_matches": [
+      "C24-e1"
+     ]
+    }
+   },
+   "hayabusa": {
+    "verdict": "degraded",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S81",
+      "S98"
+     ]
+    },
+    "result": {
+     "degraded": "Hayabusa: the filter is not parsed and the rules run without it",
+     "rule_matches": [
+      "C24-e1",
+      "C24-e2"
+     ]
+    }
+   }
+  },
+  {
+   "case": "C25",
+   "clauses": [
+    "S89"
+   ],
+   "depends": [
+    "S89",
+    "S98"
+   ],
+   "what": "filter on the base rule of an event_count per Host, gte 3: one of 3 events is filtered",
+   "evaluator": {
+    "c1": {
+     "groups": [],
+     "alerts": 0
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "degraded",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S89",
+      "S98"
+     ]
+    },
+    "result": {
+     "degraded": "Hayabusa: the filter is not parsed and the rules run without it",
+     "c1": {
+      "groups": [
+       [
+        "h"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C26",
+   "clauses": [
+    "S80"
+   ],
+   "depends": [
+    "S80"
+   ],
+   "what": "timespan 5M (upper-case unit), events at 00:00, 30:00 and 59:00",
+   "evaluator": {
+    "error": "S80: timespan '5M' is not a number followed by s, m, h or d in lower case"
+   },
+   "matcher": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "backend-bug",
+     "cause": "engine"
+    },
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "backend-bug",
+     "cause": "converter"
+    },
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "error": "Hayabusa: 1 correlation rule(s) not parsed, 2 rules loaded",
+     "leaked_base_alerts": []
+    }
+   }
+  },
+  {
+   "case": "C27",
+   "clauses": [
+    "S93"
+   ],
+   "depends": [
+    "S31",
+    "S93"
+   ],
+   "what": "event_count gte 3: 6 events in 6 seconds, then 3 more 20 minutes later",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 2
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 5
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 5
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 2
+     }
+    }
+   }
+  },
+  {
+   "case": "C28",
+   "clauses": [
+    "S77"
+   ],
+   "depends": [
+    "S77"
+   ],
+   "what": "base rule referenced without generate: are its matches emitted",
+   "evaluator": {
+    "base_emitted": false
+   },
+   "matcher": {
+    "verdict": "n/a",
+    "label": null,
+    "result": {
+     "base_emitted": null,
+     "note": "library API: base-rule matches are always returned"
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "base_emitted": false
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "base_emitted": false
+    }
+   }
+  },
+  {
+   "case": "C29",
+   "clauses": [
+    "S81",
+    "S89"
+   ],
+   "depends": [
+    "S81",
+    "S89",
+    "S98"
+   ],
+   "what": "as C25 with gte 2: 2 events are left after the filter, 1 if the filter is ANDed in",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "h"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S81",
+      "S89",
+      "S98"
+     ]
+    },
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S81",
+      "S89",
+      "S98"
+     ]
+    },
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "degraded",
+    "label": null,
+    "result": {
+     "degraded": "Hayabusa: the filter is not parsed and the rules run without it",
+     "c1": {
+      "groups": [
+       [
+        "h"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C30",
+   "clauses": [
+    "S32"
+   ],
+   "depends": [
+    "S32"
+   ],
+   "what": "event_count gte 3: three events, none with the User field",
+   "evaluator": {
+    "c1": {
+     "groups": [],
+     "alerts": 0
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S32"
+     ]
+    },
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "<missing>"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S32"
+     ]
+    },
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "null"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C31",
+   "clauses": [
+    "S33"
+   ],
+   "depends": [
+    "S31",
+    "S33",
+    "S91",
+    "S92"
+   ],
+   "what": "temporal over 3 rules, 5m: success at 00:00, failed at 05:00, other at 10:00",
+   "evaluator": {
+    "c1": {
+     "groups": [],
+     "alerts": 0
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "backend-bug",
+     "cause": "engine",
+     "breaks": {
+      "S33": [
+       "S33.a",
+       "S33.b"
+      ]
+     }
+    },
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C32",
+   "clauses": [
+    "S35"
+   ],
+   "depends": [
+    "S35"
+   ],
+   "what": "as C15 with success first in the file",
+   "evaluator": {
+    "c1": {
+     "groups": [],
+     "alerts": 0
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S35"
+     ]
+    },
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C33",
+   "clauses": [
+    "S73"
+   ],
+   "depends": [
+    "S31",
+    "S73",
+    "S33"
+   ],
+   "what": "value_count of [User, Src], gte 3: 3 events with the same pair",
+   "evaluator": {
+    "c1": {
+     "groups": [],
+     "alerts": 0
+    }
+   },
+   "matcher": {
+    "verdict": "crash",
+    "label": {
+     "verdict": "backend-bug",
+     "cause": "engine",
+     "crashed": true
+    },
+    "result": {
+     "crash": "TypeError: unhashable type: 'list'"
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "backend-bug",
+     "cause": "engine",
+     "breaks": {
+      "S73": [
+       "S73.a",
+       "S73.b"
+      ]
+     }
+    },
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "h"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C34",
+   "clauses": [
+    "S94"
+   ],
+   "depends": [
+    "S94",
+    "S76"
+   ],
+   "what": "chain of the spec's shape: inner event_count per Host gte 2, outer temporal_ordered [inner, success] per User",
+   "evaluator": {
+    "c2": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "backend-bug",
+     "cause": "engine",
+     "breaks": {
+      "S76": "clear"
+     }
+    },
+    "result": {
+     "c2": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c2": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "backend-bug",
+     "cause": "engine",
+     "breaks": {
+      "S76": "clear"
+     }
+    },
+    "result": {
+     "c2": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   }
+  },
+  {
+   "case": "C35",
+   "clauses": [
+    "S94"
+   ],
+   "depends": [
+    "S94",
+    "S76"
+   ],
+   "what": "chain: inner gte 2 per User, outer gte 2 inner matches; eve has one burst of 3",
+   "evaluator": {
+    "c2": {
+     "groups": [
+      [
+       "eve"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "backend-bug",
+     "cause": "engine",
+     "breaks": {
+      "S76": "clear"
+     }
+    },
+    "result": {
+     "c2": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c2": {
+      "groups": [
+       [
+        "eve"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "refused",
+    "label": null,
+    "result": {
+     "error": "Hayabusa: 1 correlation rule(s) not parsed, 3 rules loaded",
+     "leaked_base_alerts": []
+    }
+   }
+  },
+  {
+   "case": "C36",
+   "clauses": [
+    "S94"
+   ],
+   "depends": [
+    "S94",
+    "S76"
+   ],
+   "what": "brute force then success: failures every 2 minutes 00:00 to 14:00, success at 15:00, outer timespan 2m",
+   "evaluator": {
+    "c2": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "backend-bug",
+     "cause": "engine",
+     "breaks": {
+      "S76": "clear"
+     }
+    },
+    "result": {
+     "c2": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c2": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S94"
+     ]
+    },
+    "result": {
+     "c2": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   }
+  },
+  {
+   "case": "C37",
+   "clauses": [
+    "S95"
+   ],
+   "depends": [
+    "S95"
+   ],
+   "what": "event_count over [failed, failed2] gte 2: one event matches both rules",
+   "evaluator": {
+    "c1": {
+     "groups": [],
+     "alerts": 0
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S95"
+     ]
+    },
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   }
+  },
+  {
+   "case": "C38",
+   "clauses": [
+    "S95"
+   ],
+   "depends": [
+    "S95"
+   ],
+   "what": "value_sum over [failed, failed2] gte 20: one event with Bytes 10 matches both rules",
+   "evaluator": {
+    "c1": {
+     "groups": [],
+     "alerts": 0
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S95"
+     ]
+    },
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "h"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "refused",
+    "label": null,
+    "result": {
+     "error": "Hayabusa: 1 correlation rule(s) not parsed, 3 rules loaded",
+     "leaked_base_alerts": [
+      "failed",
+      "failed2"
+     ]
+    }
+   }
+  },
+  {
+   "case": "C39",
+   "clauses": [
+    "S96"
+   ],
+   "depends": [
+    "S96"
+   ],
+   "what": "event_count eq 2: bob has 3 events at 00:00, 01:00, 02:00",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  },
+  {
+   "case": "C40",
+   "clauses": [
+    "S96"
+   ],
+   "depends": [
+    "S96"
+   ],
+   "what": "value_avg lt 100: Bytes 1000 at 00:00, 10 at 04:00 (a window with only the 10 exists)",
+   "evaluator": {
+    "c1": {
+     "groups": [],
+     "alerts": 0
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "refused",
+    "label": null,
+    "result": {
+     "error": "Hayabusa: 1 correlation rule(s) not parsed, 2 rules loaded",
+     "leaked_base_alerts": [
+      "failed"
+     ]
+    }
+   }
+  },
+  {
+   "case": "C41",
+   "clauses": [
+    "S97"
+   ],
+   "depends": [
+    "S97",
+    "S75"
+   ],
+   "what": "aliases list only conn_in; conn_out events have a field named ip",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "10.0.0.1"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "backend-bug",
+     "cause": "engine",
+     "breaks": {
+      "S75": "clear"
+     }
+    },
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "10.0.0.1"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "backend-bug",
+     "cause": "engine",
+     "breaks": {
+      "S75": "clear"
+     }
+    },
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   }
+  },
+  {
+   "case": "C42",
+   "clauses": [
+    "S82"
+   ],
+   "depends": [
+    "S82",
+    "S98"
+   ],
+   "what": "filter with logsource product: windows only, on a product: windows, service: security rule",
+   "evaluator": {
+    "rule_matches": [
+     "C42-e1",
+     "C42-e2"
+    ]
+   },
+   "matcher": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S82",
+      "S98"
+     ]
+    },
+    "result": {
+     "rule_matches": [
+      "C42-e1"
+     ]
+    }
+   },
+   "zircolite": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S82",
+      "S98"
+     ]
+    },
+    "result": {
+     "rule_matches": [
+      "C42-e1"
+     ]
+    }
+   },
+   "hayabusa": {
+    "verdict": "degraded",
+    "label": null,
+    "result": {
+     "degraded": "Hayabusa: the filter is not parsed and the rules run without it",
+     "rule_matches": [
+      "C42-e1",
+      "C42-e2"
+     ]
+    }
+   }
+  },
+  {
+   "case": "C43",
+   "clauses": [
+    "S83"
+   ],
+   "depends": [
+    "S83",
+    "S98"
+   ],
+   "what": "filter referencing a rule that does not exist",
+   "evaluator": {
+    "rule_matches": [
+     "C43-e1",
+     "C43-e2"
+    ]
+   },
+   "matcher": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "rule_matches": [
+      "C43-e1",
+      "C43-e2"
+     ]
+    }
+   },
+   "zircolite": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "rule_matches": [
+      "C43-e1",
+      "C43-e2"
+     ]
+    }
+   },
+   "hayabusa": {
+    "verdict": "degraded",
+    "label": null,
+    "result": {
+     "degraded": "Hayabusa: the filter is not parsed and the rules run without it",
+     "rule_matches": [
+      "C43-e1",
+      "C43-e2"
+     ]
+    }
+   }
+  },
+  {
+   "case": "C44",
+   "clauses": [
+    "S77"
+   ],
+   "depends": [
+    "S77"
+   ],
+   "what": "generate: true at the top level of the correlation rule, as the JSON schema has it",
+   "evaluator": {
+    "base_emitted": true
+   },
+   "matcher": {
+    "verdict": "n/a",
+    "label": null,
+    "result": {
+     "base_emitted": null,
+     "note": "library API: base-rule matches are always returned"
+    }
+   },
+   "zircolite": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "backend-bug",
+     "cause": "converter"
+    },
+    "result": {
+     "base_emitted": false
+    }
+   },
+   "hayabusa": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "backend-bug",
+     "cause": "engine"
+    },
+    "result": {
+     "base_emitted": false
+    }
+   }
+  },
+  {
+   "case": "C45",
+   "clauses": [
+    "S35"
+   ],
+   "depends": [
+    "S35",
+    "S99"
+   ],
+   "what": "temporal_ordered failed then success 800 nanoseconds apart",
+   "evaluator": {
+    "c1": {
+     "groups": [
+      [
+       "bob"
+      ]
+     ],
+     "alerts": 1
+    }
+   },
+   "matcher": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   },
+   "zircolite": {
+    "verdict": "differ",
+    "label": {
+     "verdict": "spec-gap",
+     "open_clauses": [
+      "S35",
+      "S99"
+     ]
+    },
+    "result": {
+     "c1": {
+      "groups": [],
+      "alerts": 0
+     }
+    }
+   },
+   "hayabusa": {
+    "verdict": "agree",
+    "label": null,
+    "result": {
+     "c1": {
+      "groups": [
+       [
+        "bob"
+       ]
+      ],
+      "alerts": 1
+     }
+    }
+   }
+  }
+ ]
+}
