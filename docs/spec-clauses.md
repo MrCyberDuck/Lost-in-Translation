@@ -9,12 +9,13 @@ Source: [SigmaHQ/sigma-specification](https://github.com/SigmaHQ/sigma-specifica
 **Status** is one of:
 
 - `clear`: the spec text decides the behaviour.
-- `ambiguous`: the spec is silent, leaves it to the target SIEM, or can be read two ways.
+- `ambiguous`: the spec has text on the question, but it can be read more than one way or leaves the choice to the target SIEM.
 - `contradictory`: two parts of the spec disagree with each other.
+- `silent`: the spec has no text on the question at all.
 
-For every `ambiguous` or `contradictory` clause the evaluator follows the **working interpretation** given. The working interpretations of S1 to S88 were accepted by Nik on 23 and 24 Nov 2026, including the four questions that were open (see the end of this file). Those of S89 to S99, and the changes to the interpretations of S32, S33, S70, S72, S74, S76, S77 and S92, were written on 26 and 27 Nov 2026, when the evaluator gained correlations and filters in Phase 3 step 2, and wait for Nik's acceptance. S34 was listed as `clear` until Nik marked it `contradictory` on 27 Nov 2026; its interpretation did not change. Accepting an interpretation does not make a clause clear: its status stays `ambiguous`, and the clause keeps all its readings (see [Readings of the open clauses](#readings-of-the-open-clauses)).
+A status such as "clear for ASCII; ambiguous for non-ASCII" makes the whole clause open. For every open clause the evaluator follows the **working interpretation** given. On a `silent` clause the working interpretation is only a fixed point to measure disagreement against: the spec gives no right answer there, and agreement among backends is not one either. The working interpretations of S1 to S88 were accepted by Nik on 23 and 24 Nov 2026, including the four questions that were open (see the end of this file). Those of S89 to S99, and the changes to the interpretations of S32, S33, S70, S72, S74, S76, S77 and S92, were written on 26 and 27 Nov 2026, when the evaluator gained correlations and filters in Phase 3 step 2, and wait for Nik's acceptance. S34 was listed as `clear` until Nik marked it `contradictory` on 27 Nov 2026; its interpretation did not change. Accepting an interpretation does not make a clause clear: its status stays open, and an `ambiguous` or `contradictory` clause keeps all its readings (see [Readings of the open clauses](#readings-of-the-open-clauses)). On 28 Nov 2026 Nik decided that a reading must come from the spec's text, examples or schema, never from an engine's behaviour or from us. The clauses on whose question the spec has no text were then marked `silent` instead of `ambiguous`, and S15, S20 and S37, whose only remaining reading is the spec's, became `clear`.
 
-**Spec-gap rule (decisions of 23 and 27 Nov 2026).** A disagreement is labelled `spec-gap`, never `backend-bug`, when the target's result is right under at least one reading of an `ambiguous` or `contradictory` clause the case depends on. Only a result that is wrong under every reading of every such clause can be a `backend-bug` candidate, and the case records those readings. A `spec-gap` is reported as a proposed clarification to the Sigma specification ([spec-clarifications.md](spec-clarifications.md)), not filed against a backend. The full label set is in [triage-labels.md](triage-labels.md) and is enforced in `harness/triage.py`.
+**Spec-gap rule (decisions of 23, 27 and 28 Nov 2026).** A disagreement on a case that depends on an open clause is labelled `spec-gap`, never `backend-bug`, unless the target's mechanism breaks a `clear` clause, or an `ambiguous` or `contradictory` clause under every one of its readings. It is judged by what the mechanism does, not by whether the outcome happens to agree with some reading. A `silent` clause can never be broken, so a difference that turns on a silent point is always a `spec-gap`. A `backend-bug` candidate records what it breaks. A `spec-gap` is reported as a proposed clarification to the Sigma specification ([spec-clarifications.md](spec-clarifications.md)), not filed against a backend. The full label set is in [triage-labels.md](triage-labels.md) and is enforced in `harness/triage.py`.
 
 **Rules** is how many of the 2,247 in-scope rules use the construct, from `results/phase0/construct_census.json` (`python -m harness.construct_census`). A dash means it is not counted automatically.
 
@@ -42,7 +43,7 @@ What is still out of scope, on purpose: rule metadata that converters do not use
 
 | ID | Clause | Spec source | Status | Rules | Evaluator behaviour / working interpretation |
 | --- | --- | --- | --- | --- | --- |
-| S1 | All values are compared as case-insensitive strings | Rules spec, Detection > General | clear for ASCII; ambiguous for non-ASCII | all | Case-fold with Unicode full case folding (`str.casefold()`). Non-ASCII folding is not specified; non-ASCII cases are a spec gap (taxonomy T1). |
+| S1 | All values are compared as case-insensitive strings | Rules spec, Detection > General | clear for ASCII; ambiguous for non-ASCII | all | Case-fold with Unicode full case folding (`str.casefold()`). Which Unicode folding is meant is not specified, so a difference between full and simple folding is a spec gap (taxonomy T1); folding only ASCII letters is not case-insensitive and is no reading. |
 | S2 | `cased` makes matching case-sensitive | Modifiers > Generic | clear | 0 | Exact code-point comparison. |
 | S3 | A plain value (no modifier, no wildcard) matches the whole field value | Rules spec, Maps | clear | — | Full-string equality after S1. |
 | S4 | `*` matches any sequence (including empty); `?` matches exactly one character | Rules spec, String Wildcard | clear; ambiguous on what a "character" is | 19 inner `*`, 11 `?` | Anchored pattern over the whole value. One character = one Unicode code point (working interpretation). |
@@ -63,7 +64,7 @@ What is still out of scope, on purpose: rule metadata that converters do not use
 | S19 | `neq` on strings: field is different from the value | Modifiers > Generic | ambiguous for missing fields | 0 | A missing field does not satisfy `neq`. |
 | S20 | `fieldref` compares one field with another field of the same event | Modifiers > Specific | clear: `fieldref` compares values, and all values are case-insensitive strings (S1) | 1 | Case-insensitive (S1) unless `cased` is chained. |
 | S21 | `expand` placeholders must be resolved or the rule rejected | Rules spec, Placeholders | clear | 0 | Not in the main run; see S67 for the rejection test. |
-| S22 | Time modifiers (`minute`, `hour`, `day`, `week`, `month`, `year`) | Modifiers > Time | clear on range, silent on time zone | 0 | Conformance cases only. |
+| S22 | Time modifiers (`minute`, `hour`, `day`, `week`, `month`, `year`) | Modifiers > Time | clear on range, silent on time zone | 0 | The time as written in the event, without conversion; the spec warns that the modifiers are "not designed to handle timezone or format conversions". Conformance cases only. |
 
 ## Null, empty and missing
 
@@ -167,7 +168,7 @@ SigmaHQ r2026-07-01 contains **no** correlation rules in its rule folders, so ev
 | S71 | `group-by` is "Use: mandatory" but the text says it "optionally defines" fields | Correlation spec, Grouping | **contradictory** | A correlation without `group-by` groups all events together. |
 | S72 | `value_count` counts distinct values; whether `Admin` and `admin` are distinct is not stated | Correlation spec, Value Count + S1 | silent | Distinct after case folding (S1). An event without the field adds no value. |
 | S73 | `value_count` with several `field` values links them with AND | Correlation spec, Value Count | ambiguous (counted as tuples or separately) | Count distinct tuples. |
-| S74 | `value_percentile` semantics ("check when a certain percentage of observed values occur") | Correlation spec, Value Percentile | ambiguous | The condition holds when some value of `field` has a share, in percent, of the window's events that have the field, that meets the condition (`lte: 1` fires on a value seen in at most 1% of them). Spec gap on every disagreement. |
+| S74 | `value_percentile` semantics ("check when a certain percentage of observed values occur") | Correlation spec, Value Percentile | ambiguous | The condition holds when some value of `field` has a share, in percent, of the window's events that have the field, that meets the condition (`lte: 1` fires on a value seen in at most 1% of them). |
 | S75 | `aliases` map one group-by name to different fields per referenced rule | Correlation spec, Field Name Aliases | clear | |
 | S76 | Referenced rules may be given by `id` or `name`; correlations may reference correlations (chains) | Correlation spec, Related rules | clear | The same rule referenced twice, for example by name and by id, is a rule error: the JSON schema gives `rules` `uniqueItems`. What a chained correlation sees is S94. |
 | S77 | `generate`: by default only the correlation query is produced, not the referenced rules | Correlation spec, Generate; JSON schema | clear | A backend that emits the base rules as alerts by default is a `backend-bug`. `generate` is a top-level boolean, as in the JSON schema; the evaluator reads `correlation.generate`, where pySigma expects it, only when the top-level key is absent. Any other value is a rule error. |
@@ -220,7 +221,9 @@ Added by Nik's decision of 24 Nov 2026 while reviewing [taxonomy.md](taxonomy.md
 
 ## Readings of the open clauses
 
-Every `ambiguous` or `contradictory` clause lists the readings that a careful implementer could take, fixed here before any result is labelled. **Source** says where each reading comes from: `spec` (a sentence, example or schema of the spec, quoted with its line, and how the reading takes it), `spec, inferred` (the premise is quoted, the step after it is ours), `spec delegates` (the spec leaves the choice to the tool), `observed` (only an implementation does it) or `own` (ours). `(silent clause)` marks a clause on whose question the spec has no text at all. Line numbers refer to the spec commit above. **Working** marks the reading the evaluator follows. A disagreement is a `backend-bug` candidate only if the target's result is wrong under **every** reading of every open clause it depends on, and the case then records those readings ([triage-labels.md](triage-labels.md)). A reading is added here, never removed, and only with a note in the Phase 3 review log; adding one can turn a candidate back into a `spec-gap`, never the reverse. `harness/triage.py` reads this table.
+Every `ambiguous` or `contradictory` clause lists the readings its spec text allows, fixed here before any result is labelled. A reading quotes a sentence, example or schema of the spec and says how it takes it; a reading that only an implementation follows, or that only we came up with, is not listed (Nik, 28 Nov 2026). `silent` clauses list no readings, since the spec has no text to read. **Source** gives the quote with its line at the spec commit above: `spec`, `spec, inferred` (the premise is quoted and the step after it is ours) or `spec delegates` (the spec leaves the choice to the tool). Where an implementation is known to follow a reading, the Source says so. **Working** marks the reading the evaluator follows.
+
+A disagreement is a `backend-bug` candidate on an open clause only if the target's mechanism is wrong under **every** reading of it, and the case then records those readings ([triage-labels.md](triage-labels.md)). A reading is added only with its spec quote and a note in the Phase 3 review log. `harness/triage.py` reads this table, and a test checks that every Source starts with the spec.
 
 | Reading | What it says | Source | Working |
 | --- | --- | --- | --- |
@@ -272,7 +275,7 @@ Every `ambiguous` or `contradictory` clause lists the readings that a careful im
 
 ## Questions closed on 23 Nov 2026
 
-These four were open for the co-author. Nik decided on 23 Nov 2026 to keep the working interpretation for each. The clauses stay `ambiguous` and keep all their readings, so a finding that is right under any of those readings is a `spec-gap`.
+These four were open for the co-author. Nik decided on 23 Nov 2026 to keep the working interpretation for each. The clauses stay `ambiguous` and keep all their spec readings, so a finding that follows any of those readings is a `spec-gap`.
 
 1. S10 keywords: substring in any string field (kept), not a full-text match on the raw message.
 2. S11 integers: string comparison (kept), not numeric comparison.

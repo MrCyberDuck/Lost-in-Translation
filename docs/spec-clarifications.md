@@ -80,7 +80,7 @@ Expected: all six lines print `valid`. Checked 27 Nov 2026 at specification comm
 
 ## SC3. What a tool that cannot apply a global filter must do (S98)
 
-**Status:** ambiguous (not covered). Working interpretation written 27 Nov 2026, waiting for Nik. Draft, not sent.
+**Status:** silent: the spec has no text on it. Working interpretation written 27 Nov 2026, waiting for Nik. Draft, not sent.
 
 **What the spec says.** Nothing. The filters specification says that filters exist "to suppress matches of multiple rules" (line 35), but it has no compatibility rule. The correlation specification has one (S78: a backend must raise an error rather than convert a "must" feature it cannot support; S79: it should warn when it approximates a "should" feature), and the filters specification has no counterpart.
 
@@ -94,7 +94,7 @@ Expected: all six lines print `valid`. Checked 27 Nov 2026 at specification comm
 
 ## SC4. The resolution at which timestamps are compared (S99)
 
-**Status:** ambiguous (not covered). Working interpretation written 27 Nov 2026, waiting for Nik. Draft, not sent.
+**Status:** silent: the spec has no text on it. Working interpretation written 27 Nov 2026, waiting for Nik. Draft, not sent.
 
 **What the spec says.** Nothing. The correlation specification defines `timespan` (number plus `s`, `m`, `h` or `d`) and the order of events in `temporal_ordered`, but not the resolution at which event times are compared. Windows and order both depend on it.
 
