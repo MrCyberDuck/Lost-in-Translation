@@ -66,7 +66,8 @@ import yaml
 from sigma.exceptions import SigmaError
 from sigma.rule import SigmaRule
 
-from .core import CompiledRule, Event, RuleError, Semantics, SPEC, _parse_number, compile_rule, normalise_fields, to_text
+from .core import (CompiledRule, Event, RuleError, Semantics, SPEC, _parse_number, compile_rule, load_yaml_documents,
+                   normalise_fields, to_text)
 
 TYPES = ("event_count", "value_count", "temporal", "temporal_ordered", "value_sum", "value_avg", "value_percentile")
 VALUE_TYPES = ("value_count", "value_sum", "value_avg", "value_percentile")
@@ -224,7 +225,7 @@ def _correlation(doc: dict, clauses: set[str]) -> CompiledCorrelation:
 def compile_collection(text: str, sem: Semantics = SPEC) -> CompiledCollection:
     """Compile a multi-document YAML file of detection rules, filters and correlations."""
     try:
-        docs = [d for d in yaml.safe_load_all(text) if d]
+        docs = load_yaml_documents(text)
     except yaml.YAMLError as exc:
         raise RuleError(f"YAML error: {exc}") from exc
     rules: dict[str, CompiledRule] = {}

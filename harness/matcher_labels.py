@@ -19,7 +19,7 @@ MECHANISMS: dict[str, tuple[list[str], dict[str, object]]] = {
     "M3": (["S20", "S25"], {}),
     "M4": (["S23", "S25"], {}),
     "M5": (["S5"], {}),
-    # An integer in the rule does not match the same number as a string in the event (S11).
+    # An integer in the rule does not match the same number as a string in the event; S11 is clear.
     "M6": (["S11"], {}),
     # The value C:\x has one backslash; the rule asks for two (S5). The matcher matches the JSON text of
     # the list, which escapes it, so it breaks S5 whatever a multi-valued field is (S44, S87 are silent).

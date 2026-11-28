@@ -200,13 +200,13 @@ Example case: `selection: {Image|endswith: '\rundll32.exe'}`, `filter: {CommandL
 
 ### T5. Types and numbers
 
-**Intent.** Integers in rules are compared with the field value (S11, ambiguous on string vs number). Numeric modifiers `lt`, `lte`, `gt`, `gte` (S16); floats, negatives and quoted numbers (S69, ambiguous).
+**Intent.** Integers in rules are matched as strings, like every value (S11, clear: line 426 says a value may be written as an integer, line 361 that all values are treated as strings). Numeric modifiers `lt`, `lte`, `gt`, `gte` (S16); floats, negatives and quoted numbers (S69, ambiguous: line 426 allows only strings and integers as values).
 
-- **T5.1 Number vs string representation.** Rule `3389` vs event `'3389'` fails on Chainsaw (**run**, C8). EQL rejects numeric `EventID:4720` with `:` (**run**, demo, loud). KQL writes integer lists as strings: `EventID in~ ("4624", "4625")`, while a single value stays `Flags == 16` (**conv**); on an integer column the string list may not match (**hyp**). EQL writes integer lists as `like~ (4624, 4625)` (**conv**, **hyp** that `like~` on numbers fails).
+- **T5.1 Number vs string representation.** Rule `3389` vs event `'3389'` fails on Chainsaw (**run**, C8, `backend-bug` candidate). EQL rejects numeric `EventID:4720` with `:` (**run**, demo, loud). KQL writes integer lists as strings: `EventID in~ ("4624", "4625")`, while a single value stays `Flags == 16` (**conv**); on an integer column the string list may not match (**hyp**). EQL writes integer lists as `like~ (4624, 4625)` (**conv**, **hyp** that `like~` on numbers fails).
 - **T5.2 Numbers written as strings in the rule.** `DestinationPort: '0443'` stays the string `0443` everywhere (**conv**); an engine that stores the port as a number never matches it, one that coerces does (**hyp**).
 - **T5.3 Numeric compare on string fields.** `LogonType|lt: 5` becomes `LogonType<5` everywhere except SQLite, which wraps it in a type check (`CASE WHEN typeof(...)`) (**conv**). On a string-typed field, `<` may compare lexically (`"10" < "5"`) (**hyp**, T25).
 - **T5.4 Failed numeric conversion in LogQL (strong).** In a LogQL label filter, "if the conversion of the label value fails, the log line is not filtered and an `__error__` label is added" (**doc**). The backend emits numeric filters such as `EventID=4720`, `LogonType<5` and `x!=1` without an `__error__=""` guard (**conv**), so lines where the field is missing or not numeric pass the filter (**hyp**, strong over-match).
-- **T5.5 Booleans.** Rule string `'true'` vs event boolean `true` fails on Chainsaw (**run**, C6). LogQL rejects booleans (**conv**, loud). SQLite emits `('true' OR 1)`, KQL `=~ true` (**conv**).
+- **T5.5 Booleans.** Rule string `'true'` vs event boolean `true` fails on Chainsaw (**run**, C6, `backend-bug` candidate). LogQL rejects booleans (**conv**, loud). SQLite emits `('true' OR 1)`, KQL `=~ true` (**conv**).
 - **T5.6 Floats and negatives.** `gte: 1.5` and `lt: -1` pass through unchanged (**conv**); how Lucene parses `:<-1` is untested (**hyp**).
 
 Example case: `DestinationPort: 443` against events with `443` as integer, `"443"` and `"0443"`, and an event without `DestinationPort`.
@@ -354,9 +354,9 @@ Example case: `'event.code': '1'` on a JSON event `{"event": {"code": "1"}}` and
 
 ### T18. Rule loading and value typing
 
-**Intent.** Rules are YAML; unquoted scalars are typed by the loader (S39, contradictory with "treated as strings"). Only the YAML quote character needs escaping (S40).
+**Intent.** Rules are YAML 1.2.2 (line 94), whose core schema types unquoted scalars; every value is then matched as a string (S11). Which string a typed scalar becomes, its source text or its value, is not stated (S39, ambiguous). Only the YAML quote character needs escaping (S40).
 
-- **T18.1 YAML 1.1 vs 1.2.** `Flags: 0x10` becomes 16 for every target (**conv**), so an event value `0x10` does not match. `yes`, `on`, `010` and `1e3` differ between YAML 1.1 and 1.2 loaders; native engines with their own loaders (Chainsaw and Hayabusa, in Rust) may type them differently from pySigma (**hyp**). `Enabled: 'yes'` stays a string (**conv**).
+- **T18.1 YAML 1.1 vs 1.2.** The spec names YAML 1.2.2, but pySigma loads rules with PyYAML, which reads YAML 1.1: `010` becomes 8 instead of 10, and `yes` and `on` become `true` instead of staying strings (**run**, pySigma 1.5.1 loader, 28 Nov 2026). No SigmaHQ rule is affected today: its 976 unquoted integers are all plain decimal, and its only unquoted booleans are 4 `true`. `Flags: 0x10` becomes 16 under both versions, so for every target (**conv**) an event value `0x10` does not match (S39.a). Native engines with their own loaders (Chainsaw and Hayabusa, in Rust) may type these differently (**hyp**). `Enabled: 'yes'` stays a string (**conv**).
 - **T18.2 Rule validity.** What each tool does with a rule pySigma accepts and a native engine rejects, or the reverse (T9.5 lists what pySigma accepts silently). Counted as conversion failure.
 
 ### T19. Query structure and deferred parts
@@ -563,9 +563,9 @@ Clauses per primary area: T1 3, T2 4, T3 2, T4 8, T5 3, T6 2, T7 4, T8 9, T9 16,
 | C3 `UserData` | Chainsaw | T15.5 | `spec-gap` |
 | C4 three-valued `not` | Chainsaw | T4.3 | `backend-bug` |
 | C5 null = explicit null | Chainsaw | T4.1 | `spec-gap` |
-| C6 string `'true'` vs boolean | Chainsaw | T5.5 | `spec-gap` |
+| C6 string `'true'` vs boolean | Chainsaw | T5.5 | `backend-bug` candidate |
 | C7 logsource preconditions | Chainsaw | T16.2 | `config` |
-| C8 number vs string | Chainsaw | T5.1 | `spec-gap` |
+| C8 number vs string | Chainsaw | T5.1 | `backend-bug` candidate |
 | C9 title exclusions | Chainsaw | T16.2 | `config` |
 | C1&C4 unmapped field in a negated filter | Chainsaw | T10.5, T4.3 | `backend-bug` |
 | C1+C2 `Source Name` neither mapped nor stripped | Chainsaw | T10.5, T15.4 | `config` |

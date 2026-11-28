@@ -126,7 +126,9 @@ def chainsaw_mechanisms() -> list[Mechanism]:
         Mechanism("C5", "chainsaw", "`field: null` matches only a present JSON null, not a missing field", ["S24"],
                   "semantics", sem={"null_explicit_only": True}),
         Mechanism("C6", "chainsaw", "a string in the rule ('true') does not match a boolean event value", ["S11", "S39"],
-                  "semantics", sem={"strict_bool": True}),
+                  "semantics", sem={"strict_bool": True},
+                  # The rule's value is quoted, so S39 does not arise; every value is matched as a string (S11).
+                  breaks={"S11": "clear"}),
         Mechanism("C8", "chainsaw", "a number in the rule (3389) does not match a string event value ('3389')",
                   ["S11"], "semantics", sem={"strict_number": True}),
         Mechanism("C7", "chainsaw", "logsource preconditions by Provider/EventID (process_creation also 4688; "

@@ -105,3 +105,17 @@ Expected: all six lines print `valid`. Checked 27 Nov 2026 at specification comm
 **Proposed clarification.** Add to Time Selection: "Event times are compared at the full resolution of the event's timestamp. A tool that compares at a coarser resolution should warn, as for other approximations." Alternatively, the spec could fix a resolution, such as milliseconds, which is what many SIEMs store.
 
 **Reproduce.** `python -m harness.correlation_crosscheck zircolite`, then `compare`, and read case C45 in `results/phase3/correlation_crosscheck/summary.json`.
+
+## SC5. Which string an unquoted YAML scalar becomes (S39)
+
+**Status:** ambiguous. Narrowed by Nik on 28 Nov 2026. Draft, not sent.
+
+**What the spec says.** Rule files "are written in yaml format", linking YAML 1.2.2 (rules specification, line 94), whose core schema types unquoted scalars: `0x10` and `010` are the integers 16 and 10, `true` is a boolean, `yes` is a string. A value may be "a string or integer value" (line 426), and "All values are treated as case-insensitive strings" (line 361). The spec does not say which string a typed scalar becomes when it is matched: its source text (`0x10`) or its value (`16`).
+
+**What the implementations do.** pySigma, and so every pySigma backend, and the reference evaluator use the value: `Flags: 0x10` matches the event value `16`, not `0x10`. pySigma also loads rules with PyYAML, which reads YAML 1.1 rather than the 1.2.2 the spec names, so `010` becomes 8 and `yes` and `on` become `true` (checked with pySigma 1.5.1's own loader, 28 Nov 2026). Chainsaw and Hayabusa load rules with their own Rust YAML parsers; how they type these scalars is not checked yet.
+
+**Impact.** None on SigmaHQ rules today: at commit `552f3fee4` the 976 unquoted integer values in detections are all plain decimal, and the only unquoted booleans are 4 `true`. It matters for custom rules that write hex flags, leading zeros or `yes`/`no` unquoted.
+
+**Proposed clarification.** Add to Yaml File: "An unquoted value is matched as the string of its YAML 1.2.2 value, so `0x10` matches `16`. Quote a value to match it as written." Optionally, add the YAML version explicitly ("YAML 1.2.2, core schema") so that tools on YAML 1.1 loaders know they differ.
+
+**Reproduce.** `python -m pytest tests/test_evaluator.py -k s39` for the evaluator, and for pySigma's loader: `python -c "import yaml; from sigma.rule.base import SigmaYAMLLoader as L; print(yaml.load('a: [010, 0x10, yes, on]', L))"`, which prints `{'a': [8, 16, True, True]}`.

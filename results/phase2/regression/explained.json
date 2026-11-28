@@ -52,7 +52,9 @@
     "S39"
    ],
    "kind": "semantics",
-   "breaks": {}
+   "breaks": {
+    "S11": "clear"
+   }
   },
   "C8": {
    "engine": "chainsaw",

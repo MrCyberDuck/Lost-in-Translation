@@ -8,6 +8,8 @@ import re
 from dataclasses import dataclass, field
 from typing import Any, Callable, Iterable
 
+import yaml
+
 from sigma.collection import SigmaCollection
 from sigma.conditions import (
     ConditionAND,
@@ -485,6 +487,48 @@ def logsource_filter(rule: SigmaRule) -> tuple[Pred | None, str | None]:
     return pred, None
 
 
+# --------------------------------------------------------------------------- YAML 1.2.2 (S39)
+
+
+class Yaml12Loader(yaml.SafeLoader):
+    """Rule files are YAML 1.2.2 (rules spec, Yaml File, line 94); PyYAML, and so pySigma, read YAML 1.1.
+
+    Core schema scalars: booleans are only true/false in three spellings (`yes`, `on` stay strings),
+    integers are decimal, `0o` octal or `0x` hex (`010` is 10, not 8), and there are no sexagesimal
+    numbers. Everything else is as in PyYAML's safe loader."""
+
+
+Yaml12Loader.yaml_implicit_resolvers = {
+    ch: [(tag, rx) for tag, rx in resolvers if tag.rsplit(":", 1)[-1] not in ("bool", "int", "float")]
+    for ch, resolvers in yaml.SafeLoader.yaml_implicit_resolvers.items()
+}
+Yaml12Loader.add_implicit_resolver(
+    "tag:yaml.org,2002:bool", re.compile(r"^(?:true|True|TRUE|false|False|FALSE)$"), list("tTfF"))
+Yaml12Loader.add_implicit_resolver(
+    "tag:yaml.org,2002:int", re.compile(r"^(?:[-+]?[0-9]+|0o[0-7]+|0x[0-9a-fA-F]+)$"), list("-+0123456789"))
+Yaml12Loader.add_implicit_resolver(
+    "tag:yaml.org,2002:float",
+    re.compile(r"^(?:[-+]?(?:\.[0-9]+|[0-9]+(?:\.[0-9]*)?)(?:[eE][-+]?[0-9]+)?|[-+]?\.(?:inf|Inf|INF)|\.(?:nan|NaN|NAN))$"),
+    list("-+.0123456789"))
+
+
+def _construct_int12(loader: yaml.SafeLoader, node: yaml.ScalarNode) -> int:
+    text = loader.construct_scalar(node)
+    if text.startswith("0o"):
+        return int(text[2:], 8)
+    if text.startswith("0x"):
+        return int(text[2:], 16)
+    return int(text, 10)
+
+
+Yaml12Loader.add_constructor("tag:yaml.org,2002:int", _construct_int12)
+
+
+def load_yaml_documents(text: str) -> list:
+    """The YAML documents of a rule file, read as YAML 1.2.2."""
+    return [d for d in yaml.load_all(text, Yaml12Loader) if d]
+
+
 # --------------------------------------------------------------------------- entry points
 
 
@@ -493,7 +537,9 @@ def compile_rule(rule_yaml: str | SigmaRule, sem: Semantics = SPEC) -> CompiledR
         rule = rule_yaml
     else:
         try:
-            coll = SigmaCollection.from_yaml(rule_yaml)
+            coll = SigmaCollection.from_dicts(load_yaml_documents(rule_yaml))
+        except yaml.YAMLError as exc:
+            raise RuleError(f"YAML error: {exc}") from exc
         except SigmaError as exc:
             raise RuleError(f"pySigma rejects the rule: {exc}") from exc
         rules = [r for r in coll.rules if isinstance(r, SigmaRule)]

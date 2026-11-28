@@ -53,7 +53,7 @@ What is still out of scope, on purpose: rule metadata that converters do not use
 | S8 | A map's keys are AND | Rules spec, Maps | clear | all | |
 | S9 | A list of maps is OR | Rules spec, Lists | clear | 690 | |
 | S10 | Keyword lists (no field) search the "full log message" | Rules spec, Keywords search | ambiguous | 12 | Substring match (case-insensitive, wildcards honoured) against **any string field value** of the event, not token matching. |
-| S11 | Integers in rules are compared with the field value | Rules spec, Maps | ambiguous | 330 | Compare as strings ("all values are treated as strings"): `4688` matches int 4688 and string "4688"; `0x10` does **not** match `16`. |
+| S11 | Integers in rules are compared with the field value | Rules spec, Detection > General (line 361); Maps (line 426) | clear (Nik, 28 Nov 2026): line 426 says a value may be written as "a string or integer value", and line 361 that "All values are treated as case-insensitive strings" when matched; no line says an integer is compared by type or as a number | 330 | Compare as strings: `4688` matches the integer 4688 and the string "4688", not "04688". Which string an unquoted scalar such as `0x10` becomes is S39. |
 | S12 | Modifiers apply left to right in the order written | Rules spec, Value Modifiers | clear | — | |
 | S13 | Transformation modifiers expand values (`base64`, `base64offset`, `utf16le`/`wide`, `utf16be`, `utf16`, `windash`) | Modifiers > String | clear | 7 `base64offset`, 71 `windash` | Reuse pySigma's modifier implementations so expansion is identical to what backends receive; the oracle differs only in matching. |
 | S14 | `windash` permutes `-`, `/`, en dash, em dash, horizontal bar | Modifiers > String | clear | 71 | Five characters, all permutations. |
@@ -108,7 +108,7 @@ SigmaHQ r2026-07-01 contains **no** correlation rules in its rule folders, so ev
 
 | ID | Clause | Spec source | Status | Rules | Evaluator behaviour / working interpretation |
 | --- | --- | --- | --- | --- | --- |
-| S39 | Rules are YAML; unquoted scalars are typed by the YAML loader (`true` is a boolean, `0x10` is the integer 16, `010` is the integer 8 in YAML 1.1) | Rules spec, Yaml File; General ("treated as strings") | **contradictory**: YAML typing vs "all values are strings" | 1 boolean in scope; 3 `true` values in Windows rules overall | Use pySigma's loader (it keeps booleans as booleans). Compare a boolean `true` case-insensitively with the strings `true`/`True`. Any mismatch on typed values is a spec gap. |
+| S39 | Rules are YAML 1.2.2, whose core schema types unquoted scalars (`true` is a boolean, `0x10` and `010` are the integers 16 and 10, `yes` is a string); all values are matched as strings (S11) | Rules spec, Yaml File (line 94); General (line 361) | ambiguous: which string a typed scalar becomes, its source text or its value | 1 boolean in scope; no SigmaHQ rule where the two readings differ (976 unquoted integers, all plain decimal, and 4 unquoted `true` in all rules at commit 552f3fee4) | The string of the YAML 1.2.2 value: `0x10` matches "16", `010` matches "10", `true` matches `true` and `True`. The evaluator loads rules as YAML 1.2.2 (`Yaml12Loader` in `harness/evaluator/core.py`); pySigma's loader is PyYAML, which reads YAML 1.1 (`010` is 8, `yes` and `on` are `true`). |
 | S40 | Quoting: only the YAML quote character needs escaping in values | Rules spec, Detection > General | clear | 95 | Escaping of quotes in the target query is the converter's job; a broken query is a `backend-bug`. |
 | S41 | A backslash not followed by a wildcard may be written single or double: `\\` means one backslash | Rules spec, Escape Character | clear (but surprising) | 63 | `C:\\Windows` means `C:\Windows`. A backend that searches for two backslashes is a `backend-bug`. UNC paths therefore need `\\\\` in the rule. |
 
@@ -221,7 +221,7 @@ Added by Nik's decision of 24 Nov 2026 while reviewing [taxonomy.md](taxonomy.md
 
 ## Readings of the open clauses
 
-Every `ambiguous` or `contradictory` clause lists the readings its spec text allows, fixed here before any result is labelled. A reading quotes a sentence, example or schema of the spec and says how it takes it; a reading that only an implementation follows, or that only we came up with, is not listed (Nik, 28 Nov 2026). `silent` clauses list no readings, since the spec has no text to read. **Source** gives the quote with its line at the spec commit above: `spec`, `spec, inferred` (the premise is quoted and the step after it is ours) or `spec delegates` (the spec leaves the choice to the tool). Where an implementation is known to follow a reading, the Source says so. **Working** marks the reading the evaluator follows.
+Every `ambiguous` or `contradictory` clause lists the readings its spec text allows, fixed here before any result is labelled. A reading quotes a sentence, example or schema of the spec and says how it takes it; a reading that only an implementation follows, or that only we came up with, is not listed (Nik, 28 Nov 2026). `silent` clauses list no readings, since the spec has no text to read. **Source** gives the quote with its line at the spec commit above: `spec`, or `spec delegates` where the spec leaves the choice to the tool. Where an implementation is known to follow a reading, the Source says so. **Working** marks the reading the evaluator follows.
 
 A disagreement is a `backend-bug` candidate on an open clause only if the target's mechanism is wrong under **every** reading of it, and the case then records those readings ([triage-labels.md](triage-labels.md)). A reading is added only with its spec quote and a note in the Phase 3 review log. `harness/triage.py` reads this table, and a test checks that every Source starts with the spec.
 
@@ -233,9 +233,6 @@ A disagreement is a `backend-bug` candidate on an open clause only if the target
 | S4.b | `?` matches one user-perceived character (a grapheme cluster), so `e` followed by a combining accent is one character | spec: the same sentence, a character read as a user-perceived character (Unicode UAX #29) | |
 | S10.a | A keyword matches as a substring of any string field value of the event, case-insensitively, wildcards honoured | spec: "searching for keywords across an entire event" (rules spec, line 613) | yes |
 | S10.b | A keyword matches as a substring of the whole raw event text | spec: "strings that are applied to the full log message" (rules spec, line 401) | |
-| S11.a | Integers are compared as strings: `4688` matches the integer and the string, `0x10` does not match `16` | spec: "All values are treated as case-insensitive strings" (rules spec, line 361) | yes |
-| S11.b | Integers are compared as numbers: a numeric string in the event is parsed first | spec, inferred: "the value is a string or integer value" (rules spec, line 426); that an integer is compared as a number is inferred | |
-| S11.c | An integer matches only an integer-typed field value | spec, inferred: the same sentence; that an integer matches only an integer is inferred; observed: Chainsaw C8, sigma.matching M6 | |
 | S16.a | The field value is parsed as a number; if it does not parse, the comparison is false | spec: "can only be applied to numeric values" (modifiers appendix, line 85), read as values that denote a number | yes |
 | S16.b | Only numerically typed field values are compared; string-typed values never match | spec: the same sentence, read as values of a numeric type | |
 | S19.a | A missing field does not satisfy `neq` | spec: "The field is different from the specified values" (modifiers appendix, line 44), read as needing the field; observed: `!=` in Elasticsearch ES-QL | yes |
@@ -248,17 +245,16 @@ A disagreement is a `backend-bug` candidate on an open clause only if the target
 | S33.b | Fixed (tumbling) windows aligned to clock boundaries | spec: "... if this is not required by the given backend" (the same sentence) | |
 | S34.a | A range: every criterion given must hold | spec: "To define a range, you can use the conjunction 'AND' in the mapping" (correlation spec, line 343) | yes |
 | S34.b | Exactly one criterion: a condition with more than one is a rule error and must be refused | spec: "It is a map of exactly one condition criterion" (line 327) | |
-| S39.a | Values are typed by the YAML loader; a boolean `true` matches the strings `true` and `True` | spec, inferred: rules are YAML and "Numeric values don't use any quotes" (rules spec, line 102); comparing a typed value as a string is inferred; observed: pySigma's loader | yes |
-| S39.b | All values are strings, whether quoted or not | spec: "All values are treated as case-insensitive strings" (rules spec, line 361) | |
-| S39.c | Typed values match only values of the same type in the event | spec, inferred: the same YAML typing; that a typed value matches only the same type is inferred; observed: Chainsaw C6 | |
+| S39.a | A typed scalar becomes the string of its YAML 1.2.2 value: `0x10` is "16", `010` is "10", `true` is "true" | spec: "The rule files are written in yaml format", linking YAML 1.2.2 (rules spec, line 94), read with "All values are treated as case-insensitive strings" (line 361) applied to the loaded value | yes |
+| S39.b | A typed scalar becomes its source text: `0x10` is "0x10", `010` is "010" | spec: "All values are treated as case-insensitive strings" (rules spec, line 361) applied to the value as written | |
 | S50.a | Keywords with `all` may each appear in a different field | spec: "across an entire event" (rules spec, line 613) | yes |
 | S50.b | Keywords with `all` must all appear in the same field | spec: "applied to the full log message" (rules spec, line 401), one message | |
 | S56.a | An explicit pattern such as `1 of _filter*` includes identifiers that start with `_` | spec: "restricted to matching search identifiers" (rules spec, line 665) | yes |
 | S56.b | Identifiers that start with `_` are excluded from every pattern, as from `them` | spec: "Same as 1/all of them" (line 665), which excludes `_` identifiers (line 655) | |
 | S58.a | `neq` with a list: the value is different from all listed values | spec: "The field is different from the specified values" (modifiers appendix, line 44) | yes |
 | S58.b | `neq` with a list: the value is different from at least one listed value (OR, as for other lists) | spec: "Normally, lists of values are linked with OR" (modifiers appendix, line 26) | |
-| S69.a | Both sides are parsed as numbers; floats, negatives and quoted numbers are accepted | spec: "can only be applied to numeric values" (modifiers appendix, line 85) for floats and negatives; own for quoted numbers | yes |
-| S69.b | Only unquoted integers are allowed; other values are rule errors | spec, inferred: "Numeric values don't use any quotes" (rules spec, line 102); integers only is own | |
+| S69.a | Both sides are parsed as numbers; floats, negatives and quoted numbers are accepted | spec: "can only be applied to numeric values" (modifiers appendix, line 85), which floats and negatives are, and "Type modifiers change the type of a value" (rules spec, line 570), which covers a quoted number | yes |
+| S69.b | An unquoted float is a rule error; negative integers and quoted numbers are accepted | spec: "the value is a string or integer value" (rules spec, line 426), and the detection schema allows only strings and integers in a value list | |
 | S70.a | All seven correlation types are allowed | spec: the seven types defined under Correlation Types (correlation spec) | yes |
 | S70.b | Only the four listed types are allowed; the other three are rule errors | spec: the four types listed under Correlation type (the same spec) | |
 | S71.a | `group-by` is optional; without it all events form one group | spec: "optionally defines one or multiple fields" (correlation spec, line 282) | yes |
@@ -275,9 +271,9 @@ A disagreement is a `backend-bug` candidate on an open clause only if the target
 
 ## Questions closed on 23 Nov 2026
 
-These four were open for the co-author. Nik decided on 23 Nov 2026 to keep the working interpretation for each. The clauses stay `ambiguous` and keep all their spec readings, so a finding that follows any of those readings is a `spec-gap`.
+These four were open for the co-author. Nik decided on 23 Nov 2026 to keep the working interpretation for each. S10, S24 and S33 stay `ambiguous` and keep all their spec readings, so a finding that follows any of those readings is a `spec-gap`. S11 became `clear` on 28 Nov 2026, once its only spec text was read properly.
 
 1. S10 keywords: substring in any string field (kept), not a full-text match on the raw message.
-2. S11 integers: string comparison (kept), not numeric comparison.
+2. S11 integers: string comparison (kept), not numeric comparison; now `clear`.
 3. S24 null: absent or JSON null (kept), not absent only.
 4. S33 correlation windows: sliding (kept), not tumbling.

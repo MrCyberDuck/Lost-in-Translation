@@ -45,7 +45,7 @@ def test_backend_bug_needs_cause_and_dependencies():
         classify([], cause="engine")
 
 
-@pytest.mark.parametrize("clause", ["S10", "S11", "S24", "S33", "S35"])
+@pytest.mark.parametrize("clause", ["S10", "S24", "S33", "S35", "S39"])
 def test_closed_questions_still_give_spec_gap(clause):
     # Nik, 23 Nov 2026: working interpretations kept, findings on these are spec gaps.
     result = classify([clause, "S27"], cause="converter")
@@ -116,6 +116,5 @@ def test_a_crash_is_a_candidate():
 def test_matcher_mechanism_labels():
     from harness.matcher_labels import labels
     out = labels()
-    assert out["M6"] == {"verdict": "spec-gap", "open_clauses": ["S11"]}
-    assert {k for k, v in out.items() if v["verdict"] == "backend-bug"} == {"M1", "M2", "M3", "M4", "M5", "M7"}
+    assert {k for k, v in out.items() if v["verdict"] == "backend-bug"} == {"M1", "M2", "M3", "M4", "M5", "M6", "M7"}
     assert out["M7"]["breaks"] == {"S5": "clear"}
