@@ -1,10 +1,11 @@
 """Verdict labels for disagreements, with the spec-gap rule built in.
 
 Clause statuses and the readings of every open clause are parsed from docs/spec-clauses.md, the
-single source of truth. A disagreement is a `spec-gap`, never a `backend-bug`, when the target's
-result is right under at least one reading of an ambiguous or contradictory clause it depends on.
-Only a result that is wrong under every reading of every such clause (`wrong_under`) can be a
-`backend-bug`. See docs/triage-labels.md.
+single source of truth. A clause is clear, ambiguous or contradictory (the spec has text on its
+question, and each reading of it quotes that text) or silent (the spec has no text on it). A
+disagreement on a case that depends on an open clause is a `spec-gap` unless the target's mechanism
+breaks a clear clause, or an ambiguous or contradictory clause under every one of its readings
+(`breaks`). A silent clause can never be broken. See docs/triage-labels.md.
 """
 from __future__ import annotations
 
@@ -24,10 +25,11 @@ _READING = re.compile(r"^\|\s*(S\d+)\.([a-z])\s*\|([^|]*)\|([^|]*)\|\s*(yes)?\s*
 
 @functools.lru_cache(maxsize=1)
 def clause_status(path: str | None = None) -> dict[str, str]:
-    """Map clause id -> 'clear' | 'ambiguous' | 'contradictory', read from spec-clauses.md.
+    """Map clause id -> 'clear' | 'ambiguous' | 'contradictory' | 'silent', read from spec-clauses.md.
 
-    A clause counts as ambiguous if its status cell mentions 'ambiguous' at all (for example
-    'clear for ASCII; ambiguous for non-ASCII'): if any part of it is open, the clause is open.
+    A clause counts as open if its status cell mentions 'contradictory', 'silent' or 'ambiguous' at all
+    (for example 'clear for ASCII; ambiguous for non-ASCII'): if any part of it is open, the clause is
+    open. 'silent' wins over 'ambiguous' and loses to 'contradictory'.
     """
     text = pathlib.Path(path or SPEC_CLAUSES).read_text(encoding="utf-8")
     out: dict[str, str] = {}
@@ -40,6 +42,8 @@ def clause_status(path: str | None = None) -> dict[str, str]:
         status_cell = cells[2].lower() if len(cells) > 2 else ""
         if "contradictory" in status_cell:
             out[m.group(1)] = "contradictory"
+        elif "silent" in status_cell:
+            out[m.group(1)] = "silent"
         elif "ambiguous" in status_cell:
             out[m.group(1)] = "ambiguous"
         elif "clear" in status_cell:
@@ -52,8 +56,8 @@ def clause_status(path: str | None = None) -> dict[str, str]:
 @functools.lru_cache(maxsize=1)
 def clause_readings(path: str | None = None) -> dict[str, list[str]]:
     """Map open clause id -> its reading ids (`S34.a`, `S34.b`), from the table "Readings of the open
-    clauses" in spec-clauses.md. Every open clause has at least two readings and at most one marked
-    as the working one; a clear clause has none."""
+    clauses" in spec-clauses.md. Every ambiguous or contradictory clause has at least two readings, one
+    of them marked as the working one; a clear or silent clause has none."""
     text = pathlib.Path(path or SPEC_CLAUSES).read_text(encoding="utf-8")
     out: dict[str, list[str]] = {}
     for line in text.splitlines():
@@ -73,14 +77,8 @@ def working_reading(clause: str, path: str | None = None) -> str | None:
     return None
 
 
-def every_reading(depends_on: Iterable[str]) -> dict[str, list[str]]:
-    """`wrong_under` for a result that is wrong whatever the readings, such as a crash."""
-    readings = clause_readings()
-    return {c: list(readings[c]) for c in open_clauses(depends_on)}
-
-
 def open_clauses(depends_on: Iterable[str]) -> list[str]:
-    """The clauses in `depends_on` that are ambiguous or contradictory."""
+    """The clauses in `depends_on` that are ambiguous, contradictory or silent."""
     status = clause_status()
     unknown = [c for c in depends_on if c not in status]
     if unknown:
@@ -90,12 +88,16 @@ def open_clauses(depends_on: Iterable[str]) -> list[str]:
 
 def classify(depends_on: Iterable[str], *, oracle_wrong: bool = False,
              rule_out_of_spec: bool = False, production_only: bool = False,
-             cause: str | None = None, wrong_under: dict[str, Iterable[str]] | None = None) -> dict:
-    """Label one disagreement of one target.
+             cause: str | None = None, breaks: dict[str, object] | None = None,
+             crashed: bool = False) -> dict:
+    """Label one disagreement of one target (rule of 28 Nov 2026, docs/triage-labels.md).
 
-    `depends_on` lists every clause the case relies on, open ones included. `wrong_under` maps an open
-    clause to the readings under which the target's result is wrong; an open clause excuses the
-    result unless it is wrong under all of that clause's readings (decision of 27 Nov 2026)."""
+    `depends_on` lists every clause the case relies on, open ones included. `breaks` names what the
+    target's mechanism breaks, judged by the mechanism and not by the outcome: a clear clause maps to
+    "clear"; an ambiguous or contradictory clause maps to the readings under which the result is wrong.
+    A silent clause cannot be named. If the case depends on an open clause, the result is a candidate
+    only when it breaks a clear clause, or an open clause under all of its readings, or crashed;
+    otherwise it is a `spec-gap`."""
     deps = list(depends_on)
     if not deps:
         raise ValueError("a disagreement must name the spec clauses its expected verdict depends on")
@@ -104,18 +106,31 @@ def classify(depends_on: Iterable[str], *, oracle_wrong: bool = False,
     if rule_out_of_spec:
         return {"verdict": "rule-out-of-spec"}
     gaps = open_clauses(deps)
-    wrong = {c: sorted(set(r)) for c, r in (wrong_under or {}).items()}
-    readings = clause_readings()
-    for c, rs in wrong.items():
-        if c not in gaps:
-            raise ValueError(f"wrong_under names {c}, which is not an open clause the case depends on")
+    status, readings = clause_status(), clause_readings()
+    broken: dict[str, object] = {}
+    for c, v in (breaks or {}).items():
+        if c not in deps:
+            raise ValueError(f"breaks names {c}, which the case does not depend on")
+        if status[c] == "silent":
+            raise ValueError(f"{c} is silent: the spec has no text on it, so no result can break it")
+        if status[c] == "clear":
+            if v != "clear":
+                raise ValueError(f"{c} is clear: name it with 'clear', not readings")
+            broken[c] = "clear"
+            continue
+        rs = sorted(set(v))  # type: ignore[arg-type]
         unknown = [r for r in rs if r not in readings[c]]
-        if unknown:
-            raise ValueError(f"{c} has no readings {unknown}; its readings are {readings[c]}")
-    excusing = [c for c in gaps if set(wrong.get(c, ())) != set(readings[c])]
-    if excusing:
-        return {"verdict": "spec-gap", "open_clauses": excusing}
-    record = {"wrong_under": {c: wrong[c] for c in gaps}} if gaps else {}
+        if unknown or not rs:
+            raise ValueError(f"{c} has no readings {unknown or rs}; its readings are {readings[c]}")
+        broken[c] = rs
+    decisive = {c: v for c, v in broken.items() if v == "clear" or set(v) == set(readings[c])}  # type: ignore[arg-type]
+    if gaps and not decisive and not crashed:
+        return {"verdict": "spec-gap", "open_clauses": gaps}
+    record: dict = {}
+    if decisive:
+        record["breaks"] = decisive
+    if crashed:
+        record["crashed"] = True
     if production_only:
         return {"verdict": "config", **record}
     if cause not in CAUSES:

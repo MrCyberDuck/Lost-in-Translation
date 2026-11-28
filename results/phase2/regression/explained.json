@@ -6,7 +6,7 @@
    "description": "only fields listed in the mapping file are reachable",
    "clauses": [],
    "kind": "config",
-   "wrong_under": {}
+   "breaks": {}
   },
   "C2": {
    "engine": "chainsaw",
@@ -15,7 +15,7 @@
     "S85"
    ],
    "kind": "config",
-   "wrong_under": {}
+   "breaks": {}
   },
   "C3": {
    "engine": "chainsaw",
@@ -24,7 +24,7 @@
     "S86"
    ],
    "kind": "config",
-   "wrong_under": {}
+   "breaks": {}
   },
   "C4": {
    "engine": "chainsaw",
@@ -33,7 +33,7 @@
     "S25"
    ],
    "kind": "semantics",
-   "wrong_under": {}
+   "breaks": {}
   },
   "C5": {
    "engine": "chainsaw",
@@ -42,7 +42,7 @@
     "S24"
    ],
    "kind": "semantics",
-   "wrong_under": {}
+   "breaks": {}
   },
   "C6": {
    "engine": "chainsaw",
@@ -52,7 +52,7 @@
     "S39"
    ],
    "kind": "semantics",
-   "wrong_under": {}
+   "breaks": {}
   },
   "C8": {
    "engine": "chainsaw",
@@ -61,7 +61,7 @@
     "S11"
    ],
    "kind": "semantics",
-   "wrong_under": {}
+   "breaks": {}
   },
   "C7": {
    "engine": "chainsaw",
@@ -70,11 +70,8 @@
     "S37"
    ],
    "kind": "config",
-   "wrong_under": {
-    "S37": [
-     "S37.a",
-     "S37.b"
-    ]
+   "breaks": {
+    "S37": "clear"
    }
   },
   "C9": {
@@ -82,7 +79,7 @@
    "description": "rules listed by title under `exclusions` in the mapping file never run",
    "clauses": [],
    "kind": "config",
-   "wrong_under": {}
+   "breaks": {}
   },
   "H1": {
    "engine": "hayabusa",
@@ -92,7 +89,7 @@
     "S45"
    ],
    "kind": "semantics",
-   "wrong_under": {}
+   "breaks": {}
   },
   "H2": {
    "engine": "hayabusa",
@@ -101,7 +98,7 @@
     "S36"
    ],
    "kind": "config",
-   "wrong_under": {}
+   "breaks": {}
   },
   "H3": {
    "engine": "hayabusa",
@@ -110,7 +107,7 @@
     "S85"
    ],
    "kind": "config",
-   "wrong_under": {}
+   "breaks": {}
   },
   "H4": {
    "engine": "hayabusa",
@@ -119,13 +116,7 @@
     "S87"
    ],
    "kind": "config",
-   "wrong_under": {
-    "S87": [
-     "S87.a",
-     "S87.b",
-     "S87.c"
-    ]
-   }
+   "breaks": {}
   }
  },
  "engines": {

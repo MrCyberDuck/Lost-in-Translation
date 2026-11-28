@@ -462,20 +462,10 @@
     "label": {
      "verdict": "backend-bug",
      "cause": "engine",
-     "wrong_under": {
+     "breaks": {
       "S34": [
        "S34.a",
        "S34.b"
-      ],
-      "S33": [
-       "S33.a",
-       "S33.b",
-       "S33.c"
-      ],
-      "S96": [
-       "S96.a",
-       "S96.b",
-       "S96.c"
       ]
      }
     },
@@ -698,18 +688,7 @@
     "label": {
      "verdict": "backend-bug",
      "cause": "engine",
-     "wrong_under": {
-      "S73": [
-       "S73.a",
-       "S73.b",
-       "S73.c"
-      ],
-      "S33": [
-       "S33.a",
-       "S33.b",
-       "S33.c"
-      ]
-     }
+     "crashed": true
     },
     "result": {
      "crash": "TypeError: unhashable type: 'list'"
@@ -1084,12 +1063,8 @@
     "label": {
      "verdict": "backend-bug",
      "cause": "engine",
-     "wrong_under": {
-      "S33": [
-       "S33.a",
-       "S33.b",
-       "S33.c"
-      ]
+     "breaks": {
+      "S76": "clear"
      }
     },
     "result": {
@@ -1154,17 +1129,8 @@
     "label": {
      "verdict": "backend-bug",
      "cause": "engine",
-     "wrong_under": {
-      "S94": [
-       "S94.a",
-       "S94.b",
-       "S94.c"
-      ],
-      "S33": [
-       "S33.a",
-       "S33.b",
-       "S33.c"
-      ]
+     "breaks": {
+      "S76": "clear"
      }
     },
     "result": {
@@ -1224,22 +1190,8 @@
     "label": {
      "verdict": "backend-bug",
      "cause": "engine",
-     "wrong_under": {
-      "S92": [
-       "S92.a",
-       "S92.b",
-       "S92.c"
-      ],
-      "S33": [
-       "S33.a",
-       "S33.b",
-       "S33.c"
-      ],
-      "S32": [
-       "S32.a",
-       "S32.b",
-       "S32.c"
-      ]
+     "breaks": {
+      "S75": "clear"
      }
     },
     "result": {
@@ -1272,22 +1224,8 @@
     "label": {
      "verdict": "backend-bug",
      "cause": "engine",
-     "wrong_under": {
-      "S92": [
-       "S92.a",
-       "S92.b",
-       "S92.c"
-      ],
-      "S33": [
-       "S33.a",
-       "S33.b",
-       "S33.c"
-      ],
-      "S32": [
-       "S32.a",
-       "S32.b",
-       "S32.c"
-      ]
+     "breaks": {
+      "S75": "clear"
      }
     },
     "result": {
@@ -1923,20 +1861,10 @@
     "label": {
      "verdict": "backend-bug",
      "cause": "engine",
-     "wrong_under": {
+     "breaks": {
       "S33": [
        "S33.a",
-       "S33.b",
-       "S33.c"
-      ],
-      "S91": [
-       "S91.a",
-       "S91.b"
-      ],
-      "S92": [
-       "S92.a",
-       "S92.b",
-       "S92.c"
+       "S33.b"
       ]
      }
     },
@@ -2029,18 +1957,7 @@
     "label": {
      "verdict": "backend-bug",
      "cause": "engine",
-     "wrong_under": {
-      "S73": [
-       "S73.a",
-       "S73.b",
-       "S73.c"
-      ],
-      "S33": [
-       "S33.a",
-       "S33.b",
-       "S33.c"
-      ]
-     }
+     "crashed": true
     },
     "result": {
      "crash": "TypeError: unhashable type: 'list'"
@@ -2061,16 +1978,10 @@
     "label": {
      "verdict": "backend-bug",
      "cause": "engine",
-     "wrong_under": {
+     "breaks": {
       "S73": [
        "S73.a",
-       "S73.b",
-       "S73.c"
-      ],
-      "S33": [
-       "S33.a",
-       "S33.b",
-       "S33.c"
+       "S73.b"
       ]
      }
     },
@@ -2092,7 +2003,8 @@
     "S94"
    ],
    "depends": [
-    "S94"
+    "S94",
+    "S76"
    ],
    "what": "chain of the spec's shape: inner event_count per Host gte 2, outer temporal_ordered [inner, success] per User",
    "evaluator": {
@@ -2108,10 +2020,11 @@
    "matcher": {
     "verdict": "differ",
     "label": {
-     "verdict": "spec-gap",
-     "open_clauses": [
-      "S94"
-     ]
+     "verdict": "backend-bug",
+     "cause": "engine",
+     "breaks": {
+      "S76": "clear"
+     }
     },
     "result": {
      "c2": {
@@ -2137,10 +2050,11 @@
    "hayabusa": {
     "verdict": "differ",
     "label": {
-     "verdict": "spec-gap",
-     "open_clauses": [
-      "S94"
-     ]
+     "verdict": "backend-bug",
+     "cause": "engine",
+     "breaks": {
+      "S76": "clear"
+     }
     },
     "result": {
      "c2": {
@@ -2156,7 +2070,8 @@
     "S94"
    ],
    "depends": [
-    "S94"
+    "S94",
+    "S76"
    ],
    "what": "chain: inner gte 2 per User, outer gte 2 inner matches; eve has one burst of 3",
    "evaluator": {
@@ -2172,10 +2087,11 @@
    "matcher": {
     "verdict": "differ",
     "label": {
-     "verdict": "spec-gap",
-     "open_clauses": [
-      "S94"
-     ]
+     "verdict": "backend-bug",
+     "cause": "engine",
+     "breaks": {
+      "S76": "clear"
+     }
     },
     "result": {
      "c2": {
@@ -2213,7 +2129,8 @@
     "S94"
    ],
    "depends": [
-    "S94"
+    "S94",
+    "S76"
    ],
    "what": "brute force then success: failures every 2 minutes 00:00 to 14:00, success at 15:00, outer timespan 2m",
    "evaluator": {
@@ -2229,10 +2146,11 @@
    "matcher": {
     "verdict": "differ",
     "label": {
-     "verdict": "spec-gap",
-     "open_clauses": [
-      "S94"
-     ]
+     "verdict": "backend-bug",
+     "cause": "engine",
+     "breaks": {
+      "S76": "clear"
+     }
     },
     "result": {
      "c2": {
@@ -2496,7 +2414,8 @@
     "S97"
    ],
    "depends": [
-    "S97"
+    "S97",
+    "S75"
    ],
    "what": "aliases list only conn_in; conn_out events have a field named ip",
    "evaluator": {
@@ -2512,10 +2431,11 @@
    "matcher": {
     "verdict": "differ",
     "label": {
-     "verdict": "spec-gap",
-     "open_clauses": [
-      "S97"
-     ]
+     "verdict": "backend-bug",
+     "cause": "engine",
+     "breaks": {
+      "S75": "clear"
+     }
     },
     "result": {
      "c1": {
@@ -2541,10 +2461,11 @@
    "hayabusa": {
     "verdict": "differ",
     "label": {
-     "verdict": "spec-gap",
-     "open_clauses": [
-      "S97"
-     ]
+     "verdict": "backend-bug",
+     "cause": "engine",
+     "breaks": {
+      "S75": "clear"
+     }
     },
     "result": {
      "c1": {
